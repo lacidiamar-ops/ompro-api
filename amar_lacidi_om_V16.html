@@ -258,15 +258,14 @@ footer{background:var(--coal);padding:28px 72px;display:flex;justify-content:spa
 .ftr{font-size:11px;color:var(--mist)}
 
 /* ── SCROLL ANIMATIONS (GSAP) ── */
-.reveal,.reveal-l,.reveal-r{opacity:0}
+/* opacity initiale gérée par JS — pas de CSS pour éviter le texte invisible si CDN échoue */
 /* ── 3D CARD TILT ── */
 .av-card,.ecard,.mcard{transform-style:preserve-3d;transition:transform .3s ease,background .25s,box-shadow .3s}
 .av-card:hover,.ecard:hover{transform:translateY(-6px) rotateX(3deg) rotateY(-2deg);box-shadow:0 22px 44px rgba(0,0,0,.45),0 0 0 1px rgba(200,168,75,.22)}
 /* ── TIMELINE GROW ── */
 @keyframes timelineGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .tline::before{transform-origin:left;animation:timelineGrow 2s .3s ease-out both}
-/* ── HERO TEXT — masqué initialement (GSAP anime l'entrée) ── */
-.h1-w,.h1-g,.h1-s,.rule,.hero-sub,.pills .pill,.chip{opacity:0}
+/* ── HERO TEXT — masqué via JS uniquement (voir gsap.set ci-dessous) ── */
 
 
 /* RENFORT LISIBILITÉ — version retravaillée */
@@ -2749,6 +2748,16 @@ window.addEventListener('load',()=>{
 /* ── GSAP INIT ── */
 gsap.registerPlugin(ScrollTrigger);
 
+/* Masquer les éléments via JS (pas CSS) → visible si GSAP ne charge pas */
+gsap.set('.reveal,.reveal-l,.reveal-r', {opacity:0});
+gsap.set('.h1-w,.h1-g,.h1-s,.rule,.hero-sub,.pills .pill,.chip', {opacity:0});
+
+/* Fallback : si GSAP plante, tout afficher après 2s */
+const _gsapFallback = setTimeout(()=>{
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.h1-w,.h1-g,.h1-s,.rule,.hero-sub,.pills .pill,.chip')
+    .forEach(el=>el.style.opacity='1');
+}, 2000);
+
 /* ── SCROLL REVEAL ── */
 gsap.utils.toArray('.reveal').forEach((el,i)=>{
   const delay=el.classList.contains('delay-4')?0.4:el.classList.contains('delay-3')?0.3:el.classList.contains('delay-2')?0.2:el.classList.contains('delay-1')?0.1:0;
@@ -2772,6 +2781,7 @@ gsap.utils.toArray('.reveal-r').forEach(el=>{
 
 /* ── HERO TITLE ENTRY ── */
 window.addEventListener('load',()=>{
+  clearTimeout(_gsapFallback);
   gsap.fromTo('.chip',{opacity:0,y:20},{opacity:1,y:0,duration:0.6,ease:'power2.out',delay:0.3});
   gsap.fromTo('.h1-w',{opacity:0,y:60},{opacity:1,y:0,duration:1,ease:'expo.out',delay:0.5,stagger:0.15});
   gsap.fromTo('.h1-g',{opacity:0,y:60},{opacity:1,y:0,duration:1,ease:'expo.out',delay:0.62});
