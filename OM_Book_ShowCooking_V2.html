@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>OM x API - Show-Cooking Wok &amp; Pâtes 2025-2026</title>
+<style>
+:root{
+ --b:#0a2540;--b2:#102a56;--g:#c9a65b;--g2:#e7c989;
+ --cr:#fbf9f4;--w:#fff;--ink:#0d1b2a;--mu:#5a6b80;--ln:#e6ebf2;
+ --wok:#d4543d;--wok2:#a83a25;
+ --pa:#5fa052;--pa2:#3d7a32;
+ --s1:0 1px 2px rgba(10,37,64,.06),0 4px 12px rgba(10,37,64,.06);
+ --s2:0 8px 30px rgba(10,37,64,.10);
+ --s3:0 24px 60px rgba(10,37,64,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Cormorant Garamond','Times New Roman',Georgia,serif;background:var(--cr);color:var(--ink);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.s{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+img{max-width:100%;display:block}
+
+/* ===== TOPBAR ===== */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(10,37,64,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+.tbi{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:14px 24px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;line-height:1.1}
+.brand b{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;font-weight:600}
+.brand span{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--g2);margin-top:3px}
+.nav{display:flex;gap:6px;flex:1;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;flex-wrap:wrap}
+.nav a{padding:9px 13px;border-radius:8px;color:rgba(255,255,255,.82);transition:all .2s;font-weight:500}
+.nav a:hover,.nav a.on{color:#fff;background:rgba(255,255,255,.08)}
+.nav a.on{box-shadow:inset 0 -2px 0 var(--g)}
+.lp{display:flex;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:3px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.lp button{padding:5px 10px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,.6);transition:all .2s}
+.lp button.on{background:var(--g);color:var(--b)}
+.btn-home{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;padding:8px 14px;border-radius:8px;color:#fff;background:rgba(201,166,91,.15);border:1px solid rgba(201,166,91,.3)}
+.btn-home:hover{background:var(--g);color:var(--b)}
+
+/* ===== EDIT TOOLBAR ===== */
+.etb{position:sticky;top:64px;z-index:30;background:#fff;border-bottom:1px solid var(--ln);padding:12px 24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.etb-lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);font-weight:600;margin-right:auto}
+.etb-lbl b{color:var(--b)}
+.eb{padding:8px 14px;border-radius:8px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;transition:all .2s;border:1px solid var(--ln);background:#fff;color:var(--b)}
+.eb:hover{background:var(--cr);border-color:var(--g)}
+.eb.gold{background:linear-gradient(135deg,var(--g),var(--g2));border-color:var(--g);color:var(--b)}
+.eb.gold:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,166,91,.4)}
+.eb.dark{background:var(--b);border-color:var(--b);color:#fff}
+.eb.dark:hover{background:var(--b2)}
+.eb.danger{color:#c53030}
+.eb.danger:hover{background:#fff5f5}
+
+/* ===== COVER ===== */
+.cover{min-height:calc(100vh - 110px);display:flex;align-items:center;justify-content:center;padding:50px 24px;position:relative;overflow:hidden;background:radial-gradient(ellipse at top,#f0e6d4 0%,#dec896 100%)}
+.cover::before{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><circle cx='40' cy='40' r='1' fill='%230a2540' opacity='.05'/></svg>");pointer-events:none}
+.cover-book{width:100%;max-width:780px;background:linear-gradient(180deg,#0a2540 0%,#061a30 100%);color:#fff;border-radius:6px 18px 18px 6px;padding:60px 60px;position:relative;box-shadow:-30px 30px 80px rgba(10,37,64,.3),inset 8px 0 30px rgba(0,0,0,.3);overflow:hidden}
+.cover-book::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,var(--g),transparent);opacity:.5}
+.cover-book::after{content:"";position:absolute;top:-100px;right:-100px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(201,166,91,.2),transparent 70%)}
+.cover-corner{position:absolute;width:60px;height:60px;border:2px solid var(--g)}
+.cover-corner.tl{top:30px;left:30px;border-right:none;border-bottom:none}
+.cover-corner.tr{top:30px;right:30px;border-left:none;border-bottom:none}
+.cover-corner.bl{bottom:30px;left:30px;border-right:none;border-top:none}
+.cover-corner.br{bottom:30px;right:30px;border-left:none;border-top:none}
+.cover-content{position:relative;z-index:2;text-align:center}
+.cover-edition{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--g);font-weight:600;margin-bottom:30px}
+.cover-logos{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:30px}
+.cover-logos img.lo-om{width:90px;height:90px;border-radius:50%;background:#fff;object-fit:cover;box-shadow:0 0 0 3px var(--g),0 8px 30px rgba(0,0,0,.4)}
+.cover-logos img.lo-api{height:80px;width:auto;background:#fff;padding:6px 14px;border-radius:12px;box-shadow:0 0 0 3px var(--g),0 8px 30px rgba(0,0,0,.4)}
+.cover-logos .lo-x{font-family:'Cormorant Garamond',serif;color:var(--g);font-size:34px;font-style:italic;opacity:.7}
+.cover h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(40px,6.5vw,72px);line-height:1.05;margin-bottom:12px}
+.cover h1 em{display:block;font-style:italic;color:var(--g2);font-size:.6em;font-weight:500;margin-top:6px;letter-spacing:1px}
+.cover-div{width:80px;height:1px;background:var(--g);margin:24px auto}
+.cover-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--g2);font-size:22px;margin-bottom:8px}
+.cover-club{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:500}
+.cover-yr{margin-top:40px;padding-top:22px;border-top:1px solid rgba(201,166,91,.3);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,.5)}
+.cover-cta{margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-go{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:linear-gradient(135deg,var(--g),var(--g2));color:var(--b);padding:14px 30px;border-radius:10px;font-weight:600;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;transition:all .25s;box-shadow:0 8px 24px rgba(201,166,91,.4);cursor:pointer;border:none}
+.cta-go:hover{transform:translateY(-2px)}
+.cta-go.alt{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+.cta-go.alt:hover{border-color:var(--g);color:var(--g2)}
+
+/* ===== STATIONS HERO ===== */
+.st-hero{padding:60px 28px 30px;max-width:1280px;margin:0 auto}
+.st-hero-h{text-align:center;margin-bottom:36px}
+.st-hero-h .tag{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--b);font-weight:600;background:rgba(201,166,91,.2);padding:7px 16px;border-radius:999px;display:inline-block;margin-bottom:18px}
+.st-hero-h h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(38px,5vw,56px);color:var(--b);line-height:1.05}
+.st-hero-h p{margin-top:14px;color:var(--mu);font-size:18px;max-width:680px;margin-left:auto;margin-right:auto}
+
+/* ===== SECTIONS WOK / PATES ===== */
+.station{padding:60px 28px;max-width:1280px;margin:0 auto}
+.station-banner{position:relative;border-radius:20px;overflow:hidden;padding:60px 50px;color:#fff;margin-bottom:40px;box-shadow:var(--s2)}
+.station-banner.wok{background:radial-gradient(circle at 70% 30%,#ff6b35 0%,#cc3300 35%,#5a1a00 100%)}
+.station-banner.pa{background:radial-gradient(circle at 30% 30%,#7cb342 0%,#388e3c 35%,#1b5e20 100%)}
+.station-banner::before{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><circle cx='30' cy='30' r='1' fill='%23fff' opacity='.12'/></svg>");pointer-events:none}
+.station-banner-i{position:relative;z-index:1;display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
+.station-num{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--g2);font-weight:600;margin-bottom:14px}
+.station-banner h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:54px;line-height:1.05;margin-bottom:14px}
+.station-banner h2 em{font-style:italic;color:var(--g2);display:block;font-size:.5em;margin-top:8px;letter-spacing:1px}
+.station-banner p{color:rgba(255,255,255,.85);font-size:17px;line-height:1.5}
+.station-emoji{font-size:140px;text-align:center;filter:drop-shadow(0 8px 30px rgba(0,0,0,.5))}
+
+/* ===== BLOCKS ===== */
+.bg{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:18px}
+.bx{background:#fff;border:1px solid var(--ln);border-radius:14px;padding:22px 24px;box-shadow:var(--s1);transition:all .2s;position:relative}
+.bx.full{grid-column:span 2}
+.bx-h{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--ln)}
+.bx-n{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--b2));color:var(--g2);display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;font-weight:700;flex-shrink:0}
+.bx-n.wok{background:linear-gradient(135deg,var(--wok),var(--wok2));color:#fff}
+.bx-n.pa{background:linear-gradient(135deg,var(--pa),var(--pa2));color:#fff}
+.bx-h h4{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:20px;color:var(--b);flex:1}
+.bx-act{display:none;gap:6px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+body.editing .bx-act{display:flex}
+.ix{padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;background:var(--cr);color:var(--b);border:1px solid var(--ln);cursor:pointer}
+.ix:hover{background:var(--b);color:#fff}
+.ix.del{color:#c53030}
+.ix.del:hover{background:#c53030;color:#fff}
+
+.bx p.intro{color:var(--mu);font-size:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin-bottom:12px;line-height:1.55}
+.bx ul{list-style:none}
+.bx ul li{padding:9px 0;border-bottom:1px dashed var(--ln);display:flex;justify-content:space-between;gap:14px;align-items:flex-start;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13.5px;line-height:1.5}
+.bx ul li:last-child{border:none}
+.bx ul li .qty{flex-shrink:0;font-weight:700;color:var(--g);font-size:12px;letter-spacing:.5px;background:var(--cr);padding:3px 9px;border-radius:5px;min-width:64px;text-align:center}
+.bx ul li .lab{flex:1;color:var(--ink)}
+.bx ul li .delx{display:none;flex-shrink:0;color:#c53030;background:#fff;border:1px solid #feb2b2;border-radius:5px;width:22px;height:22px;font-size:14px;line-height:1;align-items:center;justify-content:center;cursor:pointer}
+body.editing .bx ul li .delx{display:flex}
+.bx ul li .delx:hover{background:#c53030;color:#fff}
+
+/* Procedure ordered list */
+.bx ol{list-style:none;counter-reset:st;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.bx ol li{counter-increment:st;padding:8px 0 8px 36px;position:relative;font-size:13.5px;line-height:1.55;color:var(--ink);display:flex;align-items:flex-start;gap:10px;border-bottom:1px dashed var(--ln)}
+.bx ol li:last-child{border:none}
+.bx ol li::before{content:counter(st);position:absolute;left:0;top:8px;width:26px;height:26px;border-radius:50%;background:var(--cr);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:1px solid var(--ln)}
+.bx ol li .st-txt{flex:1;padding-left:6px}
+.bx ol li .delx{flex-shrink:0;display:none;color:#c53030;background:#fff;border:1px solid #feb2b2;border-radius:5px;width:22px;height:22px;font-size:14px;align-items:center;justify-content:center;cursor:pointer;margin-top:4px}
+body.editing .bx ol li .delx{display:flex}
+
+.add-row{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--ln);text-align:center}
+body.editing .add-row{display:block}
+.add-row button{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--cr);border:1px dashed var(--g);color:var(--b);padding:7px 14px;border-radius:8px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.add-row button:hover{background:var(--g);color:var(--b)}
+
+/* Editable */
+body.editing .e-edit{background:#fff8e6;outline:1px dashed var(--g);border-radius:4px;padding:1px 5px;cursor:text;transition:all .15s}
+body.editing .e-edit:hover{background:#fff3d4}
+body.editing .e-edit:focus{outline:2px solid var(--g);background:#fff}
+
+/* ===== FREE NOTES ===== */
+.ns{background:linear-gradient(180deg,#fffbf2,#fff);border:1px solid var(--g);border-radius:14px;padding:22px 26px;margin-top:18px;margin-bottom:30px}
+.ns-h{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.ns-h .ic-n{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--g),var(--g2));color:var(--b);display:flex;align-items:center;justify-content:center;font-size:14px}
+.ns-h h5{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--b);font-weight:600}
+.nta{width:100%;min-height:80px;border:1px solid var(--ln);border-radius:10px;padding:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13.5px;line-height:1.5;resize:vertical;background:#fff;color:var(--ink);outline:none}
+.nta:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(201,166,91,.15)}
+
+/* ===== FOOTER ===== */
+.ft{background:linear-gradient(180deg,#061a30,#020e1c);color:rgba(255,255,255,.7);padding:50px 28px 28px;border-top:3px solid var(--g);margin-top:60px}
+.fti{max-width:1280px;margin:0 auto;text-align:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px}
+.fti b{color:#fff;font-family:'Cormorant Garamond',serif;font-size:22px;display:block;margin-bottom:10px;font-weight:600}
+.fti p{margin-bottom:10px;color:rgba(255,255,255,.6);font-size:13px;line-height:1.6}
+.fti .ftb{padding-top:22px;border-top:1px solid rgba(255,255,255,.08);margin-top:22px;font-size:11px;color:rgba(255,255,255,.4);letter-spacing:1px}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--b);color:#fff;padding:14px 24px;border-radius:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;font-weight:500;box-shadow:var(--s3);border:1px solid var(--g);z-index:1000;opacity:0;transition:all .35s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{border-color:#48bb78}
+.toast.err{border-color:#fc8181;background:#742a2a}
+
+/* RESPONSIVE */
+@media (max-width:980px){
+ .bg{grid-template-columns:1fr}
+ .bx.full{grid-column:auto}
+ .station-banner-i{grid-template-columns:1fr;gap:24px;text-align:center}
+ .station-emoji{font-size:90px}
+ .nav{display:none}
+ .cover-book{padding:40px 26px}
+ .cover h1{font-size:42px}
+ .cover-logos img.lo-om{width:70px;height:70px}
+ .cover-logos img.lo-api{height:60px}
+ .station-banner{padding:36px 28px}
+ .station-banner h2{font-size:38px}
+}
+@media (max-width:560px){
+ .tbi{padding:10px 14px}
+ .cover-corner{display:none}
+ .station{padding:36px 18px}
+ .etb{padding:10px 14px}
+}
+
+/* ===== PRINT ===== */
+@media print{
+ @page{margin:14mm 12mm}
+ .topbar,.etb,.toast,.cover-cta,.cta-go,.add-row,.bx-act,.delx,.ft{display:none!important}
+ body{background:#fff;font-size:13px}
+ .cover{min-height:auto;page-break-after:always;padding:30px 0;background:#fff}
+ .cover-book{box-shadow:none;background:#0a2540!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;color:#fff!important}
+ .station{padding:0;page-break-before:always}
+ .station:first-of-type{page-break-before:avoid}
+ .station-banner{-webkit-print-color-adjust:exact;print-color-adjust:exact;page-break-after:avoid;padding:24px 30px}
+ .station-banner h2{font-size:32px}
+ .bx{page-break-inside:avoid;box-shadow:none;border:1px solid #ccc;margin-bottom:10px;padding:14px 16px}
+ .bx-h h4{font-size:16px}
+ .ns{page-break-inside:avoid}
+}
+
+/* ====== SC V2 FUTURISTIC ENHANCEMENTS ====== */
+:root {
+  --neon: #00e5ff;
+  --gold-glow: rgba(201,166,91,.6);
+}
+
+/* Scroll progress */
+#sc-progress {
+  position:fixed;top:0;left:0;width:0%;height:3px;
+  background:linear-gradient(90deg,var(--g),var(--g2),var(--wok),var(--pa));
+  z-index:9999;box-shadow:0 0 12px var(--g);
+}
+
+/* Cursor glow */
+#sc-cursor {
+  position:fixed;width:320px;height:320px;
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+}
+
+/* Back to top */
+#sc-top {
+  position:fixed;bottom:32px;right:32px;
+  width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(135deg,var(--g),var(--g2));
+  color:var(--b);font-size:20px;line-height:46px;text-align:center;
+  box-shadow:0 0 20px var(--gold-glow);cursor:pointer;
+  opacity:0;transform:translateY(20px);
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  z-index:999;font-weight:700;border:none;
+}
+#sc-top.show{opacity:1;transform:translateY(0)}
+#sc-top:hover{transform:translateY(-4px) scale(1.08)}
+
+/* Loader */
+#sc-loader {
+  position:fixed;inset:0;z-index:10000;
+  background:linear-gradient(180deg,#0a1628 0%,#061018 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  transition:opacity .6s ease,visibility .6s ease;
+}
+#sc-loader.hidden{opacity:0;visibility:hidden}
+.sc-loader-ring {
+  width:56px;height:56px;border-radius:50%;
+  border:3px solid rgba(201,166,91,.2);border-top-color:var(--g);
+  animation:scSpin 1s linear infinite;
+}
+@keyframes scSpin{to{transform:rotate(360deg)}}
+.sc-loader-txt {
+  font-family:'Cormorant Garamond',serif;font-size:18px;
+  color:var(--g2);letter-spacing:5px;text-transform:uppercase;
+}
+
+/* Cover canvas */
+#sc-canvas {
+  position:absolute;inset:0;pointer-events:none;z-index:0;border-radius:6px 18px 18px 6px;
+}
+
+/* Cover book animated corners */
+.cover-corner {
+  animation:scCornerPulse 2.5s ease-in-out infinite;
+}
+.cover-corner.tl{animation-delay:0s}
+.cover-corner.tr{animation-delay:.6s}
+.cover-corner.bl{animation-delay:1.2s}
+.cover-corner.br{animation-delay:1.8s}
+@keyframes scCornerPulse {
+  0%,100%{opacity:.5}
+  50%{opacity:1;box-shadow:0 0 15px var(--g)}
+}
+
+/* Cover title shimmer */
+.cover h1 {
+  position:relative;
+}
+.cover h1 em {
+  background:linear-gradient(90deg,var(--g) 0%,var(--g2) 30%,#fff 50%,var(--g2) 70%,var(--g) 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:scShine 4s linear infinite;
+}
+@keyframes scShine{to{background-position:200% center}}
+
+/* Blur-in */
+.sc-blur-in {
+  opacity:0;filter:blur(10px);transform:translateY(24px);
+  transition:opacity .7s cubic-bezier(.4,0,.2,1),filter .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1);
+}
+.sc-blur-in.visible{opacity:1;filter:blur(0);transform:translateY(0)}
+
+/* Station banner depth */
+.station-banner {
+  transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s;
+}
+.station-banner:hover {
+  transform:translateY(-4px);
+  box-shadow:0 32px 80px rgba(0,0,0,.4),0 0 60px rgba(201,166,91,.1)!important;
+}
+
+/* Station wok glow */
+.station-banner.wok {
+  box-shadow:0 8px 30px rgba(204,51,0,.3), 0 0 60px rgba(255,107,53,.1);
+}
+.station-banner.pa {
+  box-shadow:0 8px 30px rgba(56,142,60,.3), 0 0 60px rgba(124,179,66,.1);
+}
+
+/* Block cards glow on hover */
+.bx {
+  transition:box-shadow .3s,transform .3s;
+}
+.bx:hover {
+  box-shadow:0 8px 30px rgba(10,37,64,.12),0 0 0 1px rgba(201,166,91,.3);
+  transform:translateY(-2px);
+}
+
+/* Grain overlay */
+body::before {
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9990;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='.03'/></svg>");
+  opacity:.4;
+}
+
+/* Topbar scrolled */
+.topbar.scrolled {
+  border-bottom-color:rgba(201,166,91,.25);
+  box-shadow:0 4px 30px rgba(10,37,64,.4),0 0 0 1px rgba(201,166,91,.1);
+}
+
+/* Station emoji bounce */
+.station-emoji {
+  font-size:80px;
+  animation:scEmojiBounce 3s ease-in-out infinite;
+  display:block;text-align:center;user-select:none;
+}
+@keyframes scEmojiBounce {
+  0%,100%{transform:translateY(0) rotate(-4deg) scale(1)}
+  50%{transform:translateY(-14px) rotate(4deg) scale(1.05)}
+}
+
+/* Cover book glow line (spine) */
+.cover-book::before {
+  animation:scSpineAnim 3s ease-in-out infinite;
+}
+@keyframes scSpineAnim {
+  0%,100%{opacity:.3}
+  50%{opacity:.8;box-shadow:0 0 12px var(--g)}
+}
+
+/* Ticker */
+#sc-ticker {
+  background:rgba(10,37,64,.96);
+  border-top:1px solid rgba(201,166,91,.15);
+  border-bottom:1px solid rgba(201,166,91,.15);
+  overflow:hidden;height:36px;
+}
+.sc-ticker-inner {
+  display:flex;gap:0;white-space:nowrap;
+  animation:scTick 35s linear infinite;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:10.5px;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.55);height:36px;align-items:center;
+}
+.sc-ticker-inner span{padding:0 36px}
+.sc-ticker-inner b{color:var(--g2)}
+@keyframes scTick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Wok/pa neon accent items */
+.bx-n.wok { box-shadow:0 0 12px rgba(255,107,53,.4); }
+.bx-n.pa  { box-shadow:0 0 12px rgba(124,179,66,.4); }
+
+/* Free notes glow */
+.nta:focus {
+  outline:none;
+  box-shadow:0 0 0 2px rgba(201,166,91,.4),0 4px 16px rgba(201,166,91,.1);
+  border-color:var(--g)!important;
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/ScrollTrigger.min.js"></script>
+</head>
+<body>
+<!-- SC V2 Loader -->
+<div id="sc-loader">
+  <div class="sc-loader-ring"></div>
+  <div class="sc-loader-txt">Show-Cooking</div>
+</div>
+
+<!-- SC V2 Scroll progress -->
+<div id="sc-progress"></div>
+
+<!-- SC V2 Cursor -->
+<div id="sc-cursor"></div>
+
+<!-- SC V2 Back to top -->
+<button id="sc-top" title="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- SC V2 Ticker -->
+<div id="sc-ticker">
+  <div class="sc-ticker-inner">
+    <span>OM × API Restauration</span><b>•</b>
+    <span>Station Wok — Asian Show-Cooking</span><b>•</b>
+    <span>Station Pâtes — Italian Show-Cooking</span><b>•</b>
+    <span>Saison 2025-2026</span><b>•</b>
+    <span>12 kW · 5 Tables · Matériel OM + Hôtel</span><b>•</b>
+    <span>Olympique de Marseille</span><b>•</b>
+    <span>OM × API Restauration</span><b>•</b>
+    <span>Station Wok — Asian Show-Cooking</span><b>•</b>
+    <span>Station Pâtes — Italian Show-Cooking</span><b>•</b>
+    <span>Saison 2025-2026</span><b>•</b>
+    <span>12 kW · 5 Tables · Matériel OM + Hôtel</span><b>•</b>
+    <span>Olympique de Marseille</span><b>•</b>
+  </div>
+</div>
+
+
+<!-- ====== TOPBAR ====== -->
+<header class="topbar">
+ <div class="tbi">
+  <div class="brand">
+   <b data-k="brand_main">Show-Cooking</b>
+   <span data-k="brand_sub">Wok &amp; Pâtes - 2025-2026</span>
+  </div>
+  <nav class="nav">
+   <a href="#cover" class="on" data-k="nav_cover">Couverture</a>
+   <a href="#wok" data-k="nav_wok">Station Wok</a>
+   <a href="#pa" data-k="nav_pa">Station Pâtes</a>
+   <a href="#courses" data-k="nav_courses">Liste de courses</a>
+  </nav>
+  <div class="lp">
+   <button class="on" data-lang="fr">FR</button>
+   <button data-lang="en">EN</button>
+   <button data-lang="es">ES</button>
+   <button data-lang="it">IT</button>
+  </div>
+  <a class="btn-home" href="OM_Portail.html" data-k="btn_home">← Portail</a>
+ </div>
+</header>
+
+<!-- ====== EDIT TOOLBAR ====== -->
+<div class="etb">
+ <div class="etb-lbl"><span data-k="etb_lbl">Mode</span> <b id="modeLbl" data-k="etb_read">Lecture</b> <span class="eb-status" id="status"></span></div>
+ <button class="eb" onclick="toggleEdit()" id="editBtn"><span data-k="btn_edit">Modifier</span></button>
+ <button class="eb dark" onclick="saveData()"><span data-k="btn_save">Enregistrer</span></button>
+ <button class="eb" onclick="exportJSON()"><span data-k="btn_exp">Exporter</span></button>
+ <label class="eb" style="cursor:pointer"><span data-k="btn_imp">Importer</span><input type="file" accept=".json" onchange="importJSON(event)" style="display:none"></label>
+ <button class="eb danger" onclick="resetData()"><span data-k="btn_rst">Réinitialiser</span></button>
+ <button class="eb gold" onclick="window.print()"><span data-k="btn_print">Imprimer</span></button>
+</div>
+
+<!-- ====== COVER ====== -->
+<section class="cover" id="cover">
+ <div class="cover-book">
+<canvas id="sc-canvas"></canvas>
+  <div class="cover-corner tl"></div>
+  <div class="cover-corner tr"></div>
+  <div class="cover-corner bl"></div>
+  <div class="cover-corner br"></div>
+  <div class="cover-content">
+   <div class="cover-edition" data-k="cover_ed">Édition Saison 2025-2026</div>
+   <div class="cover-logos">
+    <img class="lo-om" src="data:image/jpeg;base64,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" alt="Olympique de Marseille">
+    <div class="lo-x">×</div>
+    <img class="lo-api" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwMDAgQDAwMEBAQFBgoGBgUFBgwICQcKDgwPDg4MDQ0PERYTDxAVEQ0NExoTFRcYGRkZDxIbHRsYHRYYGRj/2wBDAQQEBAYFBgsGBgsYEA0QGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABxAKADASIAAhEBAxEB/8QAHAABAQADAQEBAQAAAAAAAAAAAAECBgcIBQQD/8QAPBAAAQMDAgQEBAEICwAAAAAAAQACAwQFEQYhEjFBUQcTYXEigZGhFBUWFycyQrGyRVJic3SDkpOzwdL/xAAaAQEAAwEBAQAAAAAAAAAAAAAAAwQFAgEG/8QALBEAAgIBAwMDAgYDAAAAAAAAAAECAxEEEiEFE1EUMUFhcSIjMoGRwaGx0f/aAAwDAQACEQMRAD8A99EHupuPVN1fcIBnfdN1emynsgL7psmVMboBt0QZ9lRsrugJg5ThV5dVA4HqEBcBTZVEAym6JugJhVTHqqgCIiAKZCuEQGOSOiZBUyO6bIC4RM7JkZQDkmTyV6qZ35IDJYv4vLdwY4sbZ5ZWXuiA0Sp0rrS7kvuGsPwYO4hoYiGt9M5BK+XP4e6vox51q1pUyyDfhme9mfu5dPRUZdOqly8585f/AEsx1VkeFjH2RyP88NeaPqGxaotprqXOPPaBy9Ht2+RGV0LT+qrLqWk8621Qc8ftwv8AhkZ7j/vkvrywxTwuhnjZJG8cLmPGQR2IXPL74Xx/jfyrpOrdbKxp4hGHEMz/AGSN2/wUXb1Gm5g98fD9/wBn8ne+q7iS2vyvb+DoyLldN4gak0zK2h1lZpXgfC2pjABdjr/Vd8iFttv8QtI3GNrmXiCBx/cqT5ZH12+imq19NnGcPw+GRz01kecZXlGzr8d1uDLVZKu5Ssc9lPE6UtHM4GcKx3W2TM44rhSvb3bK0j+K/NXXrT8dLJHcLpQNie0te2WZuCDzGCVYnZHa8SRFGLzyjQ9JeKNbe9WxWqvt8McdSS2J0JOWEAnBzzG3PZdQXKIrt4Y6Uur7haI311Yc8AhzII88+Eu2H3K3DSd9vd/kqquvtJoKLDfwweDxP55Jzz6dFn6DUNflWz3Sz8c4X1Za1NS/XCOF9TZ0RFqlIx59QmBnZNj2TBHqgGd06oMFNwUAVzunXknqgG6qZRAF+aW42+GQRzV1PG8/uvkAP0XKteaxu1Xqk6Ys8z6WNsjYZJIzh8jzgYz0AzjZY6o8MKK0aPnutLX1MtVTs8yXzcFrx1xgZH1Ky7OoSbn2IblH3ecfwXIaVJR7ksZ9jr7XNe0OY4OaeRBVXEfCjUddBqdliknc+jqGuLI3HPlvAzkds4Ofkty8S49TQWN9zs93NNSU7Mzwxjhed/2g7n1G2y7p6grNO71F8e6OZ6VwtVbfubhUy2uomFuq30sskgOKeUtcXAc/hPNald9CeH81QfxLIKCZ3SKo8v6NJx9lyDSkd3uWtaaK21xhrpuMCpkPEWgtPEd+uMrcNSeEtdSWqa50V1fcJ2AySxysIc/qSDk5PoVR9Y9VW5qhSS8lr06pmouzGT736HNMzASU9zr+A8iHscPrwr9NN4O6UheHTSV9R3D5QAf9LQfuuaaH1jXaavkET53vtsrw2aBxyG5OOIdiPuus+IMeo22B1zsV2NLDTROfPE0AOeO4d0wM7LzTPSW1StjVzH3QtV8JqDnw/k+nbtN6SsE0cNJQ0UM7zhhlIdI4+hcSfotgXnPRdVU1ninaJ6uolnldOcvkeXE/C7qV6MV/pupjqINwjtSeCrq6XVJKUssIim/ZaJVJt03QYymAmMoBgJyTHZEBd1N05ck3QGSJhDyQGlaoveidNXX8fX0NPPdjh7WxRB0uehJ5D3K1a+6n1hqnSNdUUVjjoLKYXGSad2XvaOfDy+wPuud6nfVu1tdHXAOM/wCKfxg9uLYe2MLqt+11pqv8OZbbbJnSVNRTeTHSRxnijOMYO2AAvmPWd92xlLZFZ4XDf3Nj0/bUGlub+fBofhoP1mW73f8AyOXY/ELbwxvP+HP8QuI6IudHZ9dUFfXyeVTscQ9+M8OWkZPzK69qy8UF88ILzXW2V0sHlOYHlpbkhwBxnouul2R9HZDPPPH7Hmsi+/CWOOP9nK/DE/rOt3+Z/wAbl6KIBGDyXmbQ92pLLruguFc8sp2Oc17gM8PE0tz7ZK71eNYWK1WKS4m4002G5iZFIHGQ9AAFN0W6ENPLc8Yf9Ij6hXKVqwvg843VjYdSXCCMYbHVSsaB2DyAvQ9/Dx4S1wkzxi2niz34FxrRWl63VesRVzROFEybz6mU8ic8XCO5J+y7Prmso6PQF0jqKiKJ0lM9kbXOALiRgADqoOmVuNN1z4T9v8kmsmnZCC90cP0Cc+Jtn/vz/KV6UXmXRNRBSeIdqqamVkUTJ/ikecAZBG5+a9LxSxTwtlhkZIx3JzDkH5qx0BrtSX1/pEXU1+NP6GaIi3jNMeHsUwVMHuqc9QgKMJspgJy2QDZXI6KZVygCqmQqgNY1BoLTmpKwVldTPZU4w6aB3A53v3X9rDorTunCX2+hBmcMGaU8b8dsnl8lsKKD01W/ubVu8knent27uDTJvC7SM9zNY6jlaC7iMLZSI/p29Mr++uaWmovCW7UtJAyGGOm4WRxjAaMhbYtC8TtRUlHpqqsBhqJKush+DgZlrRxcyfkVX1NVNFM5RSWUyWqdltkU3nDOT6CtdFeNd0lvuEPnU8rZA5mSOTCRuPVddg8J9IQ1YmNPUygHPlvmPCffGD91yPRlf+QNZ0d0q6WodDGXB4YwkgFpGfuvRVtuFPdbVDcKXj8mYcTeNpaeeORWX0ami2txnFOSfz44LuvsshJOLaRnR0VJb6RlLRU8dPCzZscbQ0BfMvelLFqKoinu9CKh8TS1h43NwCcnkQvtIvoJVwlHZJZXgy1OSe5Pk1L9GmjB/Q7f91//AKWxW220VotkVvt8Ihp4shjAScZOevuv1oua6K63mEUvsj2Vk5cSeQmVMhMhSnBN0yme4wqgHPqnJTrsrt1QEz7pz5q5GOanNAXZMqcJQndAX3VWJyqAeqAuVMdwqiAmB2CqmArlAFM77BCRnGVM4OAEBd0U+I+iYHUoC7Z6JkeimG5TboEAQg9NinCehT4h6oBnfB5pjsnNXHZATBzvuhKuCmMICYOOauNkOeimCeaADmruSmAAmUAx3VREBOaYCvspg90Ax6KbBXHcqYHb6oBnJ2Cb9AFfmmem6AmHdSmD3TJ6BN+yAyHJERAT94oOSIgKOSHkiIAiIgIeSDmiICoiIAiIgCxRF4CDks0RegIiID//2Q==" alt="API Restauration">
+   </div>
+   <h1 data-k="cover_h">Show-Cooking<em data-k="cover_he">Wok & Pâtes</em></h1>
+   <div class="cover-div"></div>
+   <div class="cover-sub" data-k="cover_sub">Stations live cooking en déplacement</div>
+   <div class="cover-club" data-k="cover_club">Olympique de Marseille</div>
+   <div class="cover-yr" data-k="cover_yr">Saison 2025 - 2026</div>
+   <div class="cover-cta">
+    <button class="cta-go" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})"><span data-k="cover_cta1">Découvrir</span> →</button>
+    <button class="cta-go alt" onclick="window.print()" data-k="cover_cta2">Imprimer le livre</button>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ====== INTRO ====== -->
+<section class="st-hero" id="intro">
+ <div class="st-hero-h">
+  <span class="tag" data-k="intro_tag">Présentation</span>
+  <h2 data-k="intro_h">Deux stations, un dispositif unifié</h2>
+  <p data-k="intro_p">Stations cuisinées en direct devant les joueurs lors des déplacements. Implantation 5 tables, puissance 12 kW, matériel mixte OM + Hôtel. Ce book détaille le matériel, les recettes, les sauces et la liste de courses.</p>
+ </div>
+</section>
+
+<!-- ====== STATION WOK ====== -->
+<section class="station" id="wok">
+ <div class="station-banner wok">
+  <div class="station-banner-i">
+   <div>
+    <div class="station-num s">Station 01</div>
+    <h2 data-k="wok_h">Station Wok<em data-k="wok_he">Asian show-cooking</em></h2>
+    <p data-k="wok_p">Riz jasmin, noodles, légumes sautés, protéines au choix (poulet, crevettes, saumon) et 5 sauces signature. Préparation minute devant le joueur.</p>
+   </div>
+   <div class="station-emoji">🥢</div>
+  </div>
+ </div>
+ <div id="panel-wok"></div>
+ <div class="ns">
+  <div class="ns-h"><div class="ic-n">✎</div><h5 data-k="lbl_free">Notes libres / annotations</h5></div>
+  <textarea class="nta" id="freeNotes-wok" placeholder="Annotations libres pour la station Wok : remarques opérationnelles, ajustements, demandes spécifiques..."></textarea>
+ </div>
+</section>
+
+<!-- ====== STATION PATES ====== -->
+<section class="station" id="pa">
+ <div class="station-banner pa">
+  <div class="station-banner-i">
+   <div>
+    <div class="station-num s">Station 02</div>
+    <h2 data-k="pa_h">Station Pâtes<em data-k="pa_he">Italian show-cooking</em></h2>
+    <p data-k="pa_p">5 kg de pâtes De Cecco/Rummo, sans gluten à la demande, 3 sauces maison (Pesto, Pesto Rosso, Tomate), condiments et toppings au choix. Portionnage 300 g cuit.</p>
+   </div>
+   <div class="station-emoji">🍝</div>
+  </div>
+ </div>
+ <div id="panel-pa"></div>
+ <div class="ns">
+  <div class="ns-h"><div class="ic-n">✎</div><h5 data-k="lbl_free2">Notes libres / annotations</h5></div>
+  <textarea class="nta" id="freeNotes-pa" placeholder="Annotations libres pour la station Pâtes : remarques opérationnelles, ajustements, demandes spécifiques..."></textarea>
+ </div>
+</section>
+
+<!-- ====== LISTE DE COURSES ====== -->
+<section class="station" id="courses">
+ <div class="st-hero-h">
+  <span class="tag" data-k="courses_tag">Liste de courses</span>
+  <h2 data-k="courses_h">Approvisionnement complet</h2>
+  <p data-k="courses_p">Liste consolidée pour les deux stations : féculents, protéines, légumes, fromages, épicerie, sauces.</p>
+ </div>
+ <div id="panel-courses"></div>
+ <div class="ns">
+  <div class="ns-h"><div class="ic-n">✎</div><h5 data-k="lbl_free3">Notes libres / annotations</h5></div>
+  <textarea class="nta" id="freeNotes-courses" placeholder="Annotations libres pour la liste de courses..."></textarea>
+ </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="ft">
+ <div class="fti">
+  <b>Olympique de Marseille × API Restauration</b>
+  <p data-k="ft_p">Book Show-Cooking - Stations Wok &amp; Pâtes - Saison 2025-2026</p>
+  <p data-k="ft_p2">Achraf TAMANI - Nutritionniste du sport OM - achraf.tamani@om.fr</p>
+  <div class="ftb" data-k="ft_copy">© 2025-2026 - Olympique de Marseille × API Restauration - V1 du 02/05/2026</div>
+ </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- ===== DATA & SCRIPTS ===== -->
+<script type="application/json" id="rd">
+{
+ "wok": {
+  "title":"Station Wok",
+  "blocks":[
+   {
+    "id":"matos",
+    "title":"Materiel et energie",
+    "intro":"Puissance totale estimee : 12 kW. Materiel mixte OM (cuisson) et Hotel (mobilier).",
+    "type":"items",
+    "items":[
+     {"q":"2 + 1","l":"Sauteuses + 1 wok a induction (OM)"},
+     {"q":"1","l":"Plaque induction complementaire (OM)"},
+     {"q":"1","l":"Cuiseur a pates professionnel (OM)"},
+     {"q":"6","l":"Tables traiteur nappees (Hotel)"},
+     {"q":"GN","l":"Bacs gastronormes 1/6 - 1/9 (Hotel)"},
+     {"q":"30","l":"Bols service (Hotel)"},
+     {"q":"1","l":"Balance electronique (Hotel)"}
+    ]
+   },
+   {
+    "id":"impl",
+    "title":"Implantation - 5 tables",
+    "intro":"Disposition optimale pour le service en flux continu.",
+    "type":"items",
+    "items":[
+     {"q":"T1","l":"Legumes wok (station 1)"},
+     {"q":"T2","l":"Wok induction"},
+     {"q":"T3","l":"Proteines + sauces + cuiseur pates"},
+     {"q":"T4","l":"Induction pates + assiettes"},
+     {"q":"T5","l":"Bols + pates froides + riz froid + balance"},
+     {"q":"+","l":"Reapprovisionnement legumes en arriere"}
+    ]
+   },
+   {
+    "id":"riz",
+    "title":"Riz Jasmin / Thai",
+    "intro":"Quantite brute : 3 kg. Marques conseillees : Royal Umbrella, Golden Phoenix, Tilda.",
+    "type":"steps",
+    "items":[
+     {"l":"Rincage 3 fois a l'eau froide jusqu'a eau claire"},
+     {"l":"Cuisson a l'anglaise (grand volume d'eau salee)"},
+     {"l":"Essorage complet sur passoire"},
+     {"l":"Maintien au froid en GN +3 C"}
+    ]
+   },
+   {
+    "id":"noo",
+    "title":"Noodles - methode sans cuisson",
+    "intro":"Quantite brute : 1 kg. Objectif : texture souple, non collante, remise au wok minute.",
+    "type":"steps",
+    "items":[
+     {"l":"Trempage 6 a 8 minutes en eau froide"},
+     {"l":"Egouttage immediat"},
+     {"l":"Essorage complet"},
+     {"l":"Huilage leger pour eviter le collage"},
+     {"l":"Stockage GN a +3 C"}
+    ]
+   },
+   {
+    "id":"leg",
+    "title":"Base legumes - quantites totales",
+    "intro":"Preparation en julienne / emince regulier / legerement poelees.",
+    "type":"items",
+    "items":[
+     {"q":"1 kg","l":"Carottes"},
+     {"q":"1 kg","l":"Courgettes"},
+     {"q":"500 g","l":"Chou blanc"},
+     {"q":"300 g","l":"Oignons rouges emincees"},
+     {"q":"1 kg","l":"Poivrons emincees"},
+     {"q":"1 kg","l":"Champignons Paris ou noirs rehydrates"}
+    ]
+   },
+   {
+    "id":"prot",
+    "title":"Proteines (chaud)",
+    "intro":"A cuire minute au wok devant le joueur.",
+    "type":"items",
+    "items":[
+     {"q":"4 kg","l":"Crevettes decortiquees deveinees, gros calibre"},
+     {"q":"3 kg","l":"Poulet emince Halal"},
+     {"q":"2 kg","l":"Saumon coupe en cubes"}
+    ]
+   },
+   {
+    "id":"sce",
+    "title":"Sauces signature",
+    "intro":"5 sauces presentees en flacons a la station 3.",
+    "type":"items",
+    "items":[
+     {"q":"Heinz","l":"Sauce BBQ coreenne"},
+     {"q":"Lee Kum Kee","l":"Sauce soja sucree"},
+     {"q":"Kikkoman","l":"Sauce soja salee"},
+     {"q":"Bio","l":"Sriracha"},
+     {"q":"Bio Planete","l":"Huile de sesame grillee"}
+    ]
+   }
+  ]
+ },
+ "pa": {
+  "title":"Station Pates",
+  "blocks":[
+   {
+    "id":"pates",
+    "title":"Pates - cuisson et stockage",
+    "intro":"Marque De Cecco ou Rummo. 5 kg brut. Sans gluten 250 g cuisson a la demande.",
+    "type":"steps",
+    "items":[
+     {"l":"Cuisson 1h avant le service a 50% du temps indique al dente"},
+     {"l":"Egouttage et huilage leger pour eviter le collage"},
+     {"l":"Refroidissement rapide (cellule ou eau glacee)"},
+     {"l":"Stockage froid en GN +3 C"},
+     {"l":"Remise minute en eau bouillante au moment du service"}
+    ]
+   },
+   {
+    "id":"port",
+    "title":"Portionnage",
+    "intro":"30 bols capacite 300 g cuit + balance electronique.",
+    "type":"items",
+    "items":[
+     {"q":"30","l":"Bols 300 g cuit"},
+     {"q":"1","l":"Balance electronique pour pesee precise"},
+     {"q":"+","l":"Etiquettes allergenes (gluten / sans gluten)"}
+    ]
+   },
+   {
+    "id":"pesto",
+    "title":"Sauce Pesto Verde",
+    "intro":"Recette pour grand volume - service 30 a 40 portions.",
+    "type":"items",
+    "items":[
+     {"q":"2100 g","l":"Basilic frais"},
+     {"q":"1000 g","l":"Pignons de pin"},
+     {"q":"16","l":"Gousses d'ail"},
+     {"q":"300 g","l":"Parmesan rape"},
+     {"q":"8000 ml","l":"Huile d'olive extra vierge"},
+     {"q":"1650 ml","l":"Eau glacee"}
+    ]
+   },
+   {
+    "id":"pesto_proc",
+    "title":"Pesto Verde - procede",
+    "intro":"Suivre l'ordre des etapes pour garder la couleur et la texture.",
+    "type":"steps",
+    "items":[
+     {"l":"Mixer le basilic avec l'eau glacee pour fixer la chlorophylle"},
+     {"l":"Ajouter les pignons et l'ail epluche"},
+     {"l":"Incorporer le parmesan"},
+     {"l":"Monter a l'huile d'olive en filet pour emulsionner"},
+     {"l":"Rectifier l'assaisonnement (sel)"}
+    ]
+   },
+   {
+    "id":"rosso",
+    "title":"Sauce Pesto Rosso a la ricotta",
+    "intro":"Pesto rouge avec tomates sechees et ricotta - douceur et onctuosite.",
+    "type":"items",
+    "items":[
+     {"q":"100 g","l":"Basilic frais"},
+     {"q":"300 g","l":"Pignons de pin"},
+     {"q":"6","l":"Gousses d'ail"},
+     {"q":"200 ml","l":"Huile d'olive extra vierge"},
+     {"q":"200 g","l":"Ricotta"},
+     {"q":"800 g","l":"Tomates sechees"}
+    ]
+   },
+   {
+    "id":"rosso_proc",
+    "title":"Pesto Rosso - procede",
+    "type":"steps",
+    "items":[
+     {"l":"Mixer basilic et pignons"},
+     {"l":"Ajouter ail et tomates sechees"},
+     {"l":"Monter a l'huile d'olive"},
+     {"l":"Incorporer la ricotta en finition"}
+    ]
+   },
+   {
+    "id":"tom",
+    "title":"Sauce Tomate maison",
+    "intro":"Pulpe Mutti, sans herbes, sans epices. Maintien chaud 63 C.",
+    "type":"items",
+    "items":[
+     {"q":"3,5 kg","l":"Pulpe de tomate Mutti"},
+     {"q":"170 g","l":"Concentre de tomate"},
+     {"q":"30 ml","l":"Huile d'olive"},
+     {"q":"1 piece","l":"Oignon emince"},
+     {"q":"3","l":"Gousses d'ail"},
+     {"q":"20 g","l":"Sel"},
+     {"q":"5 g","l":"Poivre noir"},
+     {"q":"10 g","l":"Sucre"}
+    ]
+   },
+   {
+    "id":"tom_proc",
+    "title":"Tomate - procede",
+    "type":"steps",
+    "items":[
+     {"l":"Suer oignon et ail dans huile d'olive"},
+     {"l":"Ajouter pulpe et concentre"},
+     {"l":"Cuisson 45 minutes a feu doux"},
+     {"l":"Mixer pour texture lisse"},
+     {"l":"Maintien a 63 C en chafing"}
+    ]
+   },
+   {
+    "id":"frm",
+    "title":"Fromages - presentes en deux contenants",
+    "type":"items",
+    "items":[
+     {"q":"700 g","l":"Parmesan rape"},
+     {"q":"700 g","l":"Parmesan en copeaux"},
+     {"q":"600 g","l":"Emmental rape"},
+     {"q":"100 g","l":"Pecorino en poudre"}
+    ]
+   },
+   {
+    "id":"gar",
+    "title":"Garnitures et toppings pates",
+    "intro":"Pour personnaliser les bols a la station 5.",
+    "type":"items",
+    "items":[
+     {"q":"300 g","l":"Olives denoyautees taggiasche"},
+     {"q":"200 g","l":"Pousses d'epinard"},
+     {"q":"300 g","l":"Champignons de Paris emincees"},
+     {"q":"400 g","l":"Tomates cerises rotis sans grappes"},
+     {"q":"200 g","l":"Pignons torrefies"},
+     {"q":"200 g","l":"St Moret light ou Philadelphia light"}
+    ]
+   }
+  ]
+ },
+ "courses": {
+  "title":"Liste de courses",
+  "blocks":[
+   {
+    "id":"fec",
+    "title":"Feculents",
+    "type":"items",
+    "items":[
+     {"q":"4 kg","l":"Riz Jasmin / Thai - Royal Umbrella, Golden Phoenix ou Tilda"},
+     {"q":"2 kg","l":"Noodles asiatiques - Cock Brand, Blue Dragon ou Thai Dancer"},
+     {"q":"6 kg","l":"Pates - De Cecco ou Rummo"},
+     {"q":"250 g","l":"Pates sans gluten - Rummo ou Barilla"}
+    ]
+   },
+   {
+    "id":"prt",
+    "title":"Proteines",
+    "type":"items",
+    "items":[
+     {"q":"3 kg","l":"Filet de poulet Halal"},
+     {"q":"6 kg","l":"Crevettes gros calibre, crues, decortiquees, deveinees"},
+     {"q":"3 kg","l":"Filet de saumon frais"}
+    ]
+   },
+   {
+    "id":"lhe",
+    "title":"Legumes / herbes",
+    "type":"items",
+    "items":[
+     {"q":"3 kg","l":"Basilic frais"},
+     {"q":"15 g + 80 g","l":"Ail (gousses + pelees)"},
+     {"q":"120 g","l":"Gingembre frais"},
+     {"q":"1","l":"Oignon jaune"},
+     {"q":"100 g","l":"Oignon rouge"},
+     {"q":"500 g","l":"Champignons de Paris"},
+     {"q":"100 g","l":"Poivrons rouges"},
+     {"q":"500 g","l":"Pousses d'epinard"},
+     {"q":"1,1 kg","l":"Tomates cerises"},
+     {"q":"200 g","l":"Tomates sechees"}
+    ]
+   },
+   {
+    "id":"sec",
+    "title":"Fruits secs et graines",
+    "type":"items",
+    "items":[
+     {"q":"900 g","l":"Pignons de pin"}
+    ]
+   },
+   {
+    "id":"frmc",
+    "title":"Fromages / cremerie",
+    "type":"items",
+    "items":[
+     {"q":"700 g","l":"Parmesan rape"},
+     {"q":"700 g","l":"Parmesan copeaux"},
+     {"q":"300 g","l":"Parmesan pour pesto"},
+     {"q":"700 g","l":"Emmental rape"},
+     {"q":"300 g","l":"Pecorino poudre"},
+     {"q":"200 g","l":"Ricotta"},
+     {"q":"300 g","l":"Fromage frais light - Philadelphia ou St Moret"}
+    ]
+   },
+   {
+    "id":"epi",
+    "title":"Epicerie",
+    "type":"items",
+    "items":[
+     {"q":"4,5 kg","l":"Pulpe de tomate Mutti"},
+     {"q":"200 g","l":"Concentre de tomate"},
+     {"q":"500 g","l":"Olives denoyautees Kalamata"},
+     {"q":"10 g","l":"Sucre"},
+     {"q":"940 ml","l":"Huile d'olive - Puget ou Carapelli"},
+     {"q":"1 btl","l":"Huile de sesame grillee"}
+    ]
+   },
+   {
+    "id":"sw",
+    "title":"Sauces Wok",
+    "type":"items",
+    "items":[
+     {"q":"Kikkoman","l":"Sauce soja salee"},
+     {"q":"Lee Kum Kee","l":"Sauce soja sucree"},
+     {"q":"Heinz","l":"Sauce BBQ coreenne"}
+    ]
+   },
+   {
+    "id":"ass",
+    "title":"Assaisonnement",
+    "type":"items",
+    "items":[
+     {"q":"-","l":"Sel fin"},
+     {"q":"-","l":"Sel en grains"},
+     {"q":"-","l":"Poivre noir moulu"},
+     {"q":"-","l":"Poivre en grains"}
+    ]
+   }
+  ]
+ }
+}
+</script>
+<script type="application/json" id="i18n">
+{
+ "fr":{
+  "brand_main":"Show-Cooking","brand_sub":"Wok & Pâtes - 2025-2026",
+  "nav_cover":"Couverture","nav_wok":"Station Wok","nav_pa":"Station Pâtes","nav_courses":"Liste de courses",
+  "btn_home":"← Portail",
+  "etb_lbl":"Mode","etb_read":"Lecture","etb_edit":"Édition",
+  "btn_edit":"Modifier","btn_save":"Enregistrer","btn_exp":"Exporter JSON","btn_imp":"Importer JSON","btn_rst":"Réinitialiser","btn_print":"Imprimer",
+  "cover_ed":"Édition Saison 2025-2026","cover_h":"Show-Cooking","cover_he":"Wok & Pâtes",
+  "cover_sub":"Stations live cooking en déplacement","cover_club":"Olympique de Marseille","cover_yr":"Saison 2025 - 2026",
+  "cover_cta1":"Découvrir","cover_cta2":"Imprimer le livre",
+  "intro_tag":"Présentation","intro_h":"Deux stations, un dispositif unifié",
+  "intro_p":"Stations cuisinées en direct devant les joueurs lors des déplacements. Implantation 5 tables, puissance 12 kW, matériel mixte OM + Hôtel. Ce book détaille le matériel, les recettes, les sauces et la liste de courses.",
+  "wok_h":"Station Wok","wok_he":"Asian show-cooking",
+  "wok_p":"Riz jasmin, noodles, légumes sautés, protéines au choix (poulet, crevettes, saumon) et 5 sauces signature. Préparation minute devant le joueur.",
+  "pa_h":"Station Pâtes","pa_he":"Italian show-cooking",
+  "pa_p":"5 kg de pâtes De Cecco/Rummo, sans gluten à la demande, 3 sauces maison (Pesto, Pesto Rosso, Tomate), condiments et toppings au choix. Portionnage 300 g cuit.",
+  "courses_tag":"Liste de courses","courses_h":"Approvisionnement complet",
+  "courses_p":"Liste consolidée pour les deux stations : féculents, protéines, légumes, fromages, épicerie, sauces.",
+  "lbl_free":"Notes libres / annotations","lbl_free2":"Notes libres / annotations","lbl_free3":"Notes libres / annotations",
+  "btn_addrow":"+ Ajouter une ligne","btn_addblock":"+ Ajouter un bloc",
+  "ft_p":"Book Show-Cooking - Stations Wok & Pâtes - Saison 2025-2026",
+  "ft_p2":"Achraf TAMANI - Nutritionniste du sport OM - achraf.tamani@om.fr",
+  "ft_copy":"© 2025-2026 - Olympique de Marseille × API Restauration - V1 du 02/05/2026",
+  "toast_save":"Modifications enregistrées","toast_reset":"Données réinitialisées","toast_export":"Fichier JSON exporté","toast_import":"Données importées","toast_error":"Erreur fichier JSON","toast_addrow":"Ligne ajoutée","toast_delrow":"Ligne supprimée"
+ },
+ "en":{
+  "brand_main":"Show-Cooking","brand_sub":"Wok & Pasta - 2025-2026",
+  "nav_cover":"Cover","nav_wok":"Wok Station","nav_pa":"Pasta Station","nav_courses":"Shopping list",
+  "btn_home":"← Portal",
+  "etb_lbl":"Mode","etb_read":"Read","etb_edit":"Edit",
+  "btn_edit":"Edit","btn_save":"Save","btn_exp":"Export JSON","btn_imp":"Import JSON","btn_rst":"Reset","btn_print":"Print",
+  "cover_ed":"Season 2025-2026 Edition","cover_h":"Show-Cooking","cover_he":"Wok & Pasta",
+  "cover_sub":"Live cooking stations on away trips","cover_club":"Olympique de Marseille","cover_yr":"Season 2025 - 2026",
+  "cover_cta1":"Discover","cover_cta2":"Print the book",
+  "intro_tag":"Overview","intro_h":"Two stations, one unified setup",
+  "intro_p":"Stations cooked live in front of players during away trips. 5-table layout, 12 kW power, mixed OM + Hotel equipment. This book details equipment, recipes, sauces and shopping list.",
+  "wok_h":"Wok Station","wok_he":"Asian show-cooking",
+  "wok_p":"Jasmine rice, noodles, sauteed vegetables, choice of proteins (chicken, shrimp, salmon) and 5 signature sauces. Cooked to order in front of the player.",
+  "pa_h":"Pasta Station","pa_he":"Italian show-cooking",
+  "pa_p":"5 kg of De Cecco/Rummo pasta, gluten-free on request, 3 house sauces (Pesto, Pesto Rosso, Tomato), choice of condiments and toppings. 300 g cooked portions.",
+  "courses_tag":"Shopping list","courses_h":"Full supply list",
+  "courses_p":"Consolidated list for both stations: grains, proteins, vegetables, cheeses, pantry, sauces.",
+  "lbl_free":"Free notes / annotations","lbl_free2":"Free notes / annotations","lbl_free3":"Free notes / annotations",
+  "btn_addrow":"+ Add row","btn_addblock":"+ Add block",
+  "ft_p":"Show-Cooking Book - Wok & Pasta Stations - Season 2025-2026",
+  "ft_p2":"Achraf TAMANI - OM Sports Nutritionist - achraf.tamani@om.fr",
+  "ft_copy":"© 2025-2026 - Olympique de Marseille × API Restauration - V1 dated 02/05/2026",
+  "toast_save":"Changes saved","toast_reset":"Data reset","toast_export":"JSON file exported","toast_import":"Data imported","toast_error":"JSON file error","toast_addrow":"Row added","toast_delrow":"Row deleted"
+ },
+ "es":{
+  "brand_main":"Show-Cooking","brand_sub":"Wok y Pasta - 2025-2026",
+  "nav_cover":"Portada","nav_wok":"Estación Wok","nav_pa":"Estación Pasta","nav_courses":"Lista de compras",
+  "btn_home":"← Portal",
+  "etb_lbl":"Modo","etb_read":"Lectura","etb_edit":"Edición",
+  "btn_edit":"Editar","btn_save":"Guardar","btn_exp":"Exportar JSON","btn_imp":"Importar JSON","btn_rst":"Reiniciar","btn_print":"Imprimir",
+  "cover_ed":"Edición Temporada 2025-2026","cover_h":"Show-Cooking","cover_he":"Wok y Pasta",
+  "cover_sub":"Estaciones live cooking en desplazamientos","cover_club":"Olympique de Marsella","cover_yr":"Temporada 2025 - 2026",
+  "cover_cta1":"Descubrir","cover_cta2":"Imprimir el libro",
+  "intro_tag":"Presentación","intro_h":"Dos estaciones, un dispositivo unificado",
+  "intro_p":"Estaciones cocinadas en directo para los jugadores en desplazamientos. Implantación 5 mesas, potencia 12 kW, material mixto OM + Hotel. Este libro detalla material, recetas, salsas y lista de compras.",
+  "wok_h":"Estación Wok","wok_he":"Show-cooking asiático",
+  "wok_p":"Arroz jazmín, noodles, verduras salteadas, proteínas a elección (pollo, gambas, salmón) y 5 salsas firma. Preparación al momento delante del jugador.",
+  "pa_h":"Estación Pasta","pa_he":"Show-cooking italiano",
+  "pa_p":"5 kg de pasta De Cecco/Rummo, sin gluten a demanda, 3 salsas caseras (Pesto, Pesto Rosso, Tomate), condimentos y toppings a elección. Porcionado 300 g cocido.",
+  "courses_tag":"Lista de compras","courses_h":"Suministro completo",
+  "courses_p":"Lista consolidada para las dos estaciones: féculas, proteínas, verduras, quesos, ultramarinos, salsas.",
+  "lbl_free":"Notas libres / anotaciones","lbl_free2":"Notas libres / anotaciones","lbl_free3":"Notas libres / anotaciones",
+  "btn_addrow":"+ Añadir línea","btn_addblock":"+ Añadir bloque",
+  "ft_p":"Libro Show-Cooking - Estaciones Wok y Pasta - Temporada 2025-2026",
+  "ft_p2":"Achraf TAMANI - Nutricionista deportivo OM - achraf.tamani@om.fr",
+  "ft_copy":"© 2025-2026 - Olympique de Marsella × API Restauration - V1 del 02/05/2026",
+  "toast_save":"Cambios guardados","toast_reset":"Datos reiniciados","toast_export":"Archivo JSON exportado","toast_import":"Datos importados","toast_error":"Error archivo JSON","toast_addrow":"Línea añadida","toast_delrow":"Línea eliminada"
+ },
+ "it":{
+  "brand_main":"Show-Cooking","brand_sub":"Wok e Pasta - 2025-2026",
+  "nav_cover":"Copertina","nav_wok":"Stazione Wok","nav_pa":"Stazione Pasta","nav_courses":"Lista della spesa",
+  "btn_home":"← Portale",
+  "etb_lbl":"Modalità","etb_read":"Lettura","etb_edit":"Modifica",
+  "btn_edit":"Modifica","btn_save":"Salva","btn_exp":"Esporta JSON","btn_imp":"Importa JSON","btn_rst":"Reimposta","btn_print":"Stampa",
+  "cover_ed":"Edizione Stagione 2025-2026","cover_h":"Show-Cooking","cover_he":"Wok e Pasta",
+  "cover_sub":"Stazioni live cooking in trasferta","cover_club":"Olympique de Marsiglia","cover_yr":"Stagione 2025 - 2026",
+  "cover_cta1":"Scopri","cover_cta2":"Stampa il libro",
+  "intro_tag":"Presentazione","intro_h":"Due stazioni, un dispositivo unificato",
+  "intro_p":"Stazioni cucinate dal vivo per i giocatori in trasferta. Layout 5 tavoli, potenza 12 kW, materiale misto OM + Hotel. Questo libro dettaglia materiale, ricette, salse e lista della spesa.",
+  "wok_h":"Stazione Wok","wok_he":"Show-cooking asiatico",
+  "wok_p":"Riso jasmine, noodles, verdure saltate, proteine a scelta (pollo, gamberi, salmone) e 5 salse firma. Preparazione al momento davanti al giocatore.",
+  "pa_h":"Stazione Pasta","pa_he":"Show-cooking italiano",
+  "pa_p":"5 kg di pasta De Cecco/Rummo, senza glutine su richiesta, 3 salse fatte in casa (Pesto, Pesto Rosso, Pomodoro), condimenti e topping a scelta. Porzionatura 300 g cotto.",
+  "courses_tag":"Lista della spesa","courses_h":"Approvvigionamento completo",
+  "courses_p":"Lista consolidata per le due stazioni: cereali, proteine, verdure, formaggi, dispensa, salse.",
+  "lbl_free":"Note libere / annotazioni","lbl_free2":"Note libere / annotazioni","lbl_free3":"Note libere / annotazioni",
+  "btn_addrow":"+ Aggiungi riga","btn_addblock":"+ Aggiungi blocco",
+  "ft_p":"Libro Show-Cooking - Stazioni Wok e Pasta - Stagione 2025-2026",
+  "ft_p2":"Achraf TAMANI - Nutrizionista dello sport OM - achraf.tamani@om.fr",
+  "ft_copy":"© 2025-2026 - Olympique de Marsiglia × API Restauration - V1 del 02/05/2026",
+  "toast_save":"Modifiche salvate","toast_reset":"Dati reimpostati","toast_export":"File JSON esportato","toast_import":"Dati importati","toast_error":"Errore file JSON","toast_addrow":"Riga aggiunta","toast_delrow":"Riga eliminata"
+ }
+}
+</script>
+
+<script>
+/* OM Book ShowCooking - moteur ES5 */
+(function(){
+ var STORAGE_KEY = "om_sc_v1";
+ var LANG_KEY = "om_sc_lang_v1";
+ var lang = "fr";
+ var data = null, defaultData = null, i18n = null;
+ var editing = false;
+
+ function $(id){return document.getElementById(id);}
+ function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+
+ function loadData(){
+  try{
+   defaultData = JSON.parse(document.getElementById("rd").textContent);
+   var saved = null;
+   try{ saved = localStorage.getItem(STORAGE_KEY); }catch(e){}
+   if(saved){
+    try{ data = JSON.parse(saved); }catch(e){ data = JSON.parse(JSON.stringify(defaultData)); }
+   }else{
+    data = JSON.parse(JSON.stringify(defaultData));
+   }
+   i18n = JSON.parse(document.getElementById("i18n").textContent);
+   try{ var sl = localStorage.getItem(LANG_KEY); if(sl) lang = sl; }catch(e){}
+  }catch(err){
+   console.error("Data load failed",err);
+  }
+ }
+
+ function t(k){ return (i18n[lang] && i18n[lang][k]) || (i18n.fr && i18n.fr[k]) || k; }
+ function applyI18n(){
+  var nodes = document.querySelectorAll("[data-k]");
+  for(var i=0;i<nodes.length;i++){
+   var k = nodes[i].getAttribute("data-k");
+   if(i18n[lang] && i18n[lang][k] != null){ nodes[i].innerHTML = i18n[lang][k]; }
+  }
+  document.documentElement.setAttribute("lang",lang);
+ }
+
+ function renderAll(){
+  renderPanel("wok", "panel-wok", "wok");
+  renderPanel("pa", "panel-pa", "pa");
+  renderPanel("courses", "panel-courses", "");
+  loadFreeNotes();
+ }
+
+ function renderPanel(secId, containerId, accentClass){
+  var sec = data[secId];
+  var box = $(containerId);
+  if(!box) return;
+  box.innerHTML = "";
+  if(!sec || !sec.blocks) return;
+  var grid = el("div","bg");
+  for(var i=0;i<sec.blocks.length;i++){
+   grid.appendChild(renderBlock(secId, i, sec.blocks[i], accentClass));
+  }
+  box.appendChild(grid);
+ }
+
+ function renderBlock(secId, idx, block, accent){
+  var b = el("div","bx" + (block.full ? " full" : ""));
+  var h = el("div","bx-h");
+  var n = el("div","bx-n " + (accent || ""), (idx+1));
+  h.appendChild(n);
+  var ttl = el("h4");
+  ttl.textContent = block.title || "";
+  ttl.contentEditable = false;
+  ttl.setAttribute("data-path", "blocks."+idx+".title");
+  ttl.setAttribute("data-sec", secId);
+  h.appendChild(ttl);
+  var act = el("div","bx-act");
+  var del = el("button","ix del","\u00d7");
+  del.title = "Supprimer ce bloc";
+  del.onclick = (function(s,i){return function(){delBlock(s,i);};})(secId, idx);
+  act.appendChild(del);
+  h.appendChild(act);
+  b.appendChild(h);
+
+  if(block.intro){
+   var p = el("p","intro");
+   p.textContent = block.intro;
+   p.contentEditable = false;
+   p.setAttribute("data-path","blocks."+idx+".intro");
+   p.setAttribute("data-sec", secId);
+   b.appendChild(p);
+  }
+
+  // Type items (q + l) ou steps (l only)
+  var listType = block.type || "items";
+  var list;
+  if(listType === "steps"){
+   list = el("ol");
+   for(var i=0;i<block.items.length;i++){
+    var li = el("li");
+    var st = el("div","st-txt");
+    st.textContent = block.items[i].l || "";
+    st.contentEditable = false;
+    st.setAttribute("data-path","blocks."+idx+".items."+i+".l");
+    st.setAttribute("data-sec", secId);
+    li.appendChild(st);
+    var dx = el("button","delx","\u00d7");
+    dx.onclick = (function(s,bi,ii){return function(){delItem(s,bi,ii);};})(secId, idx, i);
+    li.appendChild(dx);
+    list.appendChild(li);
+   }
+  }else{
+   list = el("ul");
+   for(var j=0;j<block.items.length;j++){
+    var li2 = el("li");
+    var qty = el("span","qty");
+    qty.textContent = block.items[j].q || "-";
+    qty.contentEditable = false;
+    qty.setAttribute("data-path","blocks."+idx+".items."+j+".q");
+    qty.setAttribute("data-sec", secId);
+    li2.appendChild(qty);
+    var lab = el("span","lab");
+    lab.textContent = block.items[j].l || "";
+    lab.contentEditable = false;
+    lab.setAttribute("data-path","blocks."+idx+".items."+j+".l");
+    lab.setAttribute("data-sec", secId);
+    li2.appendChild(lab);
+    var dx2 = el("button","delx","\u00d7");
+    dx2.onclick = (function(s,bi,ii){return function(){delItem(s,bi,ii);};})(secId, idx, j);
+    li2.appendChild(dx2);
+    list.appendChild(li2);
+   }
+  }
+  b.appendChild(list);
+
+  var addRow = el("div","add-row");
+  var addBtn = el("button");
+  addBtn.textContent = t("btn_addrow");
+  addBtn.setAttribute("data-k","btn_addrow");
+  addBtn.onclick = (function(s,i){return function(){addRowTo(s,i);};})(secId, idx);
+  addRow.appendChild(addBtn);
+  b.appendChild(addRow);
+
+  return b;
+ }
+
+ function setEditAttribs(on){
+  var nodes = document.querySelectorAll("[data-path]");
+  for(var i=0;i<nodes.length;i++){
+   nodes[i].contentEditable = on ? "true" : "false";
+   if(on){ nodes[i].classList.add("e-edit"); nodes[i].onblur = onFieldBlur; }
+   else{ nodes[i].classList.remove("e-edit"); }
+  }
+ }
+
+ function onFieldBlur(e){
+  var node = e.target;
+  var path = node.getAttribute("data-path");
+  var sec = node.getAttribute("data-sec");
+  if(!path || !sec) return;
+  setPath(data[sec], path, node.textContent);
+  markDirty();
+ }
+
+ function setPath(obj, path, val){
+  var parts = path.split(".");
+  var cur = obj;
+  for(var i=0;i<parts.length-1;i++){
+   var p = parts[i];
+   if(/^\d+$/.test(p)) p = parseInt(p,10);
+   cur = cur[p];
+   if(cur == null) return;
+  }
+  var last = parts[parts.length-1];
+  if(/^\d+$/.test(last)) last = parseInt(last,10);
+  cur[last] = val;
+ }
+
+ function toggleEdit(){
+  editing = !editing;
+  document.body.classList.toggle("editing", editing);
+  $("modeLbl").textContent = editing ? t("etb_edit") : t("etb_read");
+  $("editBtn").innerHTML = editing ? "\u2713 " + t("etb_read") : t("btn_edit");
+  setEditAttribs(editing);
+ }
+ window.toggleEdit = toggleEdit;
+
+ var dirty = false;
+ function markDirty(){ dirty = true; setStatus(t("etb_edit"), "warn"); }
+ function setStatus(text, kind){
+  var s = $("status");
+  if(!s) return;
+  s.textContent = text || "";
+  s.className = "eb-status" + (kind ? " "+kind : "");
+ }
+
+ function saveData(){
+  try{
+   collectFreeNotes();
+   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+   dirty = false;
+   setStatus(t("toast_save"), "ok");
+   showToast(t("toast_save"), "ok");
+  }catch(err){
+   showToast(t("toast_error"), "err");
+  }
+ }
+ window.saveData = saveData;
+
+ function exportJSON(){
+  collectFreeNotes();
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "OM_ShowCooking_" + new Date().toISOString().slice(0,10) + ".json";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast(t("toast_export"), "ok");
+ }
+ window.exportJSON = exportJSON;
+
+ function importJSON(ev){
+  var f = ev.target.files[0];
+  if(!f) return;
+  var rd = new FileReader();
+  rd.onload = function(e){
+   try{
+    data = JSON.parse(e.target.result);
+    saveData();
+    renderAll(); applyI18n(); setEditAttribs(editing);
+    showToast(t("toast_import"), "ok");
+   }catch(err){
+    showToast(t("toast_error"), "err");
+   }
+  };
+  rd.readAsText(f);
+  ev.target.value = "";
+ }
+ window.importJSON = importJSON;
+
+ function resetData(){
+  if(!confirm("Reinitialiser toutes les modifications ?")) return;
+  data = JSON.parse(JSON.stringify(defaultData));
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+  renderAll(); applyI18n(); setEditAttribs(editing);
+  showToast(t("toast_reset"), "ok");
+ }
+ window.resetData = resetData;
+
+ function addRowTo(secId, blockIdx){
+  var blk = data[secId].blocks[blockIdx];
+  if(blk.type === "steps"){
+   blk.items.push({l:"Nouvelle etape"});
+  }else{
+   blk.items.push({q:"-",l:"Nouvelle ligne"});
+  }
+  markDirty();
+  renderAll(); applyI18n(); setEditAttribs(editing);
+  showToast(t("toast_addrow"), "ok");
+ }
+
+ function delItem(secId, blockIdx, itemIdx){
+  data[secId].blocks[blockIdx].items.splice(itemIdx, 1);
+  markDirty();
+  renderAll(); applyI18n(); setEditAttribs(editing);
+  showToast(t("toast_delrow"), "ok");
+ }
+
+ function delBlock(secId, blockIdx){
+  if(!confirm("Supprimer ce bloc ?")) return;
+  data[secId].blocks.splice(blockIdx, 1);
+  markDirty();
+  renderAll(); applyI18n(); setEditAttribs(editing);
+ }
+
+ function loadFreeNotes(){
+  var keys = ["wok","pa","courses"];
+  for(var i=0;i<keys.length;i++){
+   var ta = $("freeNotes-"+keys[i]);
+   if(ta && data[keys[i]]){
+    ta.value = data[keys[i]].freeNotes || "";
+    ta.oninput = (function(k){return function(e){
+     if(!data[k]) return;
+     data[k].freeNotes = e.target.value;
+     markDirty();
+    };})(keys[i]);
+   }
+  }
+ }
+
+ function collectFreeNotes(){
+  var keys = ["wok","pa","courses"];
+  for(var i=0;i<keys.length;i++){
+   var ta = $("freeNotes-"+keys[i]);
+   if(ta && data[keys[i]]) data[keys[i]].freeNotes = ta.value;
+  }
+ }
+
+ var toastTimer = null;
+ function showToast(msg, kind){
+  var tt = $("toast");
+  tt.textContent = msg;
+  tt.className = "toast show" + (kind ? " "+kind : "");
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ tt.className = "toast"; }, 2600);
+ }
+
+ function bindLang(){
+  var btns = document.querySelectorAll(".lp button");
+  for(var i=0;i<btns.length;i++){
+   btns[i].onclick = (function(b){return function(){
+    var l = b.getAttribute("data-lang");
+    lang = l;
+    try{ localStorage.setItem(LANG_KEY, l); }catch(e){}
+    var all = document.querySelectorAll(".lp button");
+    for(var j=0;j<all.length;j++) all[j].classList.remove("on");
+    b.classList.add("on");
+    applyI18n();
+    setStatus("");
+   };})(btns[i]);
+  }
+ }
+
+ function bindNav(){
+  var links = document.querySelectorAll(".nav a");
+  for(var i=0;i<links.length;i++){
+   links[i].onclick = function(){
+    var all = document.querySelectorAll(".nav a");
+    for(var k=0;k<all.length;k++) all[k].classList.remove("on");
+    this.classList.add("on");
+   };
+  }
+ }
+
+ function boot(){
+  loadData();
+  renderAll();
+  applyI18n();
+  bindLang();
+  bindNav();
+  setStatus("");
+ }
+ if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", boot);
+ }else{
+  boot();
+ }
+})();
+</script>
+
+<script id="sc-v2-js">
+/* OM ShowCooking V2 - Futuristic Enhancements */
+(function(){
+
+  /* ── Loader ── */
+  window.addEventListener("load", function(){
+    setTimeout(function(){
+      var loader = document.getElementById("sc-loader");
+      if(loader) loader.classList.add("hidden");
+    }, 700);
+  });
+
+  /* ── Scroll progress + back to top + topbar ── */
+  window.addEventListener("scroll", function(){
+    var prog = document.getElementById("sc-progress");
+    var scrollTop = window.pageYOffset||document.documentElement.scrollTop;
+    var docH = document.documentElement.scrollHeight-document.documentElement.clientHeight;
+    if(prog) prog.style.width = (scrollTop/docH*100)+"%";
+
+    var btn = document.getElementById("sc-top");
+    if(btn){ if(scrollTop>300) btn.classList.add("show"); else btn.classList.remove("show"); }
+
+    var tb = document.querySelector(".topbar");
+    if(tb){ if(scrollTop>50) tb.classList.add("scrolled"); else tb.classList.remove("scrolled"); }
+  }, {passive:true});
+
+  /* ── Cursor glow ── */
+  var cx=window.innerWidth/2, cy=window.innerHeight/2;
+  var tx=cx, ty=cy;
+  var cursor = document.getElementById("sc-cursor");
+  document.addEventListener("mousemove", function(e){ tx=e.clientX; ty=e.clientY; }, {passive:true});
+  (function raf(){
+    cx += (tx-cx)*.06; cy += (ty-cy)*.06;
+    if(cursor){
+      cursor.style.left = cx+"px";
+      cursor.style.top = cy+"px";
+      cursor.style.background = "radial-gradient(circle,rgba(201,166,91,.07) 0,transparent 70%)";
+    }
+    requestAnimationFrame(raf);
+  })();
+
+  /* ── Blur-in observer ── */
+  var els = document.querySelectorAll(".station, .station-banner, .bx, .st-hero, .cover");
+  els.forEach(function(el){ el.classList.add("sc-blur-in"); });
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add("visible"); obs.unobserve(e.target); }
+    });
+  }, {threshold:.1, rootMargin:"0px 0px -30px 0px"});
+  els.forEach(function(el){ obs.observe(el); });
+
+  /* ── Cover canvas particles ── */
+  var canvas = document.getElementById("sc-canvas");
+  if(canvas){
+    var coverBook = document.querySelector(".cover-book");
+    var ctx = canvas.getContext("2d");
+    function resize(){
+      canvas.width = coverBook.offsetWidth;
+      canvas.height = coverBook.offsetHeight;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    var particles = [];
+    for(var i=0;i<50;i++){
+      particles.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*1.2+.4,
+        vx: (Math.random()-.5)*.35,
+        vy: (Math.random()-.5)*.35,
+        o: Math.random()*.4+.1,
+        c: Math.random()>.5 ? 0 : 1
+      });
+    }
+
+    function drawGrid(){
+      ctx.save();
+      ctx.strokeStyle = "rgba(255,255,255,0.03)";
+      ctx.lineWidth = 1;
+      for(var x=0;x<canvas.width;x+=50){
+        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,canvas.height); ctx.stroke();
+      }
+      for(var y=0;y<canvas.height;y+=50){
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function animP(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawGrid();
+      particles.forEach(function(p){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x<0)p.x=canvas.width; if(p.x>canvas.width)p.x=0;
+        if(p.y<0)p.y=canvas.height; if(p.y>canvas.height)p.y=0;
+        ctx.beginPath();
+        var colors = [
+          ["rgba(201,166,91,","rgba(201,166,91,0)"],
+          ["rgba(100,200,255,","rgba(100,200,255,0)"]
+        ];
+        var g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*10);
+        g.addColorStop(0, colors[p.c][0]+p.o+")");
+        g.addColorStop(1, colors[p.c][1]);
+        ctx.fillStyle = g;
+        ctx.arc(p.x,p.y,p.r*10,0,Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle = p.c===0 ? "rgba(231,201,137,"+(p.o*2)+")" : "rgba(150,220,255,"+(p.o*2)+")";
+        ctx.fill();
+      });
+      requestAnimationFrame(animP);
+    }
+    animP();
+  }
+
+  /* ── GSAP ── */
+  if(window.gsap && window.ScrollTrigger){
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* Cover entrance */
+    gsap.from(".cover-book", {duration:1.4, y:60, opacity:0, ease:"expo.out", delay:.2});
+    gsap.from(".cover-corner", {duration:.8, scale:0, opacity:0, stagger:.15, ease:"back.out(2)", delay:.8});
+    gsap.from(".cover-logos", {duration:1, y:30, opacity:0, ease:"power3.out", delay:.6});
+
+    /* Station banners */
+    gsap.utils.toArray(".station-banner").forEach(function(el,i){
+      gsap.from(el, {
+        scrollTrigger:{trigger:el, start:"top 85%"},
+        duration:1, x: i%2===0 ? -80 : 80, opacity:0, ease:"expo.out"
+      });
+    });
+
+    /* Block cards stagger */
+    gsap.utils.toArray(".bg").forEach(function(grid){
+      gsap.from(grid.querySelectorAll(".bx"), {
+        scrollTrigger:{trigger:grid, start:"top 85%"},
+        duration:.6, y:40, opacity:0, stagger:.06, ease:"power3.out"
+      });
+    });
+
+    /* Section tags */
+    gsap.utils.toArray(".tag").forEach(function(el){
+      gsap.from(el, {
+        scrollTrigger:{trigger:el, start:"top 88%"},
+        duration:.6, x:-20, opacity:0, ease:"power2.out"
+      });
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>

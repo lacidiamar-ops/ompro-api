@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>OM x API Restauration - Cahier des Charges 2025-2026</title>
+<style>
+:root{
+ --b:#0a2540;--b2:#102a56;--sky:#2997e8;
+ --g:#c9a65b;--g2:#e7c989;
+ --cr:#fbf9f4;--w:#fff;--ink:#0d1b2a;--mu:#5a6b80;--ln:#e6ebf2;
+ --s1:0 1px 2px rgba(10,37,64,.06),0 4px 12px rgba(10,37,64,.06);
+ --s2:0 8px 30px rgba(10,37,64,.10),0 2px 6px rgba(10,37,64,.06);
+ --s3:0 24px 60px rgba(10,37,64,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Cormorant Garamond','Times New Roman',Georgia,serif;background:var(--cr);color:var(--ink);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.s{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+
+/* ====== TOPBAR ====== */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(10,37,64,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+.tbi{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:24px;padding:18px 28px}
+.brand{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.bm-img{width:100px;height:100px;border-radius:50%;background:#fff;padding:0;object-fit:cover;box-shadow:0 0 0 3px var(--g),0 6px 20px rgba(0,0,0,.3);flex-shrink:0;display:block}
+.bm-x{font-family:'Cormorant Garamond',serif;color:var(--g);font-size:42px;font-weight:300;line-height:1;font-style:italic;flex-shrink:0;opacity:.7}
+.bm-api{height:96px;width:auto;border-radius:14px;background:#fff;padding:8px 20px;box-shadow:0 0 0 3px var(--g),0 6px 20px rgba(0,0,0,.3);flex-shrink:0}
+.bm-ft{width:100px;height:100px;background:#fff;padding:0;border-radius:50%;object-fit:cover;flex-shrink:0}
+.bm-api-ft{height:96px;width:auto;background:#fff;padding:8px 20px;border-radius:14px;flex-shrink:0;margin-left:14px}
+.bt{display:flex;flex-direction:column;line-height:1}
+.bt b{font-family:'Cormorant Garamond',serif;font-size:32px;letter-spacing:.5px;color:#fff;font-weight:600}
+.bt span{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;letter-spacing:3.5px;text-transform:uppercase;color:var(--g2);margin-top:6px;font-weight:500}
+.nav{display:flex;gap:6px;flex:1;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;letter-spacing:1.2px;text-transform:uppercase}
+.nav a{padding:10px 14px;border-radius:8px;color:rgba(255,255,255,.82);transition:all .2s;font-weight:500}
+.nav a:hover,.nav a.on{color:#fff;background:rgba(255,255,255,.08)}
+.nav a.on{box-shadow:inset 0 -2px 0 var(--g)}
+.lp{display:flex;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:3px;flex-shrink:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.lp button{padding:6px 11px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,.62);transition:all .2s}
+.lp button.on{background:var(--g);color:var(--b)}
+.mb{display:none;font-size:24px;color:#fff;padding:6px 10px}
+
+/* ====== HERO ====== */
+.hero{position:relative;overflow:hidden;background:radial-gradient(ellipse at 30% 0%,#163b73 0%,var(--b) 55%,#061a30 100%);color:#fff;padding:90px 28px 110px;border-bottom:3px solid var(--g)}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 90% 30%,rgba(201,166,91,.18) 0,transparent 40%),radial-gradient(circle at 10% 80%,rgba(41,151,232,.18) 0,transparent 35%);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><path d='M0 60h120M60 0v120' stroke='%23fff' stroke-width='.4' opacity='.05'/></svg>");pointer-events:none}
+.hi{max-width:1100px;margin:0 auto;position:relative;z-index:1;text-align:center}
+.htag{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:999px;background:rgba(201,166,91,.14);border:1px solid rgba(201,166,91,.4);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--g2);font-weight:600;margin-bottom:34px}
+.htag .dot{width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 10px var(--g);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.5;transform:scale(1.3)}}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(48px,7vw,92px);line-height:1.02;letter-spacing:-1px;margin-bottom:22px}
+.hero h1 em{font-style:italic;font-weight:500;background:linear-gradient(90deg,var(--g) 0%,var(--g2) 50%,var(--g) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.lead{font-size:21px;color:rgba(255,255,255,.78);max-width:720px;margin:0 auto 44px;font-weight:300;line-height:1.5}
+.hstats{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;margin-top:56px;padding-top:40px;border-top:1px solid rgba(255,255,255,.1)}
+.hst{text-align:center}
+.hst b{font-family:'Cormorant Garamond',serif;display:block;font-size:42px;color:var(--g2);font-weight:600;line-height:1}
+.hst span{font-family:-apple-system,BlinkMacSystemFont,sans-serif;display:block;margin-top:8px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+/* ====== QUICK ACCESS ====== */
+.qa{max-width:1320px;margin:-56px auto 0;padding:0 28px;position:relative;z-index:5}
+.qg{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.qc{background:#fff;border-radius:14px;padding:22px 18px;text-align:left;cursor:pointer;border:1px solid var(--ln);box-shadow:var(--s1);transition:all .25s ease;display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-height:128px}
+.qc:hover{transform:translateY(-3px);box-shadow:var(--s2);border-color:var(--g)}
+.qi{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--b) 0%,var(--b2) 100%);color:var(--g2);display:flex;align-items:center;justify-content:center;font-size:20px}
+.qc h4{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;line-height:1.15;color:var(--b)}
+.qc span{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--mu);font-weight:500}
+
+/* ====== SECTIONS ====== */
+.sec{padding:96px 28px;max-width:1280px;margin:0 auto}
+.sh{margin-bottom:64px;text-align:center}
+.stag{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--g);font-weight:600;display:inline-flex;align-items:center;gap:14px}
+.stag::before,.stag::after{content:"";width:36px;height:1px;background:var(--g)}
+.sh h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(38px,5vw,58px);line-height:1.05;margin-top:18px;color:var(--b)}
+.sh p{margin-top:18px;color:var(--mu);max-width:680px;margin-left:auto;margin-right:auto;font-size:19px}
+
+/* ====== INTRO ====== */
+.ig{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center}
+.it h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:36px;color:var(--b);margin-bottom:20px;line-height:1.15}
+.it p{margin-bottom:18px;color:var(--ink);font-size:18px;line-height:1.7}
+.it p strong{color:var(--b);font-weight:600}
+.ic{background:linear-gradient(180deg,var(--b) 0%,var(--b2) 100%);color:#fff;border-radius:18px;padding:42px;position:relative;overflow:hidden;box-shadow:var(--s3)}
+.ic::before{content:"";position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(201,166,91,.3),transparent 70%)}
+.ic h4{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--g2);margin-bottom:24px;font-weight:600}
+.ic ul{list-style:none;position:relative;z-index:1}
+.ic ul li{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:flex-start;gap:14px;font-size:15px;line-height:1.5}
+.ic ul li:last-child{border:none}
+.ic ul li::before{content:"";flex-shrink:0;width:7px;height:7px;background:var(--g);border-radius:50%;margin-top:9px;box-shadow:0 0 8px var(--g)}
+
+/* ====== EDIT TOOLBAR ====== */
+.etb{position:sticky;top:72px;z-index:30;background:#fff;border:1px solid var(--ln);border-radius:14px;padding:14px 18px;margin-bottom:24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;box-shadow:var(--s1);font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.etb-lbl{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);font-weight:600;margin-right:auto}
+.etb-lbl b{color:var(--b)}
+.eb{padding:9px 16px;border-radius:8px;font-size:11.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;transition:all .2s;border:1px solid var(--ln);background:#fff;color:var(--b)}
+.eb:hover{background:var(--cr);border-color:var(--g)}
+.eb.gold{background:linear-gradient(135deg,var(--g),var(--g2));border-color:var(--g);color:var(--b)}
+.eb.gold:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,166,91,.4)}
+.eb.dark{background:var(--b);border-color:var(--b);color:#fff}
+.eb.dark:hover{background:var(--b2)}
+.eb.danger{color:#c53030}
+.eb.danger:hover{background:#fff5f5;border-color:#feb2b2}
+.eb-status{font-size:11px;color:var(--mu);font-style:italic;padding:0 6px}
+.eb-status.ok{color:#2f855a}
+.eb-status.warn{color:#c05621}
+
+/* ====== CDC ====== */
+.tabs{display:flex;gap:6px;background:#fff;padding:6px;border-radius:14px;margin-bottom:30px;box-shadow:var(--s1);border:1px solid var(--ln);max-width:980px;margin-left:auto;margin-right:auto;font-family:-apple-system,BlinkMacSystemFont,sans-serif;flex-wrap:wrap;justify-content:center}
+.tab{flex:1;min-width:140px;padding:14px 18px;border-radius:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);font-weight:600;transition:all .2s;text-align:center}
+.tab.on{background:linear-gradient(135deg,var(--b),var(--b2));color:#fff;box-shadow:0 4px 12px rgba(10,37,64,.25)}
+.tab:not(.on):hover{background:var(--cr);color:var(--b)}
+.cp{display:none}
+.cp.on{display:block;animation:fi .35s ease}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.cv{background:linear-gradient(135deg,var(--b) 0%,var(--b2) 60%,#163b73 100%);color:#fff;border-radius:20px;padding:48px 52px;position:relative;overflow:hidden;margin-bottom:24px;box-shadow:var(--s2)}
+.cv::before{content:"";position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(201,166,91,.18),transparent 70%)}
+.cvg{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center;position:relative;z-index:1}
+.cvn{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--g2);font-weight:600;margin-bottom:14px}
+.cv h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:48px;line-height:1.05;margin-bottom:18px}
+.cv p{color:rgba(255,255,255,.78);font-size:18px;line-height:1.5}
+.cm{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:24px}
+.cmr{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px}
+.cmr:last-child{border:none}
+.cmr span{color:rgba(255,255,255,.6);letter-spacing:.5px}
+.cmr b{color:var(--g2);font-weight:600}
+
+.cg{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:18px}
+.cb{background:#fff;border:1px solid var(--ln);border-radius:14px;padding:24px 26px;box-shadow:var(--s1);position:relative;transition:all .2s}
+.cb.full{grid-column:span 2}
+.cb-h{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--ln)}
+.cbn{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--b2));color:var(--g2);display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;font-weight:700;flex-shrink:0}
+.cb-h h4{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:20px;color:var(--b);flex:1}
+.cb-act{display:none;gap:6px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+body.editing .cb-act{display:flex}
+.cb-act .ix{padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;background:var(--cr);color:var(--b);border:1px solid var(--ln)}
+.cb-act .ix:hover{background:var(--b);color:#fff}
+.cb-act .ix.del{color:#c53030}
+.cb-act .ix.del:hover{background:#c53030;color:#fff}
+
+.cb ul{list-style:none}
+.cb ul li{padding:9px 0;border-bottom:1px dashed var(--ln);display:flex;justify-content:space-between;gap:14px;align-items:flex-start;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13.5px;line-height:1.5}
+.cb ul li:last-child{border:none}
+.cb ul li .qty{flex-shrink:0;font-weight:700;color:var(--g);font-size:12px;letter-spacing:.5px;background:var(--cr);padding:3px 9px;border-radius:5px;min-width:64px;text-align:center}
+.cb ul li .lab{flex:1;color:var(--ink)}
+.cb ul li .delx{display:none;flex-shrink:0;color:#c53030;background:#fff;border:1px solid #feb2b2;border-radius:5px;width:22px;height:22px;font-size:14px;line-height:1;align-items:center;justify-content:center}
+body.editing .cb ul li .delx{display:flex}
+.cb ul li .delx:hover{background:#c53030;color:#fff}
+
+/* Editable fields */
+body.editing .e-edit{background:#fff8e6;outline:1px dashed var(--g);border-radius:4px;padding:1px 5px;cursor:text;transition:all .15s}
+body.editing .e-edit:hover{background:#fff3d4;outline-color:#d4a847}
+body.editing .e-edit:focus{outline:2px solid var(--g);background:#fff}
+body.editing .qty.e-edit{outline-style:solid;outline-color:rgba(201,166,91,.5)}
+
+.add-row{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--ln);text-align:center}
+body.editing .add-row{display:block}
+.add-row button{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--cr);border:1px dashed var(--g);color:var(--b);padding:8px 16px;border-radius:8px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.add-row button:hover{background:var(--g);color:var(--b)}
+
+.cn{background:linear-gradient(90deg,var(--cr) 0%,#fff 100%);border-left:4px solid var(--g);border-radius:8px;padding:18px 22px;margin-top:14px;font-size:14px;color:var(--ink);line-height:1.5;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.cn b{color:var(--b)}
+
+/* Notes section */
+.ns{background:linear-gradient(180deg,#fffbf2 0%,#fff 100%);border:1px solid var(--g);border-radius:14px;padding:24px 28px;margin-top:18px;position:relative}
+.ns-h{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.ns-h .ic-note{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--g),var(--g2));color:var(--b);display:flex;align-items:center;justify-content:center;font-size:15px}
+.ns-h h5{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--b);font-weight:600}
+.nta{width:100%;min-height:90px;border:1px solid var(--ln);border-radius:10px;padding:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;line-height:1.55;resize:vertical;background:#fff;color:var(--ink);outline:none;transition:border-color .2s}
+.nta:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(201,166,91,.15)}
+.nta::placeholder{color:#aab2bf;font-style:italic}
+
+.cact{display:flex;gap:12px;justify-content:flex-end;margin-top:18px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.cbtn{padding:11px 22px;background:#fff;border:1px solid var(--ln);border-radius:10px;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--b);display:inline-flex;align-items:center;gap:8px;transition:all .2s;box-shadow:var(--s1)}
+.cbtn:hover{background:var(--b);color:#fff;border-color:var(--b)}
+.cbtn.gold{background:linear-gradient(135deg,var(--g) 0%,var(--g2) 100%);border-color:var(--g);color:var(--b)}
+.cbtn.gold:hover{background:var(--g);transform:translateY(-1px)}
+
+/* Add section button */
+.add-sec{display:none;text-align:center;margin-top:18px}
+body.editing .add-sec{display:block}
+.add-sec button{font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:14px 26px;background:#fff;border:2px dashed var(--g);color:var(--b);border-radius:12px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
+.add-sec button:hover{background:var(--g);color:var(--b)}
+
+/* ====== BOOK PROMO ====== */
+.bp{background:linear-gradient(180deg,rgba(10,37,64,.92) 0%,rgba(10,37,64,.88) 100%),radial-gradient(ellipse at 70% 30%,rgba(201,166,91,.4) 0%,transparent 50%);background-color:var(--b);color:#fff;padding:96px 28px;border-top:3px solid var(--g);border-bottom:3px solid var(--g)}
+.bpi{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.b3d{perspective:1500px;display:flex;justify-content:center}
+.bk{width:340px;height:460px;position:relative;transform-style:preserve-3d;transform:rotateY(-22deg) rotateX(4deg);transition:transform .8s cubic-bezier(.2,.8,.2,1);box-shadow:-22px 22px 50px rgba(0,0,0,.45),-40px 40px 100px rgba(201,166,91,.15)}
+.bk:hover{transform:rotateY(-12deg) rotateX(2deg)}
+.bf{position:absolute;inset:0;background:linear-gradient(160deg,#0e2c52 0%,#061a30 60%,#020e1c 100%);border-radius:5px 14px 14px 5px;padding:40px 32px;display:flex;flex-direction:column;border:1px solid rgba(201,166,91,.2)}
+.bf::before{content:"";position:absolute;left:6px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,var(--g),transparent);opacity:.4}
+.bc{width:50px;height:50px;border:1.5px solid var(--g);border-right:none;border-bottom:none;position:absolute;top:18px;left:18px}
+.bc.br{top:auto;left:auto;bottom:18px;right:18px;border:1.5px solid var(--g);border-left:none;border-top:none}
+.bk .lbl{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--g);text-align:center;margin-top:38px;font-weight:600}
+.bk .om{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:24px auto;box-shadow:0 0 0 2px var(--g)}
+.bk .om svg{width:55px;height:55px}
+.bk h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:34px;color:#fff;text-align:center;line-height:1.05;margin-top:14px}
+.bk .div{width:60px;height:1px;background:var(--g);margin:18px auto}
+.bk .sub{font-family:'Cormorant Garamond',serif;font-style:italic;text-align:center;color:var(--g2);font-size:18px}
+.bk .yr{margin-top:auto;text-align:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,.5);padding-top:20px;border-top:1px solid rgba(201,166,91,.2)}
+.bpt h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:54px;line-height:1.05;margin-bottom:18px}
+.bpt h2 em{color:var(--g2);font-style:italic}
+.bpt p.lead{color:rgba(255,255,255,.78);font-size:19px;line-height:1.55;margin-bottom:32px;font-weight:300}
+.bpf{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:36px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.bft{display:flex;gap:14px;align-items:flex-start;padding:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px}
+.bft-i{width:38px;height:38px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,var(--g) 0%,var(--g2) 100%);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:18px}
+.bft b{display:block;font-size:13px;color:#fff;margin-bottom:3px;font-weight:600}
+.bft span{display:block;font-size:11.5px;color:rgba(255,255,255,.58);line-height:1.4}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.ctab{font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:16px 30px;border-radius:12px;font-weight:600;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;transition:all .25s}
+.ctab.p{background:linear-gradient(135deg,var(--g) 0%,var(--g2) 100%);color:var(--b);box-shadow:0 8px 24px rgba(201,166,91,.4)}
+.ctab.p:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(201,166,91,.5)}
+.ctab.gh{background:transparent;border:1.5px solid rgba(255,255,255,.25);color:#fff}
+.ctab.gh:hover{border-color:var(--g);color:var(--g2)}
+
+/* ====== STATIONS ====== */
+.sts{padding:96px 28px;max-width:1280px;margin:0 auto}
+.stg{display:grid;grid-template-columns:repeat(2,1fr);gap:30px}
+.stc{background:#fff;border-radius:20px;overflow:hidden;border:1px solid var(--ln);box-shadow:var(--s2);transition:all .35s;display:flex;flex-direction:column}
+.stc:hover{transform:translateY(-6px);box-shadow:var(--s3)}
+.sth{height:280px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:32px}
+.sth.wok{background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.7) 100%),radial-gradient(circle at 70% 30%,#ff6b35 0%,#cc3300 35%,#5a1a00 100%)}
+.sth.pa{background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.7) 100%),radial-gradient(circle at 30% 30%,#7cb342 0%,#388e3c 35%,#1b5e20 100%)}
+.sth::before{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><circle cx='30' cy='30' r='1' fill='%23fff' opacity='.15'/></svg>")}
+.ste{position:absolute;top:30px;right:32px;font-size:62px;filter:drop-shadow(0 8px 16px rgba(0,0,0,.4))}
+.sth h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:42px;color:#fff;line-height:1.05;position:relative;z-index:1;text-shadow:0 4px 14px rgba(0,0,0,.5)}
+.sth h3 em{color:var(--g2);font-style:italic;display:block;font-size:22px;margin-top:6px}
+.stb{padding:30px 32px;flex:1;display:flex;flex-direction:column}
+.stb p{color:var(--mu);margin-bottom:20px;font-size:16px}
+.stt{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.stt span{font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;background:var(--cr);color:var(--b);padding:6px 12px;border-radius:6px;font-weight:600;border:1px solid var(--ln)}
+.stcta{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+
+/* ====== FOOTER ====== */
+.ft{background:linear-gradient(180deg,#061a30 0%,#020e1c 100%);color:rgba(255,255,255,.7);padding:64px 28px 32px;border-top:3px solid var(--g)}
+.fti{max-width:1280px;margin:0 auto}
+.fg{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.fb{display:flex;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+.fb b{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;width:100%;margin-top:6px}
+.ft p.about{font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.55)}
+.ft h5{font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:var(--g2);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:18px;font-weight:600}
+.ft ul{list-style:none;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.ft ul li{padding:6px 0;font-size:13.5px}
+.ft ul li a:hover{color:var(--g2)}
+.fc{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13.5px;line-height:1.7}
+.fc b{color:#fff;display:block;margin-bottom:4px;font-weight:600}
+.fc a:hover{color:var(--g2)}
+.fbt{padding-top:28px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:11.5px;color:rgba(255,255,255,.4);letter-spacing:1px}
+
+/* ====== PRINT HEADER (visible uniquement a l'impression) ====== */
+.print-header{display:none}
+
+/* ====== TOAST ====== */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--b);color:#fff;padding:14px 24px;border-radius:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;font-weight:500;letter-spacing:.3px;box-shadow:var(--s3);border:1px solid var(--g);z-index:1000;opacity:0;transition:all .35s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{border-color:#48bb78}
+.toast.err{border-color:#fc8181;background:#742a2a}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width:980px){
+ .qg{grid-template-columns:repeat(3,1fr)}
+ .ig{grid-template-columns:1fr;gap:36px}
+ .cg{grid-template-columns:1fr}
+ .cb.full{grid-column:auto}
+ .cvg{grid-template-columns:1fr;gap:24px}
+ .bpi{grid-template-columns:1fr;gap:50px}
+ .stg{grid-template-columns:1fr}
+ .fg{grid-template-columns:1fr 1fr;gap:32px}
+ .nav{display:none}
+ .mb{display:block}
+ .nav.open{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--b);padding:20px;border-top:1px solid rgba(255,255,255,.1)}
+ .hero{padding:60px 24px 80px}
+ .hstats{gap:24px}
+ .sec{padding:64px 22px}
+}
+@media (max-width:560px){
+ .qg{grid-template-columns:repeat(2,1fr)}
+ .fg{grid-template-columns:1fr}
+ .tbi{padding:12px 18px}
+ .bt b{font-size:18px}
+ .hero h1{font-size:48px}
+ .hero p.lead{font-size:17px}
+ .cv{padding:32px 26px}
+ .cv h3{font-size:34px}
+ .bk{width:280px;height:380px}
+ .bpf{grid-template-columns:1fr}
+ .etb{flex-direction:column;align-items:stretch}
+ .etb-lbl{text-align:center}
+}
+
+/* ====== PRINT ====== */
+@media print{
+ @page{margin:14mm 12mm}
+ .topbar,.cact,.tabs,.bp,.sts,.ft,.qa,.mb,.etb,.cb-act,.add-row,.add-sec,.delx,.toast{display:none!important}
+ body{background:#fff;font-size:13px}
+ .hero,.sh,.ig,#projet{display:none}
+ .sec{padding:0;page-break-inside:auto}
+ .cp{display:block!important;page-break-after:always;page-break-before:always}
+ .cp:first-of-type{page-break-before:avoid}
+ .cb{box-shadow:none;page-break-inside:avoid;border:1px solid #ccc;margin-bottom:10px}
+ .cv{background:#0a2540!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;page-break-after:avoid;padding:24px 30px}
+ .cv h3{font-size:30px;margin-bottom:10px}
+ .cv p{font-size:14px}
+ .ns{page-break-inside:avoid;margin-top:14px}
+ .cg{gap:10px;margin-bottom:10px}
+ .cb{padding:14px 16px}
+ .cb-h h4{font-size:16px}
+ .cb ul li{padding:6px 0;font-size:12px}
+ .cb ul li .qty{font-size:11px;padding:2px 7px;min-width:55px}
+
+ /* PRINT HEADER */
+ .print-header{
+  display:flex!important;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 0 12px 0;
+  margin-bottom:14px;
+  border-bottom:3px solid #c9a65b;
+  page-break-after:avoid;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+ }
+ .print-header .ph-logos{
+  display:flex;
+  align-items:center;
+  gap:14px;
+ }
+ .print-header .ph-om{
+  width:90px;height:90px;
+  border-radius:50%;
+  background:#fff;
+  padding:0;
+  object-fit:cover;
+  box-shadow:0 0 0 2px #c9a65b;
+ }
+ .print-header .ph-x{
+  font-family:'Cormorant Garamond',serif;
+  color:#c9a65b;
+  font-size:32px;
+  font-style:italic;
+  opacity:.6;
+ }
+ .print-header .ph-api{
+  height:84px;
+  width:auto;
+  border-radius:10px;
+  background:#fff;
+  padding:6px 16px;
+  box-shadow:0 0 0 2px #c9a65b;
+ }
+ .print-header .ph-meta{
+  text-align:right;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+ }
+ .print-header .ph-t1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px;
+  color:#5a6b80;
+  letter-spacing:1px;
+  text-transform:uppercase;
+ }
+ .print-header .ph-t2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;
+  color:#0a2540;
+  font-weight:600;
+  margin:2px 0;
+  line-height:1.1;
+ }
+ .print-header .ph-t3{
+  font-size:9px;
+  color:#5a6b80;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-top:4px;
+ }
+}
+</style>
+</head>
+<body>
+
+<!-- ====== TOPBAR ====== -->
+<header class="topbar">
+ <div class="tbi">
+  <div class="brand">
+   <img class="bm-img" src="data:image/jpeg;base64,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" alt="Olympique de Marseille">
+   <div class="bm-x">×</div>
+   <img class="bm-api" src="data:image/jpeg;base64,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" alt="API Restauration">
+   <div class="bt">
+    <b data-k="brand_main">Restauration en déplacement</b>
+    <span data-k="brand_sub">Saison 2025-2026</span>
+   </div>
+  </div>
+  <nav class="nav" id="nav">
+   <a href="#top" class="on" data-k="nav_home">Accueil</a>
+   <a href="#projet" data-k="nav_proj">Le projet</a>
+   <a href="#cdc" data-k="nav_cdc">Cahier des charges</a>
+   <a href="#book" data-k="nav_book">Book recettes</a>
+   <a href="#stations" data-k="nav_st">Stations</a>
+  </nav>
+  <div class="lp">
+   <button class="on" data-lang="fr">FR</button>
+   <button data-lang="en">EN</button>
+   <button data-lang="es">ES</button>
+   <button data-lang="it">IT</button>
+  </div>
+  <button class="mb s" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
+ </div>
+</header>
+
+<!-- ====== HERO ====== -->
+<section class="hero" id="top">
+ <div class="hi">
+  <div class="htag"><span class="dot"></span><span data-k="hero_tag">Saison 2025 - 2026 . Restauration Officielle</span></div>
+  <h1 data-k="hero_h1">Cahier des Charges<br><em data-k="hero_h1b">Restauration</em></h1>
+  <p class="lead" data-k="hero_lead">Cahier des charges de la restauration des joueurs et du staff de l'Olympique de Marseille lors des déplacements. Spécifications par moment de service à destination des hôtels partenaires.</p>
+  <div class="hstats">
+   <div class="hst"><b>4</b><span data-k="st_themes">Thèmes</span></div>
+   <div class="hst"><b>45+</b><span data-k="st_rec">Recettes</span></div>
+   <div class="hst"><b>2</b><span data-k="st_stat">Stations</span></div>
+   <div class="hst"><b>4</b><span data-k="st_lang">Langues</span></div>
+  </div>
+ </div>
+</section>
+
+<!-- ====== QUICK ACCESS ====== -->
+<section class="qa">
+ <div class="qg">
+  <a class="qc" href="#cdc"><div class="qi">&#9728;</div><div><span data-k="qa_pdj_lbl">Petit-déjeuner</span><h4 data-k="qa_pdj">Jour de match</h4></div></a>
+  <a class="qc" href="#cdc"><div class="qi">&#127869;</div><div><span data-k="qa_dej_lbl">Déjeuner</span><h4 data-k="qa_dej">Avant-match J-3h30</h4></div></a>
+  <a class="qc" href="#cdc"><div class="qi">&#127869;</div><div><span data-k="qa_din_lbl">Dîner</span><h4 data-k="qa_din">Veille de match</h4></div></a>
+  <a class="qc" href="#cdc"><div class="qi">&#127814;</div><div><span data-k="qa_col_lbl">Collation</span><h4 data-k="qa_col">H-3h15 du match</h4></div></a>
+  <a class="qc" href="OM_Book_Recettes.html" target="_blank"><div class="qi">&#128214;</div><div><span data-k="qa_book_lbl">Book Digital</span><h4 data-k="qa_book">Recettes</h4></div></a>
+  <a class="qc" href="OM_Book_ShowCooking.html" target="_blank"><div class="qi">&#128293;</div><div><span data-k="qa_st_lbl">Show-cooking</span><h4 data-k="qa_st">Wok &amp; Pâtes</h4></div></a>
+ </div>
+</section>
+
+<!-- ====== PROJET ====== -->
+<section class="sec" id="projet">
+ <div class="sh"><span class="stag s" data-k="sec_proj_tag">Le projet</span><h2 data-k="sec_proj_h">Restauration des joueurs en déplacement</h2><p data-k="sec_proj_p">Le document de référence des hôtels partenaires accueillant l'équipe lors des déplacements officiels.</p></div>
+ <div class="ig">
+  <div class="it">
+   <h3 data-k="proj_h3">Une référence métier conçue pour le terrain</h3>
+   <p data-k="proj_p1">Ce cahier des charges encadre l'ensemble des prestations de restauration servies aux joueurs et au staff de l'<strong>Olympique de Marseille</strong> à l'occasion des déplacements et regroupements de la saison <strong>2025-2026</strong>. Conçu en partenariat avec le service nutrition du club, il définit les standards de qualité, de composition et de service attendus auprès des hôtels partenaires.</p>
+   <p data-k="proj_p2">Chaque section est <strong>imprimable au format dossier DDPP</strong>, modifiable à la volée, et utilisable directement en cuisine. L'interface bilingue FR/EN/ES/IT facilite le déploiement international et la coordination avec les brigades multiculturelles.</p>
+   <p data-k="proj_p3">Le portail est complété par un <strong>book recettes digital</strong> illustré et un <strong>book technique</strong> dédié à la station show-cooking (Wok &amp; Pâtes), accessibles depuis le menu principal.</p>
+  </div>
+  <div class="ic">
+   <h4 data-k="proj_card_h">Pilotage du projet</h4>
+   <ul>
+    <li data-k="proj_card_1"><b>Service nutrition OM</b> - Achraf TAMANI, Nutritionniste du sport</li>
+    <li data-k="proj_card_2"><b>Restauration partenaire</b> - API Restauration, équipe APICIUS</li>
+    <li data-k="proj_card_3"><b>Standards qualité</b> - Halal certifié, Bio prioritaire, Saisonnalité</li>
+    <li data-k="proj_card_4"><b>Couverture</b> - Tous les hôtels partenaires saison 2025-2026</li>
+    <li data-k="proj_card_5"><b>Mise à jour</b> - Version V3 du 10 décembre 2025</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<!-- ====== CAHIER DES CHARGES ====== -->
+<section class="sec" id="cdc" style="padding-top:32px">
+ <div class="sh"><span class="stag s" data-k="cdc_tag">Le cahier des charges</span><h2 data-k="cdc_h">Standards par moment de service</h2><p data-k="cdc_p">Quatre prestations encadrées : petit-déjeuner jour de match, déjeuner d'avant-match, dîner veille de match, collation H-3h15.</p></div>
+
+ <!-- EDIT TOOLBAR -->
+ <div class="etb s">
+  <div class="etb-lbl"><span data-k="etb_lbl">Mode</span> <b id="modeLbl" data-k="etb_read">Lecture</b> <span class="eb-status" id="status"></span></div>
+  <button class="eb" onclick="toggleEdit()" id="editBtn"><span data-k="btn_edit">Modifier</span></button>
+  <button class="eb dark" onclick="saveData()"><span data-k="btn_save">Enregistrer</span></button>
+  <button class="eb" onclick="exportJSON()"><span data-k="btn_exp">Exporter</span></button>
+  <label class="eb" style="cursor:pointer"><span data-k="btn_imp">Importer</span><input type="file" accept=".json" onchange="importJSON(event)" style="display:none"></label>
+  <button class="eb danger" onclick="resetData()"><span data-k="btn_rst">Réinitialiser</span></button>
+  <button class="eb gold" onclick="window.print()"><span data-k="btn_print">Imprimer</span></button>
+ </div>
+
+ <!-- TABS -->
+ <div class="tabs s" id="tabs">
+  <button class="tab on" data-target="pdj" data-k="tab_pdj">Petit-déjeuner</button>
+  <button class="tab" data-target="dej" data-k="tab_dej">Déjeuner</button>
+  <button class="tab" data-target="din" data-k="tab_din">Dîner</button>
+  <button class="tab" data-target="col" data-k="tab_col">Collation H-3h15</button>
+ </div>
+
+ <!-- PANELS RENDERED BY JS -->
+ <div id="panels"></div>
+
+ <!-- ADD SECTION -->
+ <div class="add-sec"><button onclick="addSection()" data-k="btn_addsec">+ Ajouter une nouvelle section</button></div>
+</section>
+
+<!-- ====== BOOK PROMO ====== -->
+<section class="bp" id="book">
+ <div class="bpi">
+  <div class="b3d">
+   <div class="bk">
+    <div class="bf">
+     <div class="bc"></div><div class="bc br"></div>
+     <div class="lbl" data-k="bk_lbl">Édition Saison 2025-2026</div>
+     <div class="om">
+      <img src="data:image/jpeg;base64,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" alt="OM" style="width:100%;height:100%;border-radius:50%;object-fit:cover">
+     </div>
+     <h2 data-k="bk_t">Le Book des Recettes</h2>
+     <div class="div"></div>
+     <div class="sub" data-k="bk_sub">Olympique de Marseille</div>
+     <div class="yr" data-k="bk_yr">Saison 2025 - 2026</div>
+    </div>
+   </div>
+  </div>
+  <div class="bpt">
+   <h2 data-k="bp_h">Le livre des <em data-k="bp_he">recettes</em></h2>
+   <p class="lead" data-k="bp_p">Un véritable book digital feuilletable et imprimable. Plus de 45 fiches recettes signature développées par le chef et le service nutrition de l'Olympique de Marseille.</p>
+   <div class="bpf">
+    <div class="bft"><div class="bft-i">&#10003;</div><div><b data-k="bp_f1t">Fiches A4</b><span data-k="bp_f1s">Format imprimable professionnel</span></div></div>
+    <div class="bft"><div class="bft-i">&#127852;</div><div><b data-k="bp_f2t">Photos pro</b><span data-k="bp_f2s">Visuels de chaque plat fini</span></div></div>
+    <div class="bft"><div class="bft-i">&#9881;</div><div><b data-k="bp_f3t">Modifiable</b><span data-k="bp_f3s">Adaptez chaque recette en direct</span></div></div>
+    <div class="bft"><div class="bft-i">&#9879;</div><div><b data-k="bp_f4t">Filtres</b><span data-k="bp_f4s">Viande, poisson, végétarien, sans gluten</span></div></div>
+   </div>
+   <div class="cta">
+    <a class="ctab p" href="OM_Book_Recettes.html" target="_blank"><span data-k="bp_open">Ouvrir le book</span> &#8594;</a>
+    <a class="ctab gh" href="OM_Book_Recettes.html?print=1" target="_blank" data-k="bp_print">Version imprimable</a>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ====== STATIONS PROMO ====== -->
+<section class="sts" id="stations">
+ <div class="sh"><span class="stag s" data-k="sts_tag">Show-cooking</span><h2 data-k="sts_h">Stations live cooking</h2><p data-k="sts_p">Deux stations signature pensées pour le terrain : implantation, matériel, sauces, toppings et procédures complètes.</p></div>
+ <div class="stg">
+  <div class="stc">
+   <div class="sth wok"><span class="ste">&#127837;</span><h3 data-k="sts_wok_h">Station Wok<em data-k="sts_wok_he">Asian show-cooking</em></h3></div>
+   <div class="stb">
+    <p data-k="sts_wok_p">Riz jasmin, noodles, poulet, crevettes, saumon, légumes saisonniers et 5 sauces signature : BBQ coréenne, soja sucrée, soja salée, sriracha, huile de sésame.</p>
+    <div class="stt s"><span data-k="tag_setup">Implantation</span><span data-k="tag_elec">12 kW</span><span data-k="tag_prot">Protéines</span><span data-k="tag_sauces">Sauces</span><span data-k="tag_topp">Toppings</span></div>
+    <div class="stcta"><a class="cbtn gold" href="OM_Book_ShowCooking.html#wok" target="_blank"><span data-k="sts_open">Ouvrir le book</span></a><button class="cbtn" onclick="window.print()" data-k="btn_print2">Imprimer</button></div>
+   </div>
+  </div>
+  <div class="stc">
+   <div class="sth pa"><span class="ste">&#127837;</span><h3 data-k="sts_pa_h">Station Pâtes<em data-k="sts_pa_he">Italian show-cooking</em></h3></div>
+   <div class="stb">
+    <p data-k="sts_pa_p">5 tables, pesto verde et rosso à la ricotta, sauce tomate Mutti, pâtes De Cecco/Rummo, options sans gluten et sans antibiotique. Cuisson maîtrisée et portionnage à 300 g cuit.</p>
+    <div class="stt s"><span data-k="tag_pasta">5 tables</span><span data-k="tag_sg">Sans gluten</span><span data-k="tag_pesto">Pesto maison</span><span data-k="tag_30">30 bols</span></div>
+    <div class="stcta"><a class="cbtn gold" href="OM_Book_ShowCooking.html#pa" target="_blank"><span data-k="sts_open2">Ouvrir le book</span></a><button class="cbtn" onclick="window.print()" data-k="btn_print3">Imprimer</button></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="ft">
+ <div class="fti">
+  <div class="fg">
+   <div>
+    <div class="fb">
+     <img class="bm-img bm-ft" src="data:image/jpeg;base64,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" alt="OM">
+     <img class="bm-api bm-api-ft" src="data:image/jpeg;base64,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" alt="API">
+     <b>Restauration en déplacement</b>
+    </div>
+    <p class="about" data-k="ft_about">Plateforme officielle de référence pour la restauration partenaire de l'Olympique de Marseille. Conçue avec le service nutrition du club et l'équipe Apicius d'API Restauration.</p>
+   </div>
+   <div>
+    <h5 data-k="ft_h1">Navigation</h5>
+    <ul><li><a href="#top" data-k="nav_home2">Accueil</a></li><li><a href="#projet" data-k="nav_proj2">Le projet</a></li><li><a href="#cdc" data-k="nav_cdc2">Cahier des charges</a></li><li><a href="#book" data-k="nav_book2">Book recettes</a></li><li><a href="#stations" data-k="nav_st2">Stations</a></li></ul>
+   </div>
+   <div>
+    <h5 data-k="ft_h2">Documents</h5>
+    <ul><li><a href="OM_Book_Recettes.html" target="_blank" data-k="ft_d1">Book recettes</a></li><li><a href="OM_Book_ShowCooking.html" target="_blank" data-k="ft_d2">Station Wok &amp; Pâtes</a></li><li><a href="#" onclick="window.print();return false" data-k="ft_d3">Export PDF</a></li><li><a href="#" onclick="exportJSON();return false" data-k="ft_d4">Export JSON</a></li></ul>
+   </div>
+   <div>
+    <h5 data-k="ft_h3">Contact OM</h5>
+    <div class="fc">
+     <b>Achraf TAMANI</b>
+     <span data-k="ft_role">Nutritionniste du sport OM</span><br>
+     <a href="mailto:achraf.tamani@om.fr">achraf.tamani@om.fr</a><br>
+     <a href="tel:+33748478566">+33 7 48 47 85 66</a>
+    </div>
+   </div>
+  </div>
+  <div class="fbt">
+   <div data-k="ft_copy">© 2025-2026 Olympique de Marseille x API Restauration - V3 du 10/12/2025</div>
+   <div data-k="ft_droit">Droits au but</div>
+  </div>
+ </div>
+</footer>
+
+<script>
+/* OM Portail - moteur ES5 */
+(function(){
+ var STORAGE_KEY = "om_cdc_v1";
+ var LANG_KEY = "om_lang_v1";
+ var lang = "fr";
+ var data = null;
+ var defaultData = null;
+ var i18n = null;
+ var editing = false;
+ var ICON_MAP = {Soleil:"\u2600",Plat:"\ud83c\udf7d",Lune:"\ud83c\udf19",Snack:"\ud83c\udf66"};
+
+ function $(id){return document.getElementById(id);}
+ function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+ function attr(e,k,v){e.setAttribute(k,v);return e;}
+
+ /* ---------- LOGOS ---------- */
+ var _omLogo = null, _apiLogo = null;
+ function getOmLogo(){
+  if(_omLogo) return _omLogo;
+  var img = document.querySelector(".bm-img");
+  _omLogo = img ? img.src : "";
+  return _omLogo;
+ }
+ function getApiLogo(){
+  if(_apiLogo) return _apiLogo;
+  var img = document.querySelector(".bm-api");
+  _apiLogo = img ? img.src : "";
+  return _apiLogo;
+ }
+
+ /* ---------- LOAD DATA ---------- */
+ function loadData(){
+  try{
+   var raw = document.getElementById("rd").textContent;
+   defaultData = JSON.parse(raw);
+   var saved = null;
+   try{ saved = localStorage.getItem(STORAGE_KEY); }catch(e){}
+   if(saved){
+    try{ data = JSON.parse(saved); }catch(e){ data = JSON.parse(JSON.stringify(defaultData)); }
+   }else{
+    data = JSON.parse(JSON.stringify(defaultData));
+   }
+   var rawI = document.getElementById("i18n").textContent;
+   i18n = JSON.parse(rawI);
+   try{ var savedLang = localStorage.getItem(LANG_KEY); if(savedLang) lang = savedLang; }catch(e){}
+  }catch(err){
+   console.error("Data load failed",err);
+   data = {};
+   i18n = {fr:{}};
+  }
+ }
+
+ /* ---------- I18N ---------- */
+ function t(k){ return (i18n[lang] && i18n[lang][k]) || (i18n.fr && i18n.fr[k]) || k; }
+ function applyI18n(){
+  var nodes = document.querySelectorAll("[data-k]");
+  for(var i=0;i<nodes.length;i++){
+   var k = nodes[i].getAttribute("data-k");
+   if(i18n[lang] && i18n[lang][k] != null){ nodes[i].innerHTML = i18n[lang][k]; }
+  }
+  document.documentElement.setAttribute("lang",lang);
+ }
+
+ /* ---------- ORDER OF SECTIONS ---------- */
+ function getKeys(){
+  var keys = [];
+  for(var k in data){ if(data.hasOwnProperty(k)) keys.push(k); }
+  // Keep base order if present
+  var base = ["pdj","dej","din","col"];
+  var orderedBase = [];
+  var custom = [];
+  for(var i=0;i<base.length;i++){ if(keys.indexOf(base[i]) > -1) orderedBase.push(base[i]); }
+  for(var j=0;j<keys.length;j++){ if(base.indexOf(keys[j]) === -1) custom.push(keys[j]); }
+  return orderedBase.concat(custom);
+ }
+
+ /* ---------- RENDER ---------- */
+ function renderTabs(){
+  var tabs = $("tabs");
+  tabs.innerHTML = "";
+  var keys = getKeys();
+  var firstActive = null;
+  for(var i=0;i<keys.length;i++){
+   var k = keys[i];
+   var sec = data[k];
+   var btn = el("button","tab"+(i===0?" on":""));
+   btn.setAttribute("data-target",k);
+   var label;
+   if(k === "pdj") label = t("tab_pdj");
+   else if(k === "dej") label = t("tab_dej");
+   else if(k === "din") label = t("tab_din");
+   else if(k === "col") label = t("tab_col");
+   else label = sec.title || k;
+   btn.textContent = label;
+   btn.onclick = (function(target){ return function(){ activateTab(target); }; })(k);
+   tabs.appendChild(btn);
+   if(i===0) firstActive = k;
+  }
+  return firstActive;
+ }
+
+ function activateTab(target){
+  var btns = $("tabs").querySelectorAll(".tab");
+  for(var i=0;i<btns.length;i++){
+   if(btns[i].getAttribute("data-target") === target) btns[i].classList.add("on");
+   else btns[i].classList.remove("on");
+  }
+  var panels = $("panels").querySelectorAll(".cp");
+  for(var j=0;j<panels.length;j++){
+   if(panels[j].getAttribute("data-id") === target) panels[j].classList.add("on");
+   else panels[j].classList.remove("on");
+  }
+ }
+
+ function renderPanels(){
+  var box = $("panels");
+  box.innerHTML = "";
+  var keys = getKeys();
+  for(var i=0;i<keys.length;i++){
+   box.appendChild(renderPanel(keys[i]));
+  }
+ }
+
+ function renderPanel(secId){
+  var sec = data[secId];
+  var panel = el("div","cp"+(secId===getKeys()[0]?" on":""));
+  panel.setAttribute("data-id",secId);
+
+  // PRINT HEADER (visible seulement a l'impression)
+  var ph = el("div","print-header");
+  ph.innerHTML = '<div class="ph-logos">'
+   + '<img class="ph-om" src="' + getOmLogo() + '" alt="OM">'
+   + '<div class="ph-x">x</div>'
+   + '<img class="ph-api" src="' + getApiLogo() + '" alt="API">'
+   + '</div>'
+   + '<div class="ph-meta">'
+   + '<div class="ph-t1">' + t("hero_h1") + '</div>'
+   + '<div class="ph-t2">' + (sec.title || "") + '</div>'
+   + '<div class="ph-t3">' + t("ft_copy") + '</div>'
+   + '</div>';
+  panel.appendChild(ph);
+
+  // COVER
+  var cover = el("div","cv");
+  var cvg = el("div","cvg");
+  var leftCol = document.createElement("div");
+  var num = el("div","cvn s","Section " + (sec.num || ""));
+  leftCol.appendChild(num);
+  var titleNode = el("h3");
+  titleNode.contentEditable = false;
+  titleNode.setAttribute("data-path","title");
+  titleNode.setAttribute("data-sec",secId);
+  titleNode.textContent = sec.title || "";
+  leftCol.appendChild(titleNode);
+  var subNode = el("p");
+  subNode.contentEditable = false;
+  subNode.setAttribute("data-path","subtitle");
+  subNode.setAttribute("data-sec",secId);
+  subNode.textContent = sec.subtitle || "";
+  leftCol.appendChild(subNode);
+  cvg.appendChild(leftCol);
+
+  // META right
+  if(sec.meta && sec.meta.length){
+   var cm = el("div","cm");
+   for(var m=0;m<sec.meta.length;m++){
+    var row = el("div","cmr s");
+    var sp = el("span",null,sec.meta[m].k);
+    var bb = el("b",null,sec.meta[m].v);
+    bb.contentEditable = false;
+    bb.setAttribute("data-path","meta."+m+".v");
+    bb.setAttribute("data-sec",secId);
+    row.appendChild(sp);
+    row.appendChild(bb);
+    cm.appendChild(row);
+   }
+   cvg.appendChild(cm);
+  }
+  cover.appendChild(cvg);
+  panel.appendChild(cover);
+
+  // INTRO note
+  if(sec.intro){
+   var nt = el("div","cn");
+   var introB = el("span",null,sec.intro);
+   introB.contentEditable = false;
+   introB.setAttribute("data-path","intro");
+   introB.setAttribute("data-sec",secId);
+   nt.appendChild(introB);
+   panel.appendChild(nt);
+  }
+
+  // BLOCKS
+  var grid = el("div","cg");
+  if(sec.blocks){
+   for(var b=0;b<sec.blocks.length;b++){
+    grid.appendChild(renderBlock(secId, b, sec.blocks[b]));
+   }
+  }
+  panel.appendChild(grid);
+
+  // ADD BLOCK
+  var addBlock = el("div","add-sec");
+  var addBlockBtn = el("button",null,t("btn_addblock"));
+  addBlockBtn.setAttribute("data-k","btn_addblock");
+  addBlockBtn.onclick = (function(s){return function(){addBlockTo(s);};})(secId);
+  addBlock.appendChild(addBlockBtn);
+  panel.appendChild(addBlock);
+
+  // NOTES officielles
+  if(sec.notes){
+   var nblock = el("div","cn");
+   var nb = el("b",null,t("lbl_notes")+" : ");
+   nb.setAttribute("data-k","lbl_notes_p");
+   nblock.appendChild(nb);
+   var ns = el("span",null,sec.notes);
+   ns.contentEditable = false;
+   ns.setAttribute("data-path","notes");
+   ns.setAttribute("data-sec",secId);
+   nblock.appendChild(ns);
+   panel.appendChild(nblock);
+  }
+
+  // FREE NOTES (always editable / annotation libre)
+  var nsBox = el("div","ns");
+  var nsh = el("div","ns-h");
+  var nsicon = el("div","ic-note s","\u270e");
+  var nsh5 = el("h5",null,t("lbl_free"));
+  nsh5.setAttribute("data-k","lbl_free");
+  nsh.appendChild(nsicon);
+  nsh.appendChild(nsh5);
+  nsBox.appendChild(nsh);
+  var ta = el("textarea","nta s");
+  ta.value = sec.freeNotes || "";
+  ta.placeholder = t("ph_free");
+  ta.setAttribute("data-sec",secId);
+  ta.oninput = (function(s){return function(e){ data[s].freeNotes = e.target.value; markDirty(); };})(secId);
+  nsBox.appendChild(ta);
+  panel.appendChild(nsBox);
+
+  // ACTIONS
+  var act = el("div","cact");
+  var actDel = el("button","cbtn",t("btn_delsec"));
+  actDel.setAttribute("data-k","btn_delsec");
+  actDel.style.display = "none";
+  actDel.className = "cbtn add-sec-btn";
+  actDel.onclick = (function(s){return function(){deleteSection(s);};})(secId);
+  // Show only in edit mode via class "act-edit-only"
+  actDel.setAttribute("data-editonly","1");
+  act.appendChild(actDel);
+  var pBtn = el("button","cbtn",t("btn_print"));
+  pBtn.setAttribute("data-k","btn_print");
+  pBtn.onclick = function(){ window.print(); };
+  act.appendChild(pBtn);
+  var sBtn = el("button","cbtn gold",t("btn_save"));
+  sBtn.setAttribute("data-k","btn_save");
+  sBtn.onclick = saveData;
+  act.appendChild(sBtn);
+  panel.appendChild(act);
+
+  return panel;
+ }
+
+ function renderBlock(secId, blockIdx, block){
+  var box = el("div","cb");
+  var h = el("div","cb-h");
+  var num = el("div","cbn s",(blockIdx+1));
+  h.appendChild(num);
+  var ttl = el("h4",null,block.title || "");
+  ttl.contentEditable = false;
+  ttl.setAttribute("data-path","blocks."+blockIdx+".title");
+  ttl.setAttribute("data-sec",secId);
+  h.appendChild(ttl);
+  var actBtns = el("div","cb-act");
+  var bDel = el("button","ix del","\u00d7");
+  bDel.title = "Supprimer ce bloc";
+  bDel.onclick = (function(s,i){return function(){delBlock(s,i);};})(secId,blockIdx);
+  actBtns.appendChild(bDel);
+  h.appendChild(actBtns);
+  box.appendChild(h);
+
+  var ul = el("ul");
+  if(block.items){
+   for(var i=0;i<block.items.length;i++){
+    ul.appendChild(renderItem(secId, blockIdx, i, block.items[i]));
+   }
+  }
+  box.appendChild(ul);
+
+  var addRow = el("div","add-row");
+  var addBtn = el("button",null,t("btn_addrow"));
+  addBtn.setAttribute("data-k","btn_addrow");
+  addBtn.onclick = (function(s,i){return function(){addRowTo(s,i);};})(secId,blockIdx);
+  addRow.appendChild(addBtn);
+  box.appendChild(addRow);
+
+  return box;
+ }
+
+ function renderItem(secId, blockIdx, itemIdx, item){
+  var li = el("li");
+  var qty = el("span","qty",item.q || "-");
+  qty.contentEditable = false;
+  qty.setAttribute("data-path","blocks."+blockIdx+".items."+itemIdx+".q");
+  qty.setAttribute("data-sec",secId);
+  li.appendChild(qty);
+  var lab = el("span","lab",item.l || "");
+  lab.contentEditable = false;
+  lab.setAttribute("data-path","blocks."+blockIdx+".items."+itemIdx+".l");
+  lab.setAttribute("data-sec",secId);
+  li.appendChild(lab);
+  var del = el("button","delx","\u00d7");
+  del.onclick = (function(s,b,i){return function(){delItem(s,b,i);};})(secId,blockIdx,itemIdx);
+  li.appendChild(del);
+  return li;
+ }
+
+ /* ---------- EDIT MODE ---------- */
+ function setEditAttribs(on){
+  var nodes = document.querySelectorAll("[data-path]");
+  for(var i=0;i<nodes.length;i++){
+   nodes[i].contentEditable = on ? "true" : "false";
+   if(on) nodes[i].classList.add("e-edit");
+   else nodes[i].classList.remove("e-edit");
+  }
+  // bind blur
+  if(on){
+   for(var j=0;j<nodes.length;j++){
+    nodes[j].onblur = onFieldBlur;
+    nodes[j].onkeydown = function(e){ if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); e.target.blur(); } };
+   }
+  }
+  // delete-section button visibility
+  var delSec = document.querySelectorAll("[data-editonly]");
+  for(var k=0;k<delSec.length;k++){ delSec[k].style.display = on ? "" : "none"; }
+ }
+
+ function onFieldBlur(e){
+  var node = e.target;
+  var path = node.getAttribute("data-path");
+  var secId = node.getAttribute("data-sec");
+  if(!path || !secId) return;
+  var val = node.textContent;
+  setPath(data[secId], path, val);
+  markDirty();
+ }
+
+ function setPath(obj, path, val){
+  var parts = path.split(".");
+  var cur = obj;
+  for(var i=0;i<parts.length-1;i++){
+   var p = parts[i];
+   if(/^\d+$/.test(p)) p = parseInt(p,10);
+   cur = cur[p];
+   if(cur == null) return;
+  }
+  var last = parts[parts.length-1];
+  if(/^\d+$/.test(last)) last = parseInt(last,10);
+  cur[last] = val;
+ }
+
+ function toggleEdit(){
+  editing = !editing;
+  document.body.classList.toggle("editing", editing);
+  $("modeLbl").textContent = editing ? t("etb_edit") : t("etb_read");
+  $("editBtn").innerHTML = (editing ? "\u2713 " : "") + (editing ? t("etb_read") : t("btn_edit"));
+  setEditAttribs(editing);
+ }
+ window.toggleEdit = toggleEdit;
+
+ /* ---------- SAVE / EXPORT / IMPORT ---------- */
+ var dirty = false;
+ function markDirty(){ dirty = true; setStatus(t("etb_lbl") + " : " + t("etb_edit"), "warn"); }
+ function setStatus(text, kind){
+  var s = $("status");
+  s.textContent = text;
+  s.className = "eb-status" + (kind ? " "+kind : "");
+ }
+ function saveData(){
+  try{
+   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+   dirty = false;
+   setStatus(t("toast_save"), "ok");
+   showToast(t("toast_save"), "ok");
+  }catch(err){
+   showToast(t("toast_error"), "err");
+  }
+ }
+ window.saveData = saveData;
+ function exportJSON(){
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "OM_CahierDesCharges_" + new Date().toISOString().slice(0,10) + ".json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast(t("toast_export"), "ok");
+ }
+ window.exportJSON = exportJSON;
+ function importJSON(ev){
+  var file = ev.target.files[0];
+  if(!file) return;
+  var rd = new FileReader();
+  rd.onload = function(e){
+   try{
+    var obj = JSON.parse(e.target.result);
+    data = obj;
+    saveData();
+    renderTabs();
+    renderPanels();
+    applyI18n();
+    setEditAttribs(editing);
+    showToast(t("toast_import"), "ok");
+   }catch(err){
+    showToast(t("toast_error"), "err");
+   }
+  };
+  rd.readAsText(file);
+  ev.target.value = "";
+ }
+ window.importJSON = importJSON;
+ function resetData(){
+  if(!confirm("Reinitialiser toutes les modifications ?")) return;
+  data = JSON.parse(JSON.stringify(defaultData));
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+  renderTabs();
+  renderPanels();
+  applyI18n();
+  setEditAttribs(editing);
+  showToast(t("toast_reset"), "ok");
+ }
+ window.resetData = resetData;
+
+ /* ---------- ADD / DELETE STRUCTURE ---------- */
+ function addRowTo(secId, blockIdx){
+  data[secId].blocks[blockIdx].items.push({q:"-",l:"Nouvelle ligne"});
+  markDirty();
+  rerender();
+  showToast(t("toast_addrow"), "ok");
+ }
+ function delItem(secId, blockIdx, itemIdx){
+  data[secId].blocks[blockIdx].items.splice(itemIdx,1);
+  markDirty();
+  rerender();
+  showToast(t("toast_delrow"), "ok");
+ }
+ function addBlockTo(secId){
+  if(!data[secId].blocks) data[secId].blocks = [];
+  data[secId].blocks.push({title:"Nouveau bloc", items:[{q:"-",l:"Nouvelle ligne"}]});
+  markDirty();
+  rerender();
+  showToast(t("toast_addblock"), "ok");
+ }
+ function delBlock(secId, blockIdx){
+  if(!confirm("Supprimer ce bloc ?")) return;
+  data[secId].blocks.splice(blockIdx,1);
+  markDirty();
+  rerender();
+  showToast(t("toast_delblock"), "ok");
+ }
+ function addSection(){
+  var name = prompt(t("ph_sec_title"), "Nouvelle section");
+  if(!name) return;
+  var id = "sec_" + Date.now();
+  data[id] = {
+   id:id,
+   icon:"Plat",
+   num:String(getKeys().length+1).padStart ? String(getKeys().length+1).padStart(2,"0") : "0"+(getKeys().length+1),
+   title:name,
+   subtitle:"",
+   intro:"Description de la section",
+   meta:[{k:"Moment",v:"A definir"}],
+   blocks:[{title:"Nouveau bloc",items:[{q:"-",l:"Premiere ligne"}]}],
+   notes:"",
+   freeNotes:""
+  };
+  markDirty();
+  rerender();
+  activateTab(id);
+  showToast(t("toast_addsec"), "ok");
+ }
+ window.addSection = addSection;
+ function deleteSection(secId){
+  if(!confirm("Supprimer definitivement cette section ?")) return;
+  delete data[secId];
+  markDirty();
+  rerender();
+  showToast(t("toast_delsec"), "ok");
+ }
+
+ function rerender(){
+  renderTabs();
+  renderPanels();
+  applyI18n();
+  setEditAttribs(editing);
+ }
+
+ /* ---------- TOAST ---------- */
+ var toastTimer = null;
+ function showToast(msg, kind){
+  var tt = $("toast");
+  tt.textContent = msg;
+  tt.className = "toast show" + (kind ? " "+kind : "");
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ tt.className = "toast"; }, 2600);
+ }
+
+ /* ---------- LANG ---------- */
+ function bindLang(){
+  var btns = document.querySelectorAll(".lp button");
+  for(var i=0;i<btns.length;i++){
+   btns[i].onclick = (function(b){return function(){
+    var l = b.getAttribute("data-lang");
+    lang = l;
+    try{ localStorage.setItem(LANG_KEY, l); }catch(e){}
+    var all = document.querySelectorAll(".lp button");
+    for(var j=0;j<all.length;j++) all[j].classList.remove("on");
+    b.classList.add("on");
+    rerender();
+    setStatus("");
+   };})(btns[i]);
+   if(btns[i].getAttribute("data-lang") === lang){
+    var all = document.querySelectorAll(".lp button");
+    for(var j=0;j<all.length;j++) all[j].classList.remove("on");
+    btns[i].classList.add("on");
+   }
+  }
+ }
+
+ /* ---------- NAV SCROLL ---------- */
+ function bindNav(){
+  var navLinks = document.querySelectorAll(".nav a");
+  for(var i=0;i<navLinks.length;i++){
+   navLinks[i].onclick = function(e){
+    var nav = document.getElementById("nav");
+    if(nav) nav.classList.remove("open");
+    var all = document.querySelectorAll(".nav a");
+    for(var k=0;k<all.length;k++) all[k].classList.remove("on");
+    this.classList.add("on");
+   };
+  }
+ }
+
+ /* ---------- BOOT ---------- */
+ function boot(){
+  loadData();
+  rerender();
+  bindLang();
+  bindNav();
+  setStatus("");
+ }
+ if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", boot);
+ }else{
+  boot();
+ }
+})();
+</script>
+
+<!-- ===== DATA & SCRIPTS ===== -->
+<div class="toast" id="toast"></div>
+<script type="application/json" id="rd">
+{
+ "pdj": {
+  "id": "pdj",
+  "icon": "Soleil",
+  "num": "01",
+  "title": "Petit-dejeuner Jour de Match",
+  "subtitle": "Le repas qui lance la performance",
+  "intro": "Petit-dejeuner servi le matin du match. Compose pour apporter glucides complexes, proteines de qualite et hydratation optimale. Tous les ingredients sont selectionnes BIO en priorite.",
+  "meta": [
+   {"k":"Moment","v":"Matin J du match"},
+   {"k":"Standards","v":"BIO + Halal certifie"},
+   {"k":"Allergenes","v":"Affichage obligatoire"},
+   {"k":"Eau","v":"Ambiante + froide"}
+  ],
+  "blocks": [
+   {
+    "title":"Pain et cereales (complet / riches en grains)",
+    "items":[
+     {"q":"500 g","l":"Muesli BIO sans sucre ajoute"},
+     {"q":"300 g","l":"Flocons d'avoine"},
+     {"q":"1 bte","l":"Weetabix Original (boite 430 g)"},
+     {"q":"500 g","l":"Pain de seigle"},
+     {"q":"250 g","l":"Pain sans gluten et sans graines"},
+     {"q":"2 kg","l":"Pain blanc baguette (8-10 baguettes), english muffins (30 pieces)"},
+     {"q":"40 tr","l":"Pain de mie sans croute a toaster, sans sucres ajoutes (+ grille-pain)"}
+    ]
+   },
+   {
+    "title":"Preparation glucidique",
+    "items":[
+     {"q":"90","l":"Pancakes - voir recette 8 / dressage 10 assiettes x 2 pancakes"},
+     {"q":"20","l":"Pancakes sans gluten - voir recette 8bis"},
+     {"q":"2","l":"Banana bread sportif - voir recette 7A"},
+     {"q":"3 L","l":"Smoothie banane / lait avoine / dattes"},
+     {"q":"1","l":"Saladier de Porridge - voir cahier des recettes"}
+    ]
+   },
+   {
+    "title":"Legumes et avocats",
+    "items":[
+     {"q":"25 u","l":"St Moret BIO portions individuelles 16,7 g"},
+     {"q":"16","l":"Purees d'avocats sans ajout (8 par saladier x 2)"}
+    ]
+   },
+   {
+    "title":"Laitages (non sucres - max 3%)",
+    "items":[
+     {"q":"1 pot","l":"ALPRO Avoine + Coco + Amande (pots 500 g, 1 de chaque)"},
+     {"q":"1,5 kg","l":"Skyr nature en saladier"},
+     {"q":"1,5 kg","l":"Fromage blanc en saladier"},
+     {"q":"10 u","l":"Yaourt Nature BIO + Yaourt aux fruits BIO Les 2 Vaches (par arome)"},
+     {"q":"15 u","l":"Yaourt vanille Les 2 Vaches BIO uniquement"}
+    ]
+   },
+   {
+    "title":"Viande - volaille - poissons - oeufs",
+    "items":[
+     {"q":"90 u","l":"Oeufs BIO - mise en place pour brouilles et omelette (station omelette)"},
+     {"q":"20 x 35 g","l":"Jambon de dinde Halal sans nitrite"},
+     {"q":"20 x 35 g","l":"Jambon de poulet Halal sans nitrite"},
+     {"q":"20 x 50 g","l":"Bresaola Halal coupee finement"},
+     {"q":"20 x 35 g","l":"Saumon fume SAUVAGE ideal ou BIO, sans antibiotique"}
+    ]
+   },
+   {
+    "title":"Station sandwich toast maison",
+    "items":[
+     {"q":"30","l":"Toast 1 - pain de mie BIO + StMoret + jambon de dinde Halal"},
+     {"q":"60","l":"Toast 2 - pain de mie BIO + StMoret + jambon de poulet Halal (voir cahier de recette)"}
+    ]
+   },
+   {
+    "title":"Boissons chaudes",
+    "items":[
+     {"q":"1 L","l":"Lait chaud demi-ecreme"},
+     {"q":"-","l":"Selection cafes (intensites et decafeines) - machine Nespresso"},
+     {"q":"-","l":"Selection de thes et infusions"}
+    ]
+   },
+   {
+    "title":"Boissons froides",
+    "items":[
+     {"q":"1 L","l":"Lait froid demi-ecreme"},
+     {"q":"1 L x 3","l":"Boissons vegetales - lait avoine + soja + amande (BIO sans sucres ajoutes)"},
+     {"q":"10 L","l":"Jus orange presse machine Sempa"},
+     {"q":"2 L","l":"Smoothie de fruits rouges - voir recette"},
+     {"q":"-","l":"Centrifugeuse - gingembre, pomme, betterave, carotte, celeri branches"}
+    ]
+   },
+   {
+    "title":"Glucides et tartinables",
+    "items":[
+     {"q":"~280 g","l":"Beurre doux individuel 10 g - a donner au nutritionniste sur place"},
+     {"q":"400 g","l":"Stevia Pure Via cristallisee en stick"},
+     {"q":"500 g","l":"Sucre complet de canne"},
+     {"q":"250 g","l":"Miel origine France (idealement en squeezer)"},
+     {"q":"200 g","l":"Brisures de pistole de chocolat noir > 75%"},
+     {"q":"1 pot","l":"Confiture 65% de fruits (Bonne Maman Intense / Leonce Blanc)"},
+     {"q":"1 pot","l":"Puree de cacahuetes 100% BIO + pate a tartiner Emile Noel 62% noisettes BIO"}
+    ]
+   },
+   {
+    "title":"Fruits frais et fruits cuits",
+    "items":[
+     {"q":"3 kg","l":"Fraises BIO en saladier"},
+     {"q":"1,5 kg","l":"Framboises BIO"},
+     {"q":"1,5 kg","l":"Myrtilles BIO"},
+     {"q":"750 g","l":"Mures BIO"},
+     {"q":"1 kg x 2","l":"Fruits de saison au choix"},
+     {"q":"-","l":"Corbeille de fruits entiers de saison - pomme, poire, banane"}
+    ]
+   }
+  ],
+  "notes":"Pas de pain sur la table mais en zone de service libre. Affichage allergenes obligatoire. Gel hydroalcoolique a l'entree du buffet. Presentation en contenants qualitatifs (carafes, saladiers).",
+  "freeNotes": ""
+ },
+ "dej": {
+  "id": "dej",
+  "icon": "Plat",
+  "num": "02",
+  "title": "Dejeuner - Dernier repas avant Match",
+  "subtitle": "Service J-3h30 du coup d'envoi",
+  "intro": "Dejeuner servi 3h30 avant le match si c'est le dernier repas. Repas equilibre, digeste, riche en glucides complexes. 1/3 des proteines doit etre tenu a disposition du chef en station live cooking.",
+  "meta": [
+   {"k":"Timing","v":"J-3h30 avant coup d'envoi"},
+   {"k":"Cuisson live","v":"1/3 proteines au chef"},
+   {"k":"Validation","v":"Avec le chef et nutritionniste"},
+   {"k":"Service","v":"Eau ambiante + froide"}
+  ],
+  "blocks": [
+   {
+    "title":"Pain et cereales completes",
+    "items":[
+     {"q":"250 g","l":"Pain sans gluten et sans graines"},
+     {"q":"2 kg","l":"Pain blanc baguette (8-10 baguettes) + english muffin (30 pieces)"},
+     {"q":"300 g","l":"Flocons d'avoine + Weetabix Original"},
+     {"q":"1 bte","l":"Weetabix - boite 430 g"},
+     {"q":"40 tr","l":"Pain de mie a toaster sans croute, sans sucres ajoutes (+ grille-pain)"}
+    ]
+   },
+   {
+    "title":"Entrees et crudites - Salad bar",
+    "items":[
+     {"q":"800 g","l":"Salade romaine ou Iceberg emincee"},
+     {"q":"6 p","l":"Mais doux"},
+     {"q":"20","l":"Quartiers de tomates (uniquement de saison et origine FR)"},
+     {"q":"4 p","l":"Concombres peles"},
+     {"q":"20","l":"Avocats coupes en cubes"},
+     {"q":"800 g","l":"Carotte rapee"}
+    ]
+   },
+   {
+    "title":"Proteines (charcuterie et poisson fume)",
+    "items":[
+     {"q":"20 tr","l":"Jambon de dinde Halal sans nitrite"},
+     {"q":"20 tr","l":"Jambon de poulet Halal sans nitrite"},
+     {"q":"20 tr","l":"Bresaola Halal coupee finement, sans nitrite"},
+     {"q":"20 tr","l":"Saumon fume SAUVAGE idealement (sinon BIO sans antibiotique)"}
+    ]
+   },
+   {
+    "title":"Condiments et oleagineux",
+    "items":[
+     {"q":"-","l":"Vinaigrette maison 50% olive + 50% colza, peu de moutarde"},
+     {"q":"-","l":"Quartiers de citron, fleur de sel (pas de poivre)"},
+     {"q":"-","l":"Huile d'olive vierge 1ere pression a froid + huile de noix + vinaigre balsamique + sauce soja salee"},
+     {"q":"-","l":"Oleagineux BIO non-sales : noix, noisettes, amandes, cajou, pecan, pistaches"},
+     {"q":"-","l":"Fruits secs BIO : abricots, figues, baies de Goji, cranberries, dattes Medjool, mangue, coco"},
+     {"q":"-","l":"Graines BIO : lin, sesame blanc, courge, chia"}
+    ]
+   },
+   {
+    "title":"Station du chef - Live cooking (voir document Wok / Pates)",
+    "items":[
+     {"q":"4 kg","l":"Legumes WOK sautes selon saisonnalite"},
+     {"q":"6 kg","l":"Nouilles de riz"},
+     {"q":"250 g","l":"Riz jasmin ou Thai"},
+     {"q":"500 g","l":"Pates blanches Mezze maniche ou pate courte (De Cecco / Rummo)"},
+     {"q":"500 g","l":"Pates SANS GLUTEN - penne ET linguine (Rummo / Barilla) cuisson a la demande"},
+     {"q":"-","l":"Ciboulette, herbes, condiments, toppings (voir doc station)"}
+    ]
+   },
+   {
+    "title":"Viande - volaille - poissons - feculents (Chafing dish)",
+    "items":[
+     {"q":"50 p","l":"Filet de Bar et Pave de Saumon (filet avec peau) 25 + 25"},
+     {"q":"50 p","l":"Aiguillettes de Poulet Halal - rotis curcuma persil, mix vapeur 70 C a coeur"},
+     {"q":"-","l":"Pommes de terre aux herbes au four"},
+     {"q":"-","l":"Pates cuites moitie du temps al dente, en gastros, ne pas exposer en chafing"}
+    ]
+   },
+   {
+    "title":"Mini-sandwich triangle toaste type panini",
+    "items":[
+     {"q":"60","l":"Mini-sandwichs sportifs servis chauds (voir recette 5)"}
+    ]
+   },
+   {
+    "title":"Laitages (non sucres - max 3%)",
+    "items":[
+     {"q":"25 u","l":"St Moret BIO portions individuelles 16,7 g"},
+     {"q":"1 pot","l":"ALPRO Avoine, Coco, Amande (pot 500 g, 1 de chaque)"},
+     {"q":"1,5 kg","l":"Skyr nature en saladier"},
+     {"q":"1,5 kg","l":"Fromage blanc en saladier"},
+     {"q":"6 u","l":"Yaourt Nature BIO + fruits BIO Les 2 Vaches (par arome)"},
+     {"q":"15 u","l":"Yaourt vanille Les 2 Vaches BIO"}
+    ]
+   },
+   {
+    "title":"Glucides et tartinables",
+    "items":[
+     {"q":"10 p","l":"Beurre doux individuel 10 g (250-300 g - a donner au nutritionniste)"},
+     {"q":"1 pot","l":"Puree de cacahuetes 100% BIO"},
+     {"q":"400 g","l":"Stevia Pure Via cristallisee en stick"},
+     {"q":"500 g","l":"Sucre complet de canne"},
+     {"q":"250 g","l":"Miel origine France (squeezer)"},
+     {"q":"200 g","l":"Brisures de pistole de chocolat noir > 75%"},
+     {"q":"1 pot","l":"Confiture 65% de fruits (Bonne Maman / Leonce Blanc)"}
+    ]
+   }
+  ],
+  "notes":"1/3 de la viande, du saumon et du poulet doit etre taille et mis a disposition du chef en station live cooking. Le poisson peut etre modifie a la demande du nutritionniste ou du chef. Le salad bar peut changer selon les demandes du service nutrition.",
+  "freeNotes": ""
+ },
+ "din": {
+  "id": "din",
+  "icon": "Lune",
+  "num": "03",
+  "title": "Diner Veille de Match",
+  "subtitle": "Charge glucidique et digestion optimale",
+  "intro": "Diner servi la veille du match. Apport glucidique adapte, charge proteique maitrisee, repas digeste. Une presentation individuelle des desserts peut etre demandee, voir photo de presentation.",
+  "meta": [
+   {"k":"Moment","v":"Veille de match au soir"},
+   {"k":"Cuisson","v":"Pates 5 min al dente"},
+   {"k":"Soupe","v":"Si demande nutritionniste"},
+   {"k":"Validation","v":"Chef + nutritionniste"}
+  ],
+  "blocks": [
+   {
+    "title":"Pain et cereales completes",
+    "items":[
+     {"q":"500 g","l":"Pain de seigle"},
+     {"q":"250 g","l":"Pain sans gluten et sans graines"},
+     {"q":"48 tr","l":"Pain de mie sans croute (blanc)"},
+     {"q":"1 kg","l":"Pain blanc baguette (4-5 baguettes)"}
+    ]
+   },
+   {
+    "title":"Soupe (uniquement si demande du nutritionniste)",
+    "items":[
+     {"q":"4 L","l":"Gaspacho maison (printemps-ete) OU potage de legumes maison (automne-hiver), < 5% de matieres grasses, ideal huile d'olive"}
+    ]
+   },
+   {
+    "title":"Entrees et crudites - Salad bar",
+    "items":[
+     {"q":"1","l":"Saladier salade romaine ou Iceberg emincee"},
+     {"q":"20 p","l":"Tomates en quartier (saison + origine FR) ou tomates cerises"},
+     {"q":"20","l":"Verrine de betterave OU assiette d'entree dressee (voir cahier des recettes)"},
+     {"q":"500 g","l":"Mais doux"},
+     {"q":"800 g","l":"Carotte rapee"},
+     {"q":"4 p","l":"Concombres peles"},
+     {"q":"20","l":"Oeufs durs coupes en deux"},
+     {"q":"500 g","l":"1 legumineuse au choix - pois chiches OU lentilles OU edamame"},
+     {"q":"20","l":"Avocats coupes en cubes"}
+    ]
+   },
+   {
+    "title":"Charcuterie et saumon fume",
+    "items":[
+     {"q":"20 tr","l":"Jambon de dinde Halal sans nitrite"},
+     {"q":"20 tr","l":"Jambon de poulet Halal sans nitrite"},
+     {"q":"20 tr","l":"Bresaola Halal coupee finement sans nitrite"},
+     {"q":"20 tr","l":"Saumon fume SAUVAGE idealement ou BIO"}
+    ]
+   },
+   {
+    "title":"Condiments et bar a graines",
+    "items":[
+     {"q":"-","l":"Vinaigrette maison 50% olive + 50% colza, peu de moutarde"},
+     {"q":"-","l":"Ciboulette, persil, quartier de citron, fleur de sel, poivre"},
+     {"q":"-","l":"Oleagineux BIO non-sales : noix, noisettes, amandes, cajou, pecan, pistaches"},
+     {"q":"-","l":"Fruits secs BIO : abricots, figues, baies de Goji, cranberries, dattes Medjool, mangue, coco"},
+     {"q":"-","l":"Graines BIO : lin, sesame blanc, courge, chia"},
+     {"q":"-","l":"Huiles : olive 1ere pression a froid, noix, sesame + vinaigre balsamique + sauce soja salee"}
+    ]
+   },
+   {
+    "title":"Station du chef - Live cooking",
+    "items":[
+     {"q":"3 kg","l":"Legumes WOK sautes selon saisonnalite"},
+     {"q":"2 kg","l":"Nouilles de riz"},
+     {"q":"3 kg","l":"Riz jasmin ou Thai"},
+     {"q":"6 kg","l":"Pates Mezze maniche ou pate courte (De Cecco / Rummo) - cuisson 5 min tres al dente"},
+     {"q":"250 g","l":"Pates SANS GLUTEN - penne ET linguine (Rummo / Barilla) a la demande"},
+     {"q":"500 g","l":"Ciboulette, herbes, condiments, toppings (voir doc station)"}
+    ]
+   },
+   {
+    "title":"Viande - volaille - poissons - feculents (Chafing dish)",
+    "items":[
+     {"q":"2 kg","l":"Riz jasmin cuit"},
+     {"q":"3 kg","l":"Pommes de terre fromage chapelure facon croquettes (cuisson four)"},
+     {"q":"50 p","l":"Filet de Bar ET Pave de Saumon - 20 + 30 (filet avec peau)"},
+     {"q":"50 p","l":"Filet de Poulet Jaune Halal (15) + Cuisse desossee (35) - marinade faible MG, double cuisson grille puis four"},
+     {"q":"750 ml x 2","l":"2 sauces - sauce vierge pour saumon + base fromage blanc curry soja moutarde ancienne pour poulet"}
+    ]
+   },
+   {
+    "title":"Garniture",
+    "items":[
+     {"q":"1,5 kg","l":"Pois gourmands assaisonnes persil + noix de cajou mixees (recette cahier)"},
+     {"q":"3 kg","l":"Epinards en feuilles, frais, snackes et cuits minute"}
+    ]
+   },
+   {
+    "title":"Laitages (non sucres - max 3%)",
+    "items":[
+     {"q":"1 pot","l":"ALPRO Avoine, Coco, Amande (pot 500 g, 1 de chaque)"},
+     {"q":"1,5 kg","l":"Skyr nature en saladier"},
+     {"q":"1,5 kg","l":"Fromage blanc en saladier"},
+     {"q":"10 u","l":"Yaourt Nature BIO + fruits BIO framboise / myrtille / citron Les 2 Vaches"},
+     {"q":"15 u","l":"Yaourt vanille Les 2 Vaches BIO"}
+    ]
+   },
+   {
+    "title":"Glucides",
+    "items":[
+     {"q":"400 g","l":"Stevia Pure Via cristallisee en stick"},
+     {"q":"-","l":"Sucre complet de canne"},
+     {"q":"200 g","l":"Brisures de pistole de chocolat noir > 75%"},
+     {"q":"-","l":"Miel origine France (squeezer)"}
+    ]
+   },
+   {
+    "title":"Desserts",
+    "items":[
+     {"q":"3 L","l":"Smoothie banane / lait avoine / dattes (ou autre recette nutritionniste)"},
+     {"q":"100","l":"Pancakes (voir recette 8)"},
+     {"q":"20","l":"Pancakes SANS GLUTEN (voir recette 8bis)"},
+     {"q":"3","l":"Banana bread sportif (voir recette 7A)"}
+    ]
+   },
+   {
+    "title":"Fruits frais et fruits cuits",
+    "items":[
+     {"q":"-","l":"Saladiers de fruits decoupes BIO - fraises 4 kg / framboises 2 kg / myrtilles 2 kg / mures 1 kg + fruits saison 1,5 kg x 2"},
+     {"q":"-","l":"Mangue (20 pieces) + Ananas (6 grosses pieces) - provenance avion obligatoire"},
+     {"q":"-","l":"Corbeille de fruits entiers de saison"}
+    ]
+   },
+   {
+    "title":"Boissons froides",
+    "items":[
+     {"q":"1 / pers","l":"Eau minerale plate 50 cl"},
+     {"q":"22 btl","l":"Eau gazeuse St Yorre 50 cl - a mettre sur la table joueurs"},
+     {"q":"-","l":"Carafe d'eau fruitee (voir recette page 10)"}
+    ]
+   }
+  ],
+  "notes":"Pates cuites 5 min tres al dente en gastros a disposition du chef, ne pas exposer en chafing dish. Decorer la moitie du poisson avec des herbes aromatiques apres validation. 1/3 de la viande, saumon et poulet filet doit etre taille au chef en live cooking. Possibilite de dressage individuel des legumineuses en bols (sous validation chef + nutritionniste).",
+  "freeNotes": ""
+ },
+ "col": {
+  "id": "col",
+  "icon": "Snack",
+  "num": "04",
+  "title": "Collation H-3h15 du Match",
+  "subtitle": "Le dernier carburant avant l'effort",
+  "intro": "Collation servie 3h15 avant le match. Repas leger, glucides assimilables, faible en matieres grasses. Preparation maison a emporter (puree de dattes denoyautees) a remettre au nutritionniste.",
+  "meta": [
+   {"k":"Timing","v":"H-3h15 du coup d'envoi"},
+   {"k":"Profil","v":"Glucides assimilables"},
+   {"k":"A emporter","v":"Puree de dattes maison"},
+   {"k":"Eau","v":"Ambiante + froide"}
+  ],
+  "blocks": [
+   {
+    "title":"Pain et cereales (complet / riches en grains)",
+    "items":[
+     {"q":"250 g","l":"Pain sans gluten et sans graines"},
+     {"q":"2 kg","l":"Pain blanc baguette (8-10 baguettes)"},
+     {"q":"250 g","l":"Flocons d'avoine"},
+     {"q":"1 bte","l":"Weetabix Original (boite 430 g)"},
+     {"q":"40 tr","l":"Pain de mie sans croute a toaster, sans sucres ajoutes (+ grille-pain)"}
+    ]
+   },
+   {
+    "title":"Feculents (station du chef)",
+    "items":[
+     {"q":"500 g","l":"Pates blanches penne (De Cecco ou Rummo) - bien cuites"},
+     {"q":"500 g","l":"Riz Basmati"},
+     {"q":"1 bol","l":"Pesto maison"},
+     {"q":"1 bol","l":"Sauce tomate maison sans sucres ajoutes, sans epices, sans herbes, < 5% huile d'olive"},
+     {"q":"-","l":"Parmesan en poudre"}
+    ]
+   },
+   {
+    "title":"Laitages (non sucres - max 3%)",
+    "items":[
+     {"q":"25 u","l":"St Moret BIO portions individuelles 16,7 g"},
+     {"q":"1 pot","l":"ALPRO Avoine, Coco, Amande (pot 500 g, 1 de chaque)"},
+     {"q":"1,5 kg","l":"Skyr nature en saladier"},
+     {"q":"1,5 kg","l":"Fromage blanc en saladier"},
+     {"q":"6 u","l":"Yaourt Nature BIO + fruits BIO Les 2 Vaches (par arome)"},
+     {"q":"15 u","l":"Yaourt vanille Les 2 Vaches BIO"}
+    ]
+   },
+   {
+    "title":"Viande - volaille - poissons - oeufs",
+    "items":[
+     {"q":"1 kg","l":"Aiguillettes de poulet Halal en mini brochettes - grille snacke puis four mix vapeur 70 C a coeur, sans MG"},
+     {"q":"20 tr","l":"Jambon de dinde Halal sans nitrite"},
+     {"q":"20 tr","l":"Jambon de poulet Halal sans nitrite"},
+     {"q":"20 tr","l":"Bresaola Halal coupee finement"},
+     {"q":"20 tr","l":"Saumon fume SAUVAGE idealement"}
+    ]
+   },
+   {
+    "title":"Mini-sandwich triangle toaste type panini",
+    "items":[
+     {"q":"60","l":"Mini-sandwichs poulet servis chauds"},
+     {"q":"30","l":"Mini-sandwichs dinde servis chauds (total 90, voir recette 5)"}
+    ]
+   },
+   {
+    "title":"Glucides et tartinables",
+    "items":[
+     {"q":"10 p","l":"Beurre doux individuel 10 g (~250-300 g - a donner au nutritionniste)"},
+     {"q":"1 pot","l":"Puree de cacahuetes 100% BIO"},
+     {"q":"400 g","l":"Stevia Pure Via cristallisee en stick"},
+     {"q":"500 g","l":"Sucre complet de canne"},
+     {"q":"250 g","l":"Miel origine France (squeezer)"},
+     {"q":"1 pot","l":"Confiture 65% de fruits (Bonne Maman Intense / Leonce Blanc)"}
+    ]
+   },
+   {
+    "title":"Desserts",
+    "items":[
+     {"q":"30","l":"Verrines Riz au lait sportif (voir recette)"},
+     {"q":"30","l":"Pancakes sans gluten (voir recette 8bis)"},
+     {"q":"100","l":"Pancakes (voir recette 8)"}
+    ]
+   },
+   {
+    "title":"Boissons chaudes",
+    "items":[
+     {"q":"2 L","l":"Lait chaud demi-ecreme"},
+     {"q":"-","l":"Selection cafes Nespresso (intensites + decafeines)"},
+     {"q":"-","l":"Selection thes et infusions"}
+    ]
+   },
+   {
+    "title":"Boissons froides",
+    "items":[
+     {"q":"1 L","l":"Lait froid demi-ecreme + lait avoine + soja + amandes"},
+     {"q":"8-10 L","l":"Jus orange presse machine Sempa"},
+     {"q":"1 / pers","l":"Eau minerale plate ET gazeuse 50 cl"},
+     {"q":"22 btl","l":"Eau gazeuse St Yorre 50 cl"},
+     {"q":"2 L","l":"Smoothie de fruits rouges (voir recette)"},
+     {"q":"-","l":"Carafe d'eau fruitee (voir recette page 10)"}
+    ]
+   },
+   {
+    "title":"Fruits frais et fruits cuits",
+    "items":[
+     {"q":"2","l":"Saladiers fruits decoupes BIO - fraises 4 kg / framboises 2 kg / myrtilles 2 kg / mures 1 kg + saison 1,5 kg x 2"},
+     {"q":"20+6","l":"Mangue (20 pieces) + Ananas (6 grosses pieces) - provenance avion"},
+     {"q":"-","l":"Corbeille de fruits entiers de saison"},
+     {"q":"-","l":"Compote de pommes maison sans sucres ajoutes, sans epices"}
+    ]
+   },
+   {
+    "title":"Preparation maison a emporter (au nutritionniste)",
+    "items":[
+     {"q":"200 g","l":"Puree de dattes Medjool denoyautees - nature, mixee, eventuellement delayee avec compote de pomme. Conditionnees en 2 contenants."}
+    ]
+   }
+  ],
+  "notes":"Cette collation est servie 3h15 avant le match. Affichage allergenes obligatoire. Gel hydroalcoolique a l'entree du buffet. La puree de dattes est preparee a emporter et remise au nutritionniste sur place.",
+  "freeNotes": ""
+ }
+}
+</script>
+<script type="application/json" id="i18n">
+{
+ "fr": {
+  "brand_main":"Restauration en déplacement","brand_sub":"Saison 2025-2026",
+  "nav_home":"Accueil","nav_proj":"Le projet","nav_cdc":"Cahier des charges","nav_book":"Book recettes","nav_st":"Stations",
+  "hero_tag":"Saison 2025 - 2026 . Restauration en déplacement",
+  "hero_h1":"Cahier des Charges","hero_h1b":"Restauration",
+  "hero_lead":"Cahier des charges de la restauration des joueurs et du staff de l'Olympique de Marseille lors des déplacements. Spécifications par moment de service à destination des hôtels partenaires.",
+  "st_themes":"Thèmes","st_rec":"Recettes","st_stat":"Stations","st_lang":"Langues",
+  "qa_pdj_lbl":"Petit-déjeuner","qa_pdj":"Jour de match",
+  "qa_dej_lbl":"Déjeuner","qa_dej":"Avant-match J-3h30",
+  "qa_din_lbl":"Dîner","qa_din":"Veille de match",
+  "qa_col_lbl":"Collation","qa_col":"H-3h15 du match",
+  "qa_book_lbl":"Book Digital","qa_book":"Recettes",
+  "qa_st_lbl":"Show-cooking","qa_st":"Wok & Pâtes",
+  "sec_proj_tag":"Le projet","sec_proj_h":"Restauration des joueurs en déplacement",
+  "sec_proj_p":"Le document de référence des hôtels partenaires accueillant l'équipe lors des déplacements officiels.",
+  "proj_h3":"Le document de référence pour les déplacements de l'équipe",
+  "proj_p1":"Ce cahier des charges encadre les prestations de restauration servies aux joueurs et au staff de l'<strong>Olympique de Marseille</strong> à l'occasion des <strong>déplacements et regroupements</strong> de la saison <strong>2025-2026</strong>. Établi par le service nutrition du club avec API Restauration, il précise les attentes du club auprès des hôtels partenaires : composition des repas, quantités, marques de référence et modalités de service.",
+  "proj_p2":"Chaque section est <strong>imprimable au format dossier DDPP</strong>, modifiable à la volée, et utilisable directement en cuisine. L'interface bilingue FR/EN/ES/IT facilite le déploiement international et la coordination avec les brigades multiculturelles.",
+  "proj_p3":"Le portail est complété par un <strong>book recettes digital</strong> illustré et un <strong>book technique</strong> dédié à la station show-cooking (Wok & Pâtes), accessibles depuis le menu principal.",
+  "proj_card_h":"Pilotage du projet",
+  "proj_card_1":"<b>Service nutrition OM</b> - Achraf TAMANI, Nutritionniste du sport",
+  "proj_card_2":"<b>Restauration partenaire</b> - API Restauration, équipe APICIUS",
+  "proj_card_3":"<b>Standards qualité</b> - Halal certifié, Bio prioritaire, Saisonnalité",
+  "proj_card_4":"<b>Couverture</b> - Tous les hôtels partenaires saison 2025-2026",
+  "proj_card_5":"<b>Mise à jour</b> - Version V3 du 10 décembre 2025",
+  "cdc_tag":"Le cahier des charges","cdc_h":"Standards par moment de service",
+  "cdc_p":"Quatre prestations encadrées : petit-déjeuner jour de match, déjeuner d'avant-match, dîner veille de match, collation H-3h15.",
+  "etb_lbl":"Mode","etb_read":"Lecture","etb_edit":"Édition",
+  "btn_edit":"Modifier","btn_save":"Enregistrer","btn_exp":"Exporter JSON","btn_imp":"Importer JSON","btn_rst":"Réinitialiser","btn_print":"Imprimer","btn_addsec":"+ Ajouter une nouvelle section",
+  "tab_pdj":"Petit-déjeuner","tab_dej":"Déjeuner","tab_din":"Dîner","tab_col":"Collation H-3h15",
+  "lbl_intro":"Présentation","lbl_blocks":"Composition","lbl_meta":"Informations clés","lbl_notes":"Notes & commentaires","lbl_free":"Notes libres / annotations",
+  "ph_free":"Annotations libres pour cette section : remarques opérationnelles, demandes spécifiques, retours hôtel...",
+  "btn_addrow":"+ Ajouter une ligne","btn_addblock":"+ Ajouter un bloc","btn_delsec":"Supprimer cette section",
+  "bk_lbl":"Édition Saison 2025-2026","bk_t":"Le Book des Recettes","bk_sub":"Olympique de Marseille","bk_yr":"Saison 2025 - 2026",
+  "bp_h":"Le livre des","bp_he":"recettes",
+  "bp_p":"Le recueil des recettes utilisées par les hôtels partenaires lors des déplacements de l'équipe. Plus de 45 fiches détaillées : ingrédients, quantités, modes opératoires.",
+  "bp_f1t":"Fiches A4","bp_f1s":"Format imprimable professionnel",
+  "bp_f2t":"Photos pro","bp_f2s":"Visuels de chaque plat fini",
+  "bp_f3t":"Modifiable","bp_f3s":"Adaptez chaque recette en direct",
+  "bp_f4t":"Filtres","bp_f4s":"Viande, poisson, végétarien, sans gluten",
+  "bp_open":"Ouvrir le book","bp_print":"Version imprimable",
+  "sts_tag":"Show-cooking","sts_h":"Stations de show-cooking","sts_p":"Deux stations cuisinées en direct devant les joueurs lors des déplacements : implantation, matériel, sauces et procédures.",
+  "sts_wok_h":"Station Wok","sts_wok_he":"Asian show-cooking",
+  "sts_wok_p":"Riz jasmin, noodles, poulet, crevettes, saumon, légumes saisonniers et 5 sauces signature : BBQ coréenne, soja sucrée, soja salée, sriracha, huile de sésame.",
+  "sts_pa_h":"Station Pâtes","sts_pa_he":"Italian show-cooking",
+  "sts_pa_p":"5 tables, pesto verde et rosso à la ricotta, sauce tomate Mutti, pâtes De Cecco/Rummo, options sans gluten et sans antibiotique. Cuisson maîtrisée et portionnage à 300 g cuit.",
+  "tag_setup":"Implantation","tag_elec":"12 kW","tag_prot":"Protéines","tag_sauces":"Sauces","tag_topp":"Toppings",
+  "tag_pasta":"5 tables","tag_sg":"Sans gluten","tag_pesto":"Pesto maison","tag_30":"30 bols",
+  "sts_open":"Ouvrir le book","sts_open2":"Ouvrir le book","btn_print2":"Imprimer","btn_print3":"Imprimer",
+  "ft_about":"Cahier des charges de la restauration des joueurs et du staff de l'Olympique de Marseille en déplacement. Établi par le service nutrition du club avec l'équipe Apicius d'API Restauration.",
+  "ft_h1":"Navigation","ft_h2":"Documents","ft_h3":"Contact OM",
+  "nav_home2":"Accueil","nav_proj2":"Le projet","nav_cdc2":"Cahier des charges","nav_book2":"Book recettes","nav_st2":"Stations",
+  "ft_d1":"Book recettes","ft_d2":"Station Wok & Pâtes","ft_d3":"Export PDF","ft_d4":"Export JSON",
+  "ft_role":"Nutritionniste du sport OM",
+  "ft_copy":"© 2025-2026 Olympique de Marseille x API Restauration - V3 du 10/12/2025",
+  "ft_droit":"Droit au but",
+  "toast_save":"Modifications enregistrées","toast_reset":"Données réinitialisées","toast_export":"Fichier JSON exporté","toast_import":"Données importées avec succès","toast_error":"Erreur : fichier JSON invalide","toast_addrow":"Ligne ajoutée","toast_delrow":"Ligne supprimée","toast_addblock":"Bloc ajouté","toast_delblock":"Bloc supprimé","toast_addsec":"Section ajoutée","toast_delsec":"Section supprimée",
+  "ph_qty":"Qté","ph_lab":"Désignation","ph_title":"Titre du bloc","ph_sec_title":"Titre de la nouvelle section"
+ },
+ "en": {
+  "brand_main":"Away catering","brand_sub":"Season 2025-2026",
+  "nav_home":"Home","nav_proj":"The project","nav_cdc":"Specifications","nav_book":"Recipe book","nav_st":"Stations",
+  "hero_tag":"Season 2025 - 2026 . Away matches catering",
+  "hero_h1":"Catering","hero_h1b":"Specifications",
+  "hero_lead":"Catering specifications for OM players and staff during away trips. Service-by-service requirements for partner hotels.",
+  "st_themes":"Themes","st_rec":"Recipes","st_stat":"Stations","st_lang":"Languages",
+  "qa_pdj_lbl":"Breakfast","qa_pdj":"Match day",
+  "qa_dej_lbl":"Lunch","qa_dej":"Pre-match D-3h30",
+  "qa_din_lbl":"Dinner","qa_din":"Match-eve",
+  "qa_col_lbl":"Snack","qa_col":"Match D-3h15",
+  "qa_book_lbl":"Digital Book","qa_book":"Recipes",
+  "qa_st_lbl":"Show-cooking","qa_st":"Wok & Pasta",
+  "sec_proj_tag":"The project","sec_proj_h":"Player catering during away trips",
+  "sec_proj_p":"The reference document for partner hotels hosting the team during official away trips.",
+  "proj_h3":"The reference document for the team's away trips",
+  "proj_p1":"This document covers the catering services provided to <strong>Olympique de Marseille</strong> players and staff during <strong>away trips and gatherings</strong> in the <strong>2025-2026 season</strong>. Drawn up by the club's nutrition service with API Restauration, it details the club's requirements for partner hotels: meal composition, quantities, reference brands and service modalities.",
+  "proj_p2":"Every section is <strong>printable as a DDPP-format dossier</strong>, editable on the fly, and usable directly in the kitchen. The FR/EN/ES/IT interface facilitates international rollout and coordination with multicultural brigades.",
+  "proj_p3":"The portal is complemented by an illustrated <strong>digital recipe book</strong> and a <strong>technical book</strong> dedicated to the show-cooking station (Wok & Pasta), accessible from the main menu.",
+  "proj_card_h":"Project leadership",
+  "proj_card_1":"<b>OM Nutrition Service</b> - Achraf TAMANI, Sports Nutritionist",
+  "proj_card_2":"<b>Catering partner</b> - API Restauration, APICIUS team",
+  "proj_card_3":"<b>Quality standards</b> - Certified Halal, Organic priority, Seasonality",
+  "proj_card_4":"<b>Coverage</b> - All partner hotels for the 2025-2026 season",
+  "proj_card_5":"<b>Update</b> - Version V3 dated December 10, 2025",
+  "cdc_tag":"The specifications","cdc_h":"Standards by service moment",
+  "cdc_p":"Four documented services: match-day breakfast, pre-match lunch, match-eve dinner, D-3h15 snack.",
+  "etb_lbl":"Mode","etb_read":"Read","etb_edit":"Edit",
+  "btn_edit":"Edit","btn_save":"Save","btn_exp":"Export JSON","btn_imp":"Import JSON","btn_rst":"Reset","btn_print":"Print","btn_addsec":"+ Add new section",
+  "tab_pdj":"Breakfast","tab_dej":"Lunch","tab_din":"Dinner","tab_col":"Snack D-3h15",
+  "lbl_intro":"Overview","lbl_blocks":"Composition","lbl_meta":"Key information","lbl_notes":"Notes & comments","lbl_free":"Free notes / annotations",
+  "ph_free":"Free notes for this section: operational comments, specific requests, hotel feedback...",
+  "btn_addrow":"+ Add a row","btn_addblock":"+ Add a block","btn_delsec":"Delete this section",
+  "bk_lbl":"Season 2025-2026 Edition","bk_t":"The Recipe Book","bk_sub":"Olympique de Marseille","bk_yr":"Season 2025 - 2026",
+  "bp_h":"The book of","bp_he":"recipes",
+  "bp_p":"The recipe book used by partner hotels during the team's away trips. More than 45 detailed cards: ingredients, quantities, procedures.",
+  "bp_f1t":"A4 cards","bp_f1s":"Professional printable format",
+  "bp_f2t":"Pro photos","bp_f2s":"Final dish visuals",
+  "bp_f3t":"Editable","bp_f3s":"Adapt every recipe live",
+  "bp_f4t":"Filters","bp_f4s":"Meat, fish, vegetarian, gluten-free",
+  "bp_open":"Open the book","bp_print":"Printable version",
+  "sts_tag":"Show-cooking","sts_h":"Show-cooking stations","sts_p":"Two stations cooked in front of the players during away trips: layout, equipment, sauces and procedures.",
+  "sts_wok_h":"Wok Station","sts_wok_he":"Asian show-cooking",
+  "sts_wok_p":"Jasmine rice, noodles, chicken, shrimp, salmon, seasonal vegetables and 5 signature sauces: Korean BBQ, sweet soy, salty soy, sriracha, sesame oil.",
+  "sts_pa_h":"Pasta Station","sts_pa_he":"Italian show-cooking",
+  "sts_pa_p":"5 tables, green and ricotta red pesto, Mutti tomato sauce, De Cecco/Rummo pasta, gluten-free and antibiotic-free options. Mastered cooking and portioning at 300 g cooked.",
+  "tag_setup":"Layout","tag_elec":"12 kW","tag_prot":"Proteins","tag_sauces":"Sauces","tag_topp":"Toppings",
+  "tag_pasta":"5 tables","tag_sg":"Gluten free","tag_pesto":"House pesto","tag_30":"30 bowls",
+  "sts_open":"Open the book","sts_open2":"Open the book","btn_print2":"Print","btn_print3":"Print",
+  "ft_about":"Catering specifications for OM players and staff during away trips. Drawn up by the club's nutrition service with the Apicius team at API Restauration.",
+  "ft_h1":"Navigation","ft_h2":"Documents","ft_h3":"OM Contact",
+  "nav_home2":"Home","nav_proj2":"The project","nav_cdc2":"Specifications","nav_book2":"Recipe book","nav_st2":"Stations",
+  "ft_d1":"Recipe book","ft_d2":"Wok & Pasta Station","ft_d3":"PDF export","ft_d4":"JSON export",
+  "ft_role":"OM Sports Nutritionist",
+  "ft_copy":"© 2025-2026 Olympique de Marseille x API Restauration - V3 dated 10/12/2025",
+  "ft_droit":"Droit au but",
+  "toast_save":"Changes saved","toast_reset":"Data reset","toast_export":"JSON file exported","toast_import":"Data imported successfully","toast_error":"Error: invalid JSON file","toast_addrow":"Row added","toast_delrow":"Row deleted","toast_addblock":"Block added","toast_delblock":"Block deleted","toast_addsec":"Section added","toast_delsec":"Section deleted",
+  "ph_qty":"Qty","ph_lab":"Description","ph_title":"Block title","ph_sec_title":"New section title"
+ },
+ "es": {
+  "brand_main":"Restauración en desplazamientos","brand_sub":"Temporada 2025-2026",
+  "nav_home":"Inicio","nav_proj":"El proyecto","nav_cdc":"Pliego de condiciones","nav_book":"Libro de recetas","nav_st":"Estaciones",
+  "hero_tag":"Temporada 2025 - 2026 . Restauración en desplazamientos",
+  "hero_h1":"Pliego de","hero_h1b":"Condiciones",
+  "hero_lead":"Pliego de condiciones para la restauración de los jugadores y el cuerpo técnico del OM durante los desplazamientos. Especificaciones por momento de servicio para los hoteles asociados.",
+  "st_themes":"Temas","st_rec":"Recetas","st_stat":"Estaciones","st_lang":"Idiomas",
+  "qa_pdj_lbl":"Desayuno","qa_pdj":"Día de partido",
+  "qa_dej_lbl":"Almuerzo","qa_dej":"Pre-partido J-3h30",
+  "qa_din_lbl":"Cena","qa_din":"Víspera de partido",
+  "qa_col_lbl":"Tentempié","qa_col":"H-3h15 del partido",
+  "qa_book_lbl":"Libro Digital","qa_book":"Recetas",
+  "qa_st_lbl":"Show-cooking","qa_st":"Wok y Pasta",
+  "sec_proj_tag":"El proyecto","sec_proj_h":"Restauración de los jugadores en desplazamiento",
+  "sec_proj_p":"El documento de referencia de los hoteles asociados que reciben al equipo en los desplazamientos oficiales.",
+  "proj_h3":"El documento de referencia para los desplazamientos del equipo",
+  "proj_p1":"Este pliego de condiciones regula el conjunto de prestaciones de restauración servidas a los jugadores y staff del <strong>Olympique de Marsella</strong> durante los desplazamientos y concentraciones de la temporada <strong>2025-2026</strong>. Diseñado en colaboración con el servicio de nutrición del club, define los estándares de calidad, composición y servicio esperados de los hoteles asociados.",
+  "proj_p2":"Cada sección es <strong>imprimible en formato dossier DDPP</strong>, modificable al instante y utilizable directamente en cocina. La interfaz multilingüe FR/EN/ES/IT facilita el despliegue internacional y la coordinación con brigadas multiculturales.",
+  "proj_p3":"El portal se completa con un <strong>libro de recetas digital</strong> ilustrado y un <strong>libro técnico</strong> dedicado a la estación show-cooking (Wok y Pasta), accesibles desde el menú principal.",
+  "proj_card_h":"Dirección del proyecto",
+  "proj_card_1":"<b>Servicio Nutrición OM</b> - Achraf TAMANI, Nutricionista deportivo",
+  "proj_card_2":"<b>Restauración asociada</b> - API Restauration, equipo APICIUS",
+  "proj_card_3":"<b>Estándares calidad</b> - Halal certificado, Bio prioritario, Estacionalidad",
+  "proj_card_4":"<b>Cobertura</b> - Todos los hoteles asociados temporada 2025-2026",
+  "proj_card_5":"<b>Actualización</b> - Versión V3 del 10 de diciembre de 2025",
+  "cdc_tag":"El pliego de condiciones","cdc_h":"Estándares por momento de servicio",
+  "cdc_p":"Cuatro prestaciones documentadas: desayuno día de partido, almuerzo previo, cena víspera, tentempié H-3h15.",
+  "etb_lbl":"Modo","etb_read":"Lectura","etb_edit":"Edición",
+  "btn_edit":"Editar","btn_save":"Guardar","btn_exp":"Exportar JSON","btn_imp":"Importar JSON","btn_rst":"Reiniciar","btn_print":"Imprimir","btn_addsec":"+ Añadir nueva sección",
+  "tab_pdj":"Desayuno","tab_dej":"Almuerzo","tab_din":"Cena","tab_col":"Tentempié H-3h15",
+  "lbl_intro":"Presentación","lbl_blocks":"Composición","lbl_meta":"Información clave","lbl_notes":"Notas y comentarios","lbl_free":"Notas libres / anotaciones",
+  "ph_free":"Anotaciones libres para esta sección: comentarios operativos, peticiones específicas, retornos del hotel...",
+  "btn_addrow":"+ Añadir línea","btn_addblock":"+ Añadir bloque","btn_delsec":"Eliminar esta sección",
+  "bk_lbl":"Edición Temporada 2025-2026","bk_t":"El Libro de Recetas","bk_sub":"Olympique de Marsella","bk_yr":"Temporada 2025 - 2026",
+  "bp_h":"El libro de","bp_he":"recetas",
+  "bp_p":"El recetario utilizado por los hoteles asociados durante los desplazamientos del equipo. Más de 45 fichas detalladas: ingredientes, cantidades, modos operativos.",
+  "bp_f1t":"Fichas A4","bp_f1s":"Formato imprimible profesional",
+  "bp_f2t":"Fotos pro","bp_f2s":"Visuales de cada plato terminado",
+  "bp_f3t":"Modificable","bp_f3s":"Adapta cada receta en directo",
+  "bp_f4t":"Filtros","bp_f4s":"Carne, pescado, vegetariano, sin gluten",
+  "bp_open":"Abrir el libro","bp_print":"Versión imprimible",
+  "sts_tag":"Show-cooking","sts_h":"Estaciones de show-cooking","sts_p":"Dos estaciones cocinadas en directo para los jugadores en los desplazamientos: implantación, material, salsas y procedimientos.",
+  "sts_wok_h":"Estación Wok","sts_wok_he":"Show-cooking asiático",
+  "sts_wok_p":"Arroz jazmín, noodles, pollo, gambas, salmón, verduras de temporada y 5 salsas firma: BBQ coreana, soja dulce, soja salada, sriracha, aceite de sésamo.",
+  "sts_pa_h":"Estación Pasta","sts_pa_he":"Show-cooking italiano",
+  "sts_pa_p":"5 mesas, pesto verde y rosso a la ricotta, salsa tomate Mutti, pasta De Cecco/Rummo, opciones sin gluten y sin antibiótico. Cocción dominada y porcionado a 300 g cocido.",
+  "tag_setup":"Implantación","tag_elec":"12 kW","tag_prot":"Proteínas","tag_sauces":"Salsas","tag_topp":"Toppings",
+  "tag_pasta":"5 mesas","tag_sg":"Sin gluten","tag_pesto":"Pesto casero","tag_30":"30 boles",
+  "sts_open":"Abrir el libro","sts_open2":"Abrir el libro","btn_print2":"Imprimir","btn_print3":"Imprimir",
+  "ft_about":"Pliego de condiciones para la restauración de los jugadores y el staff del Olympique de Marsella en desplazamiento. Elaborado por el servicio de nutrición del club con el equipo Apicius de API Restauration.",
+  "ft_h1":"Navegación","ft_h2":"Documentos","ft_h3":"Contacto OM",
+  "nav_home2":"Inicio","nav_proj2":"El proyecto","nav_cdc2":"Pliego","nav_book2":"Libro recetas","nav_st2":"Estaciones",
+  "ft_d1":"Libro de recetas","ft_d2":"Estación Wok y Pasta","ft_d3":"Exportar PDF","ft_d4":"Exportar JSON",
+  "ft_role":"Nutricionista deportivo OM",
+  "ft_copy":"© 2025-2026 Olympique de Marsella x API Restauration - V3 del 10/12/2025",
+  "ft_droit":"Droit au but",
+  "toast_save":"Cambios guardados","toast_reset":"Datos reiniciados","toast_export":"Archivo JSON exportado","toast_import":"Datos importados con éxito","toast_error":"Error: archivo JSON inválido","toast_addrow":"Línea añadida","toast_delrow":"Línea eliminada","toast_addblock":"Bloque añadido","toast_delblock":"Bloque eliminado","toast_addsec":"Sección añadida","toast_delsec":"Sección eliminada",
+  "ph_qty":"Ctd","ph_lab":"Descripción","ph_title":"Título del bloque","ph_sec_title":"Título de la nueva sección"
+ },
+ "it": {
+  "brand_main":"Ristorazione in trasferta","brand_sub":"Stagione 2025-2026",
+  "nav_home":"Home","nav_proj":"Il progetto","nav_cdc":"Capitolato","nav_book":"Libro ricette","nav_st":"Stazioni",
+  "hero_tag":"Stagione 2025 - 2026 . Ristorazione in trasferta",
+  "hero_h1":"Capitolato","hero_h1b":"Ristorazione",
+  "hero_lead":"Capitolato di ristorazione per i giocatori e lo staff dell'OM durante le trasferte. Specifiche per ogni momento di servizio destinate agli hotel partner.",
+  "st_themes":"Temi","st_rec":"Ricette","st_stat":"Stazioni","st_lang":"Lingue",
+  "qa_pdj_lbl":"Colazione","qa_pdj":"Giorno partita",
+  "qa_dej_lbl":"Pranzo","qa_dej":"Pre-partita G-3h30",
+  "qa_din_lbl":"Cena","qa_din":"Vigilia partita",
+  "qa_col_lbl":"Spuntino","qa_col":"H-3h15 partita",
+  "qa_book_lbl":"Libro Digitale","qa_book":"Ricette",
+  "qa_st_lbl":"Show-cooking","qa_st":"Wok e Pasta",
+  "sec_proj_tag":"Il progetto","sec_proj_h":"Ristorazione dei giocatori in trasferta",
+  "sec_proj_p":"Il documento di riferimento degli hotel partner che ospitano la squadra durante le trasferte ufficiali.",
+  "proj_h3":"Il documento di riferimento per le trasferte della squadra",
+  "proj_p1":"Questo capitolato disciplina l'insieme delle prestazioni di ristorazione servite ai giocatori e allo staff dell'<strong>Olympique de Marsiglia</strong> in occasione delle trasferte e dei raduni della stagione <strong>2025-2026</strong>. Realizzato in collaborazione con il servizio nutrizione del club, definisce gli standard di qualità, composizione e servizio attesi dagli hotel partner.",
+  "proj_p2":"Ogni sezione è <strong>stampabile in formato dossier DDPP</strong>, modificabile al volo e utilizzabile direttamente in cucina. L'interfaccia multilingue FR/EN/ES/IT facilita il dispiegamento internazionale e il coordinamento con brigate multiculturali.",
+  "proj_p3":"Il portale è completato da un <strong>libro digitale di ricette</strong> illustrato e da un <strong>libro tecnico</strong> dedicato alla stazione show-cooking (Wok e Pasta), accessibili dal menu principale.",
+  "proj_card_h":"Direzione del progetto",
+  "proj_card_1":"<b>Servizio Nutrizione OM</b> - Achraf TAMANI, Nutrizionista dello sport",
+  "proj_card_2":"<b>Ristorazione partner</b> - API Restauration, team APICIUS",
+  "proj_card_3":"<b>Standard qualità</b> - Halal certificato, Bio prioritario, Stagionalità",
+  "proj_card_4":"<b>Copertura</b> - Tutti gli hotel partner stagione 2025-2026",
+  "proj_card_5":"<b>Aggiornamento</b> - Versione V3 del 10 dicembre 2025",
+  "cdc_tag":"Il capitolato","cdc_h":"Standard per momento di servizio",
+  "cdc_p":"Quattro prestazioni documentate: colazione giorno partita, pranzo pre-partita, cena vigilia partita, spuntino H-3h15.",
+  "etb_lbl":"Modalità","etb_read":"Lettura","etb_edit":"Modifica",
+  "btn_edit":"Modifica","btn_save":"Salva","btn_exp":"Esporta JSON","btn_imp":"Importa JSON","btn_rst":"Reimposta","btn_print":"Stampa","btn_addsec":"+ Aggiungi nuova sezione",
+  "tab_pdj":"Colazione","tab_dej":"Pranzo","tab_din":"Cena","tab_col":"Spuntino H-3h15",
+  "lbl_intro":"Presentazione","lbl_blocks":"Composizione","lbl_meta":"Informazioni chiave","lbl_notes":"Note e commenti","lbl_free":"Note libere / annotazioni",
+  "ph_free":"Annotazioni libere per questa sezione: osservazioni operative, richieste specifiche, feedback dell'hotel...",
+  "btn_addrow":"+ Aggiungi riga","btn_addblock":"+ Aggiungi blocco","btn_delsec":"Elimina questa sezione",
+  "bk_lbl":"Edizione Stagione 2025-2026","bk_t":"Il Libro delle Ricette","bk_sub":"Olympique de Marsiglia","bk_yr":"Stagione 2025 - 2026",
+  "bp_h":"Il libro delle","bp_he":"ricette",
+  "bp_p":"Il ricettario utilizzato dagli hotel partner durante le trasferte della squadra. Oltre 45 schede dettagliate: ingredienti, quantità, procedure.",
+  "bp_f1t":"Schede A4","bp_f1s":"Formato stampabile professionale",
+  "bp_f2t":"Foto pro","bp_f2s":"Visual di ogni piatto finito",
+  "bp_f3t":"Modificabile","bp_f3s":"Adatta ogni ricetta in tempo reale",
+  "bp_f4t":"Filtri","bp_f4s":"Carne, pesce, vegetariano, senza glutine",
+  "bp_open":"Apri il libro","bp_print":"Versione stampabile",
+  "sts_tag":"Show-cooking","sts_h":"Stazioni show-cooking","sts_p":"Due stazioni cucinate dal vivo per i giocatori durante le trasferte: layout, materiale, salse e procedure.",
+  "sts_wok_h":"Stazione Wok","sts_wok_he":"Show-cooking asiatico",
+  "sts_wok_p":"Riso jasmine, noodles, pollo, gamberi, salmone, verdure stagionali e 5 salse firma: BBQ coreana, soia dolce, soia salata, sriracha, olio di sesamo.",
+  "sts_pa_h":"Stazione Pasta","sts_pa_he":"Show-cooking italiano",
+  "sts_pa_p":"5 tavoli, pesto verde e rosso alla ricotta, salsa pomodoro Mutti, pasta De Cecco/Rummo, opzioni senza glutine e senza antibiotici. Cottura curata e porzionatura a 300 g cotto.",
+  "tag_setup":"Layout","tag_elec":"12 kW","tag_prot":"Proteine","tag_sauces":"Salse","tag_topp":"Topping",
+  "tag_pasta":"5 tavoli","tag_sg":"Senza glutine","tag_pesto":"Pesto fatto in casa","tag_30":"30 ciotole",
+  "sts_open":"Apri il libro","sts_open2":"Apri il libro","btn_print2":"Stampa","btn_print3":"Stampa",
+  "ft_about":"Capitolato di ristorazione per i giocatori e lo staff dell'Olympique de Marsiglia in trasferta. Redatto dal servizio nutrizione del club con il team Apicius di API Restauration.",
+  "ft_h1":"Navigazione","ft_h2":"Documenti","ft_h3":"Contatto OM",
+  "nav_home2":"Home","nav_proj2":"Il progetto","nav_cdc2":"Capitolato","nav_book2":"Libro ricette","nav_st2":"Stazioni",
+  "ft_d1":"Libro ricette","ft_d2":"Stazione Wok e Pasta","ft_d3":"Esporta PDF","ft_d4":"Esporta JSON",
+  "ft_role":"Nutrizionista dello sport OM",
+  "ft_copy":"© 2025-2026 Olympique de Marsiglia x API Restauration - V3 del 10/12/2025",
+  "ft_droit":"Droit au but",
+  "toast_save":"Modifiche salvate","toast_reset":"Dati reimpostati","toast_export":"File JSON esportato","toast_import":"Dati importati con successo","toast_error":"Errore: file JSON non valido","toast_addrow":"Riga aggiunta","toast_delrow":"Riga eliminata","toast_addblock":"Blocco aggiunto","toast_delblock":"Blocco eliminato","toast_addsec":"Sezione aggiunta","toast_delsec":"Sezione eliminata",
+  "ph_qty":"Qta","ph_lab":"Descrizione","ph_title":"Titolo blocco","ph_sec_title":"Titolo nuova sezione"
+ }
+}
+</script>
+
+</body>
+</html>
