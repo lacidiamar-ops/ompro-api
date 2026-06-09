@@ -215,6 +215,57 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
 .location-display{font-size:11px;color:var(--text-l);margin-top:2px;display:flex;align-items:center;gap:4px}
 .btn-edit-punch{background:none;border:none;color:var(--om);font-size:11px;font-weight:600;cursor:pointer;padding:4px 8px}
 
+
+
+/* === V8 PLANNING SALARIÉS SIMPLIFIÉ === */
+.plan-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.plan-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}
+.plan-grid-wrap{overflow-x:auto;background:#fff;border-radius:14px;box-shadow:var(--shadow);margin-bottom:10px}
+.plan-grid{border-collapse:collapse;width:100%;min-width:980px;font-size:12px}
+.plan-grid th{background:var(--gold-l);color:var(--gold-d);font-size:10px;text-transform:uppercase;letter-spacing:.4px;padding:8px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1}
+.plan-grid td{padding:6px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:top}
+.plan-grid td:first-child,.plan-grid th:first-child{position:sticky;left:0;background:#fff;z-index:2;min-width:150px}
+.plan-grid th:first-child{background:var(--gold-l);z-index:3}
+.plan-emp-name{font-weight:800;font-size:12px}
+.plan-emp-role{font-size:10px;color:var(--text-l);margin-top:2px}
+.plan-cell{display:grid;grid-template-columns:1fr 1fr;gap:4px;min-width:120px}
+.plan-cell select{grid-column:1/3;width:100%;padding:6px;border:1px solid var(--border);border-radius:7px;font-size:11px;background:#fff}
+.plan-cell input{width:100%;padding:6px;border:1px solid var(--border);border-radius:7px;font-size:11px}
+.plan-cell .break{grid-column:1/3}
+.plan-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.plan-org-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:10px 0}
+.plan-org-day{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:8px}
+.plan-org-day label{display:block;font-size:10px;font-weight:800;color:var(--text-l);text-transform:uppercase;margin-bottom:5px}
+.plan-org-day select{width:100%;padding:8px;border:1px solid var(--border);border-radius:8px;font-size:11px;background:#fff}
+.plan-alert{font-size:9px;margin-top:4px;padding:3px 5px;border-radius:5px;background:#FEF3C7;color:#92400E;font-weight:700}
+.plan-alert.red{background:#FEE2E2;color:#991B1B}
+.plan-validation-box{background:#fff;border-radius:14px;padding:12px;box-shadow:var(--shadow);margin-bottom:8px;border-left:4px solid var(--green)}
+.plan-validation-box.pending{border-left-color:var(--orange)}
+.plan-day-card{background:#fff;border-radius:14px;padding:12px;box-shadow:var(--shadow);margin-bottom:8px;border-left:4px solid var(--om)}
+.plan-day-card.rest{border-left-color:var(--text-l);opacity:.82}
+.plan-day-card.abs{border-left-color:var(--red)}
+.plan-day-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px}
+.plan-day-title{font-weight:800;font-size:14px}
+.plan-day-time{font-weight:800;color:var(--om);font-variant-numeric:tabular-nums}
+.plan-day-sub{font-size:11px;color:var(--text-l)}
+@media(max-width:600px){.plan-toolbar,.plan-actions,.plan-summary,.plan-org-grid{grid-template-columns:1fr}.plan-grid{min-width:900px}}
+
+
+
+/* === V9.2 Planning imprimable + affectations + demandes congés === */
+.plan-cell .ploc,.plan-cell .pnote{width:100%;margin-top:4px;padding:6px 7px;border:1px solid var(--border);border-radius:7px;font-size:11px;background:#fff;color:var(--text)}
+.plan-cell .pnote{font-size:10.5px}
+.plan-location{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--om-d);margin-top:4px}
+.plan-print-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.print-sheet{background:#fff;color:#111;padding:18px;border-radius:18px;box-shadow:var(--shadow);margin-top:10px}
+.print-head{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:3px solid var(--om);padding-bottom:10px;margin-bottom:12px}
+.print-title{font-size:22px;font-weight:900;letter-spacing:-.4px;color:#0B376D}.print-sub{font-size:12px;color:#6B7280;font-weight:600;margin-top:2px}
+.print-grid{width:100%;border-collapse:collapse;font-size:12px}.print-grid th{background:#0B376D;color:#fff;padding:8px;text-align:left}.print-grid td{border:1px solid #D7DEE8;padding:8px;vertical-align:top}.print-grid .off{background:#F3F4F6;color:#6B7280}.print-grid .work{background:#F9FCFF}.print-grid .loc{display:block;margin-top:4px;color:#0B76BC;font-weight:700;font-size:11px}.print-grid .org{display:block;margin-top:3px;color:#8A6A00;font-size:10px;text-transform:uppercase;font-weight:800}.print-footer{margin-top:12px;font-size:10px;color:#6B7280;display:flex;justify-content:space-between;gap:12px}
+.leave-card{background:#fff;border-radius:14px;padding:12px;box-shadow:var(--shadow);margin-bottom:8px;border-left:4px solid var(--gold)}
+.leave-card.pending{border-left-color:var(--orange)}.leave-card.approved{border-left-color:var(--green)}.leave-card.rejected{border-left-color:var(--red)}
+.leave-title{font-weight:800;font-size:14px}.leave-meta{font-size:12px;color:var(--text-l);margin-top:3px;line-height:1.4}.leave-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+@media print{body *{visibility:hidden!important}.print-sheet,.print-sheet *{visibility:visible!important}.print-sheet{position:absolute!important;left:0!important;top:0!important;width:100%!important;box-shadow:none!important;border-radius:0!important;margin:0!important}.tabs,.app-h,.p-status,.btn,.plan-actions,.plan-toolbar,.section-t:not(.print-keep){display:none!important}}
+
 </style>
 </head>
 <body>
@@ -283,8 +334,10 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
   <div class="tabs">
     <button class="tab active" data-tab="emp-punch" onclick="empTab('punch',this)">Pointage</button>
     <button class="tab" data-tab="emp-week" onclick="empTab('week',this)">Semaine</button>
+    <button class="tab" data-tab="emp-planning" onclick="empTab('planning',this)">Planning</button>
     <button class="tab" data-tab="emp-month" onclick="empTab('month',this)">Mois</button>
     <button class="tab" data-tab="emp-regul" onclick="empTab('regul',this)">Régul</button>
+    <button class="tab" data-tab="emp-leave" onclick="empTab('leave',this)">Congés</button>
     <button class="tab" data-tab="emp-set" onclick="empTab('set',this)">Réglages</button>
   </div>
   <div class="content">
@@ -307,6 +360,16 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
       </div>
       <div class="card"><div class="section-t" style="margin-top:0">📊 Détail</div><div id="ew-detail"><div class="empty"><div class="ico">📭</div><p>Aucune donnée</p></div></div></div>
     </div>
+
+    <div id="emp-planning" class="tab-content">
+      <div class="card">
+        <div class="section-t" style="margin-top:0">📅 Mon planning de la semaine</div>
+        <p style="font-size:12px;color:var(--text-l);margin-bottom:10px">Planning prévu par le manager. Le pointage réel reste enregistré séparément.</p>
+        <div id="emp-plan-list"><div class="empty"><div class="ico">⏳</div><p>Chargement...</p></div></div>
+        <div class="plan-print-actions"><button class="btn btn-pri" onclick="printMyPlanning()">🖨️ Imprimer</button><button class="btn btn-sec" onclick="loadEmployeePlanning()">↻ Actualiser</button></div>
+        <div id="emp-week-validation" style="margin-top:10px"></div>
+      </div>
+    </div>
     <div id="emp-month" class="tab-content">
       <div class="kpi-grid">
         <div class="kpi"><div class="lbl">Heures mois</div><div class="val" id="em-h">0h</div><div class="sub" id="em-period">—</div></div>
@@ -326,6 +389,23 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
         <div id="emp-regul-list"><div class="empty"><div class="ico">📭</div><p>Aucune demande</p></div></div>
       </div>
     </div>
+    <div id="emp-leave" class="tab-content">
+      <div class="card">
+        <div class="section-t" style="margin-top:0">🌴 Demande de congé / récupération</div>
+        <div id="leave-request-zone">
+          <p style="font-size:13px;color:var(--text-l);margin-bottom:12px">Les salariés peuvent poser une demande. Amar Lacidi la valide ou la refuse côté manager. Les intérimaires n'ont pas accès aux demandes de congés.</p>
+          <div class="fg"><label>Du</label><input type="date" id="lr-start"></div>
+          <div class="fg"><label>Au</label><input type="date" id="lr-end"></div>
+          <div class="fg"><label>Type</label><select id="lr-kind"><option value="cp">Congé payé</option><option value="recovery">Récupération</option><option value="rest">Repos demandé</option><option value="absence">Absence autorisée</option></select></div>
+          <div class="fg"><label>Commentaire</label><textarea id="lr-note" rows="2" placeholder="Motif ou précision..."></textarea></div>
+          <button class="btn btn-gold btn-blk" onclick="submitLeaveRequest()">Envoyer la demande</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-t" style="margin-top:0">📋 Mes demandes</div>
+        <div id="emp-leave-list"><div class="empty"><div class="ico">⏳</div><p>Chargement...</p></div></div>
+      </div>
+    </div>
     <div id="emp-set" class="tab-content">
       <div class="card">
         <div class="section-t" style="margin-top:0">🔐 Mon code PIN</div>
@@ -336,7 +416,7 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
       </div>
       <div class="card">
         <div class="section-t" style="margin-top:0">📱 Application</div>
-        <p style="font-size:12px;color:var(--text-l);margin-bottom:12px">Version V7 · OM PRO × API</p>
+        <p style="font-size:12px;color:var(--text-l);margin-bottom:12px">Version V9.1 · OM PRO × API</p>
         <button class="btn btn-sec btn-blk" onclick="logout()">Se déconnecter</button>
       </div>
     </div>
@@ -361,7 +441,9 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
     <button class="tab active" onclick="mgrTab('dash',this)">Dashboard</button>
     <button class="tab" onclick="mgrTab('punch',this)">Pointer</button>
     <button class="tab" onclick="mgrTab('team',this)">Équipe</button>
+    <button class="tab" onclick="mgrTab('planning',this)">Planning</button>
     <button class="tab" onclick="mgrTab('to',this)">Congés</button>
+    <button class="tab" onclick="mgrTab('leave',this)">Demandes CP</button>
     <button class="tab" onclick="mgrTab('regul',this)">Régul</button>
     <button class="tab" onclick="mgrTab('mreg',this)">Mes régul</button>
     <button class="tab" onclick="mgrTab('exp',this)">Export</button>
@@ -403,6 +485,41 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
     <div id="mgr-team" class="tab-content">
       <button class="btn btn-pri btn-blk" onclick="showModal('mod-add-emp')" style="margin-bottom:10px">➕ Ajouter un salarié</button>
       <div id="mt-list"><div class="empty"><div class="ico">⏳</div><p>Chargement...</p></div></div>
+    </div>
+
+    <div id="mgr-planning" class="tab-content">
+      <div class="card">
+        <div class="section-t" style="margin-top:0">📅 Générateur de planning simplifié</div>
+        <p style="font-size:12px;color:var(--text-l);margin-bottom:10px">Accès réservé à Amar Lacidi. Tu renseignes le type d'organisation de chaque journée : entraînement matin, entraînement après-midi, mise au vert, jour de match ou départ déplacement. L'application génère les plages horaires, puis Amar ajuste les salariés, intérimaires et heures.</p>
+        <div class="plan-toolbar">
+          <div class="fg"><label>Semaine du lundi</label><input type="date" id="plan-week-start"></div>
+          <div class="fg"><label>Mode de génération</label><select id="plan-pattern"><option value="auto">Auto selon organisation</option><option value="standard">Semaine standard</option><option value="matin">Équipe matin</option><option value="soir">Équipe soir</option><option value="reduit">Équipe réduite</option></select></div>
+        </div>
+        <div class="section-t">🏟️ Organisation de la semaine</div>
+        <div id="plan-org-grid" class="plan-org-grid"></div>
+        <div class="plan-actions">
+          <button class="btn btn-gold" onclick="generatePlanningWeek()">⚡ Générer selon organisation</button>
+          <button class="btn btn-sec" onclick="loadPlanningWeek()">↻ Recharger</button>
+          <button class="btn btn-pri" onclick="savePlanningWeek()">💾 Enregistrer</button>
+          <button class="btn btn-suc" onclick="exportPlanningXLSX()">📊 Export Excel</button>
+          <button class="btn btn-gold" onclick="printPlanningForStaff()">🖨️ Visuel imprimable</button>
+        </div>
+      </div>
+      <div class="plan-summary">
+        <div class="kpi"><div class="lbl">Salariés</div><div class="val" id="plan-kpi-emp">0</div></div>
+        <div class="kpi gold"><div class="lbl">Heures prévues</div><div class="val" id="plan-kpi-hours">0h</div></div>
+        <div class="kpi green"><div class="lbl">Créneaux</div><div class="val" id="plan-kpi-slots">0</div></div>
+        <div class="kpi orange"><div class="lbl">Alertes RH</div><div class="val" id="plan-kpi-alerts">0</div></div>
+      </div>
+      <div id="plan-grid-container"><div class="empty"><div class="ico">📅</div><p>Clique sur Générer la semaine</p></div></div>
+    </div>
+    <div id="mgr-leave" class="tab-content">
+      <div class="card">
+        <div class="section-t" style="margin-top:0">🌴 Demandes de congés à valider</div>
+        <p style="font-size:12px;color:var(--text-l);margin-bottom:10px">Les demandes des salariés apparaissent ici. Les intérimaires sont exclus automatiquement.</p>
+        <button class="btn btn-sec btn-blk" onclick="loadLeaveRequests()">↻ Recharger les demandes</button>
+      </div>
+      <div id="mgr-leave-requests"><div class="empty"><div class="ico">⏳</div><p>Chargement...</p></div></div>
     </div>
     <div id="mgr-to" class="tab-content">
       <button class="btn btn-gold btn-blk" onclick="showModal('mod-add-to')" style="margin-bottom:10px">🌴 Enregistrer un congé/absence</button>
@@ -771,6 +888,25 @@ const state = {
   installEvent: null,
   allEmps: []
 };
+
+
+// Accès planning : seul Amar Lacidi peut créer / modifier / exporter le planning.
+function normalizeName(v){
+  return String(v || '').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z]/g,' ').replace(/\s+/g,' ').trim();
+}
+function isAmarPlanningManager(){
+  const n = normalizeName(state.current?.full_name || state.current?.name || '');
+  return state.current?.role === 'manager' && n.includes('amar') && n.includes('lacidi');
+}
+function setupPlanningAccess(){
+  const allowed = isAmarPlanningManager();
+  document.querySelectorAll('#s-mgr .tab').forEach(tab => {
+    const isPlanningTab = (tab.getAttribute('onclick') || '').includes("mgrTab('planning'");
+    if(isPlanningTab) tab.style.display = allowed ? '' : 'none';
+  });
+  const planningContent = document.getElementById('mgr-planning');
+  if(planningContent) planningContent.style.display = allowed ? '' : 'none';
+}
 
 // PWA
 if ('serviceWorker' in navigator) {
@@ -1272,8 +1408,10 @@ function empTab(name, btn){
   document.querySelectorAll('#s-emp .tab-content').forEach(c=>c.classList.remove('active'));
   document.getElementById('emp-'+name).classList.add('active');
   if(name === 'week') loadWeek();
+  if(name === 'planning') loadEmployeePlanning();
   if(name === 'month') loadMonth();
   if(name === 'regul') loadEmpRegulList();
+  if(name === 'leave') loadMyLeaveRequests();
 }
 
 async function loadWeek(){
@@ -1392,6 +1530,7 @@ async function changePin(){
 
 async function enterMgr(){
   document.getElementById('mgr-name').textContent = state.current.full_name;
+  setupPlanningAccess();
   showScreen('s-mgr');
   startClock('mgr-clock');
   
@@ -1480,12 +1619,18 @@ async function loadDash(){
 }
 
 function mgrTab(name, btn){
+  if(name === 'planning' && !isAmarPlanningManager()){
+    toast('Planning réservé à Amar Lacidi', 'err');
+    return;
+  }
   document.querySelectorAll('#s-mgr .tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('#s-mgr .tab-content').forEach(c=>c.classList.remove('active'));
   document.getElementById('mgr-'+name).classList.add('active');
   if(name === 'team') loadTeam();
+  if(name === 'planning') initPlanningModule();
   if(name === 'to') loadTimeOff();
+  if(name === 'leave') loadLeaveRequests();
   if(name === 'regul') loadMgrRegulations();
   if(name === 'mreg') loadMgrSelfRegulList();
   if(name === 'exp') loadExpSel();
@@ -2432,6 +2577,373 @@ async function loadMgrSelfRegulList(){
   }
 }
 
+
+
+// ═══════════════ V8 PLANNING SALARIÉS SIMPLIFIÉ ═══════════════
+const PLAN_DAYS = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+const PLAN_TEMPLATES = {
+  repos:{label:'Repos', start:'', end:'', break:0, status:'rest'},
+  matin:{label:'Matin', start:'07:00', end:'14:30', break:30, status:'planned'},
+  journee:{label:'Journée', start:'08:30', end:'16:15', break:45, status:'planned'},
+  apresmidi:{label:'Après-midi', start:'11:30', end:'19:30', break:45, status:'planned'},
+  coupe:{label:'Coupure', start:'10:00', end:'21:00', break:120, status:'planned'},
+  soir:{label:'Soir', start:'12:00', end:'21:00', break:90, status:'planned'},
+  match:{label:'Jour de match', start:'10:00', end:'22:00', break:120, status:'planned'},
+  depart:{label:'Départ déplacement', start:'07:30', end:'15:30', break:45, status:'planned'},
+  court:{label:'Renfort', start:'11:00', end:'15:00', break:0, status:'planned'},
+  absence:{label:'Absent/CP', start:'', end:'', break:0, status:'absence'}
+};
+const PLAN_ORG_TYPES = {
+  entrainement_matin:{label:'Entraînement matin', slots:['matin','journee','court','repos']},
+  entrainement_apres_midi:{label:'Entraînement après-midi', slots:['journee','apresmidi','soir','repos']},
+  mise_au_vert:{label:'Mise au vert', slots:['matin','journee','soir','coupe']},
+  jour_match:{label:'Jour de match', slots:['matin','match','soir','court']},
+  depart_deplacement:{label:'Départ déplacement équipe', slots:['depart','matin','journee','repos']}
+};
+const PLAN_RULES = { weeklyHours:35*60, maxDay:10*60, minRest:11*60, minBreakAfter6h:20 };
+const PLAN_LOCATIONS = {batiment_pro:'Bâtiment pro', stade_velodrome:'Stade Vélodrome', deplacement:'Déplacement extérieur', forom:'Site ForOM', cfo:'Site CFO', commanderie:'Commanderie', autre:'Autre site'};
+function planLocationOptions(sel=''){return Object.entries(PLAN_LOCATIONS).map(([k,v])=>`<option value="${k}" ${k===sel?'selected':''}>${v}</option>`).join('')}
+function defaultLocationForOrg(orgKey){ if(orgKey==='jour_match') return 'stade_velodrome'; if(orgKey==='depart_deplacement') return 'deplacement'; return 'batiment_pro'; }
+function locLabel(k){return PLAN_LOCATIONS[k] || k || 'Lieu à préciser'}
+function hesc(v){return String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function isInterimEmployee(emp){ const n=String(emp?.full_name||'').toLowerCase(); return emp?.role==='interim' || n.includes('intérim') || n.includes('interim') || n.includes('extra'); }
+
+function planMondayISO(){
+  const d = new Date();
+  const day = d.getDay() || 7;
+  d.setDate(d.getDate() - day + 1);
+  return d.toISOString().split('T')[0];
+}
+function addDaysISO(iso, n){
+  const d = new Date(iso + 'T12:00:00');
+  d.setDate(d.getDate() + n);
+  return d.toISOString().split('T')[0];
+}
+function frDay(iso){return new Date(iso+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'2-digit'})}
+function timeMin(t){if(!t) return null; const [h,m]=t.split(':').map(Number); return h*60+m}
+function plannedMinutes(row){
+  if(row.status !== 'planned' || !row.start_time || !row.end_time) return 0;
+  let s=timeMin(row.start_time), e=timeMin(row.end_time);
+  if(e < s) e += 24*60;
+  return Math.max(0, e - s - (Number(row.break_minutes)||0));
+}
+function fmtMin(min){const h=Math.floor(min/60), m=min%60; return `${h}h${String(m).padStart(2,'0')}`}
+function templateFor(pattern, empIndex, dayIndex){
+  if(dayIndex >= 5) return 'repos';
+  if(pattern === 'matin') return empIndex % 4 === 0 ? 'repos' : 'matin';
+  if(pattern === 'soir') return empIndex % 3 === 0 ? 'journee' : 'soir';
+  if(pattern === 'reduit') return empIndex < 3 ? 'journee' : 'repos';
+  const cycle = ['journee','matin','soir','journee','repos'];
+  return cycle[(empIndex + dayIndex) % cycle.length];
+}
+function defaultOrgForDay(dayIndex){
+  if(dayIndex >= 5) return 'depart_deplacement';
+  return ['entrainement_matin','entrainement_apres_midi','mise_au_vert','jour_match','depart_deplacement'][dayIndex] || 'entrainement_matin';
+}
+function renderOrgGrid(){
+  const grid=document.getElementById('plan-org-grid'); if(!grid) return;
+  const start=document.getElementById('plan-week-start').value || planMondayISO();
+  const opts=Object.entries(PLAN_ORG_TYPES).map(([k,o])=>`<option value="${k}">${o.label}</option>`).join('');
+  grid.innerHTML=Array.from({length:7},(_,i)=>{const d=addDaysISO(start,i); const val=(state.planOrg&&state.planOrg[d])||defaultOrgForDay(i); return `<div class="plan-org-day"><label>${frDay(d)}</label><select data-date="${d}" onchange="state.planOrg=state.planOrg||{};state.planOrg[this.dataset.date]=this.value"><option value="">— Choisir —</option>${opts}</select></div>`}).join('');
+  grid.querySelectorAll('select').forEach((sel,i)=>{sel.value=(state.planOrg&&state.planOrg[sel.dataset.date])||defaultOrgForDay(i)});
+}
+function templateForOrg(orgKey, empIndex){
+  const org=PLAN_ORG_TYPES[orgKey] || PLAN_ORG_TYPES.entrainement_matin;
+  return org.slots[empIndex % org.slots.length] || 'repos';
+}
+function planAlertsForRows(rows){
+  const alerts=[]; const byEmp={};
+  rows.forEach(r=>{(byEmp[r.employee_id] ||= []).push(r)});
+  Object.entries(byEmp).forEach(([emp,rs])=>{
+    rs.sort((a,b)=>String(a.work_date).localeCompare(String(b.work_date)));
+    const total=rs.reduce((s,r)=>s+plannedMinutes(r),0);
+    if(total > PLAN_RULES.weeklyHours) alerts.push({emp,type:'week',msg:`Semaine ${fmtMin(total)} > 35h`});
+    rs.forEach((r,i)=>{
+      const dur=plannedMinutes(r);
+      if(dur > PLAN_RULES.maxDay) alerts.push({emp,date:r.work_date,type:'day',msg:`Journée ${fmtMin(dur)} > 10h`});
+      if(dur > 6*60 && Number(r.break_minutes||0) < PLAN_RULES.minBreakAfter6h) alerts.push({emp,date:r.work_date,type:'break',msg:'Pause insuffisante'});
+      const next=rs[i+1];
+      if(r.status==='planned' && next?.status==='planned' && r.end_time && next.start_time){
+        let end=timeMin(r.end_time), ns=timeMin(next.start_time)+24*60;
+        const rest=ns-end;
+        if(rest < PLAN_RULES.minRest) alerts.push({emp,date:next.work_date,type:'rest',msg:`Repos ${fmtMin(rest)} < 11h`});
+      }
+    });
+  });
+  return alerts;
+}
+async function initPlanningModule(){
+  if(!isAmarPlanningManager()){
+    toast('Planning réservé à Amar Lacidi', 'err');
+    return;
+  }
+  if(!document.getElementById('plan-week-start').value) document.getElementById('plan-week-start').value = planMondayISO();
+  state.planOrg = state.planOrg || {};
+  renderOrgGrid();
+  if(!state.allEmps || state.allEmps.length === 0){
+    const {data} = await sb.from('employees').select('id, full_name, role, active').eq('active', true).order('full_name');
+    state.allEmps = data || [];
+  }
+  await loadPlanningWeek();
+}
+function buildEmptyPlanning(pattern='auto'){
+  const start = document.getElementById('plan-week-start').value || planMondayISO();
+  renderOrgGrid();
+  const rows = [];
+  (state.allEmps||[]).forEach((e, ei)=>{
+    for(let di=0; di<7; di++){
+      const date = addDaysISO(start, di);
+      const orgKey = (state.planOrg && state.planOrg[date]) || defaultOrgForDay(di);
+      const key = pattern === 'auto' ? templateForOrg(orgKey, ei) : templateFor(pattern, ei, di);
+      const tpl = PLAN_TEMPLATES[key] || PLAN_TEMPLATES.repos;
+      rows.push({employee_id:e.id, employee_name:e.full_name, role:e.role, work_date:date, organization_type:orgKey, template_key:key, start_time:tpl.start, end_time:tpl.end, break_minutes:tpl.break, status:tpl.status, location_type:defaultLocationForOrg(orgKey), location_label:'', note:''});
+    }
+  });
+  state.planningRows = rows;
+}
+function generatePlanningWeek(){
+  if(!isAmarPlanningManager()){
+    toast('Planning réservé à Amar Lacidi', 'err');
+    return;
+  }
+  buildEmptyPlanning(document.getElementById('plan-pattern').value);
+  renderPlanningGrid();
+  toast('Planning généré selon les organisations. Ajuste les personnes et les heures avant validation.', 'suc');
+}
+async function loadPlanningWeek(){
+  const start = document.getElementById('plan-week-start').value || planMondayISO();
+  const end = addDaysISO(start, 6);
+  try{
+    const {data, error} = await sb.from('employee_planning')
+      .select('*')
+      .gte('work_date', start).lte('work_date', end)
+      .order('work_date');
+    if(error) throw error;
+    buildEmptyPlanning(document.getElementById('plan-pattern').value || 'standard');
+    const byKey = {};
+    (data||[]).forEach(r => { byKey[`${r.employee_id}_${r.work_date}`] = r; if(r.organization_type){ state.planOrg = state.planOrg || {}; state.planOrg[r.work_date]=r.organization_type; } });
+    renderOrgGrid();
+    state.planningRows = state.planningRows.map(r => {
+      const saved = byKey[`${r.employee_id}_${r.work_date}`];
+      return saved ? {...r, ...saved, employee_name:r.employee_name, role:r.role} : r;
+    });
+    renderPlanningGrid();
+  }catch(err){
+    console.error(err);
+    buildEmptyPlanning(document.getElementById('plan-pattern').value || 'standard');
+    renderPlanningGrid();
+    toast('Table planning absente : exécute le fichier SQL fourni', 'err');
+  }
+}
+function renderPlanningGrid(){
+  const container = document.getElementById('plan-grid-container');
+  const emps = state.allEmps || [];
+  const start = document.getElementById('plan-week-start').value || planMondayISO();
+  const days = Array.from({length:7},(_,i)=>addDaysISO(start,i));
+  const byEmpDay = {};
+  (state.planningRows||[]).forEach(r => byEmpDay[`${r.employee_id}_${r.work_date}`] = r);
+  const tplOptions = Object.entries(PLAN_TEMPLATES).map(([k,t])=>`<option value="${k}">${t.label}</option>`).join('');
+  container.innerHTML = `<div class="plan-grid-wrap"><table class="plan-grid"><thead><tr><th>Salarié</th>${days.map(d=>`<th>${frDay(d)}</th>`).join('')}</tr></thead><tbody>${emps.map((e,ei)=>`<tr><td><div class="plan-emp-name">${hesc(e.full_name)}${e.role==='manager'?' 👑':''}</div><div class="plan-emp-role">${e.role==='manager'?'Manager':isInterimEmployee(e)?'Intérimaire':'Salarié'}</div></td>${days.map((d,di)=>{const r=byEmpDay[`${e.id}_${d}`]||{}; const cellAlerts=planAlertsForRows(state.planningRows||[]).filter(a=>a.emp===e.id && (!a.date || a.date===d)); return `<td><div class="plan-cell" data-emp="${e.id}" data-date="${d}"><select onchange="applyPlanTemplate(this)"><option value="custom">Personnalisé</option>${tplOptions}</select><input type="time" class="ps" value="${r.start_time||''}" onchange="updatePlanCell(this)"><input type="time" class="pe" value="${r.end_time||''}" onchange="updatePlanCell(this)"><input type="number" class="pb break" min="0" step="5" value="${r.break_minutes||0}" placeholder="Pause min" onchange="updatePlanCell(this)"><select class="ploc" onchange="updatePlanCell(this)">${planLocationOptions(r.location_type||defaultLocationForOrg(r.organization_type))}</select><input class="pnote" value="${hesc(r.location_label||r.note||'')}" placeholder="Précision / affectation" onchange="updatePlanCell(this)"><input type="hidden" class="pst" value="${r.status||'planned'}">${cellAlerts.map(a=>`<div class="plan-alert ${a.type==='day'||a.type==='rest'?'red':''}">${a.msg}</div>`).join('')}</div></td>`}).join('')}</tr>`).join('')}</tbody></table></div>`;
+  container.querySelectorAll('.plan-cell').forEach(cell=>{
+    const s=cell.querySelector('.ps').value, e=cell.querySelector('.pe').value, b=Number(cell.querySelector('.pb').value||0), st=cell.querySelector('.pst').value;
+    const key=Object.keys(PLAN_TEMPLATES).find(k=>PLAN_TEMPLATES[k].start===s && PLAN_TEMPLATES[k].end===e && PLAN_TEMPLATES[k].break===b && PLAN_TEMPLATES[k].status===st);
+    cell.querySelector('select').value = key || 'custom';
+  });
+  refreshPlanKpis();
+}
+function findPlanRow(cell){
+  const emp = cell.dataset.emp, date = cell.dataset.date;
+  let row = state.planningRows.find(r=>r.employee_id===emp && r.work_date===date);
+  if(!row){row={employee_id:emp,work_date:date,start_time:'',end_time:'',break_minutes:0,status:'planned',note:''}; state.planningRows.push(row)}
+  return row;
+}
+function applyPlanTemplate(sel){
+  const cell = sel.closest('.plan-cell');
+  const key = sel.value;
+  if(key === 'custom') return;
+  const tpl = PLAN_TEMPLATES[key];
+  cell.querySelector('.ps').value = tpl.start;
+  cell.querySelector('.pe').value = tpl.end;
+  cell.querySelector('.pb').value = tpl.break;
+  cell.querySelector('.pst').value = tpl.status;
+  updatePlanCell(cell.querySelector('.ps'));
+}
+function updatePlanCell(input){
+  const cell = input.closest('.plan-cell');
+  const row = findPlanRow(cell);
+  row.start_time = cell.querySelector('.ps').value || null;
+  row.end_time = cell.querySelector('.pe').value || null;
+  row.break_minutes = Number(cell.querySelector('.pb').value || 0);
+  row.location_type = cell.querySelector('.ploc')?.value || row.location_type || 'batiment_pro';
+  row.location_label = cell.querySelector('.pnote')?.value || '';
+  row.note = row.location_label;
+  row.status = cell.querySelector('.pst').value || ((row.start_time && row.end_time) ? 'planned' : 'rest');
+  if(!row.start_time && !row.end_time && row.status === 'planned') row.status = 'rest';
+  cell.querySelector('select').value = 'custom';
+  refreshPlanKpis();
+}
+function refreshPlanKpis(){
+  const rows = state.planningRows || [];
+  const planned = rows.filter(r=>r.status==='planned' && r.start_time && r.end_time);
+  const minutes = planned.reduce((s,r)=>s+plannedMinutes(r),0);
+  document.getElementById('plan-kpi-emp').textContent = (state.allEmps||[]).length;
+  document.getElementById('plan-kpi-slots').textContent = planned.length;
+  document.getElementById('plan-kpi-hours').textContent = fmtMin(minutes);
+  const al = planAlertsForRows(rows).length;
+  const ak = document.getElementById('plan-kpi-alerts'); if(ak) ak.textContent = al;
+}
+async function savePlanningWeek(){
+  if(!isAmarPlanningManager()){
+    toast('Seul Amar Lacidi peut enregistrer le planning', 'err');
+    return;
+  }
+  const rows = (state.planningRows||[]).map(r=>({
+    employee_id:r.employee_id, work_date:r.work_date, start_time:r.start_time || null, end_time:r.end_time || null,
+    break_minutes:Number(r.break_minutes)||0, status:r.status || 'planned', note:r.note || null, organization_type:r.organization_type || null, template_key:r.template_key || null, location_type:r.location_type || null, location_label:r.location_label || null, created_by:state.current?.id || null
+  }));
+  try{
+    const {error} = await sb.from('employee_planning').upsert(rows, {onConflict:'employee_id,work_date'});
+    if(error) throw error;
+    toast('Planning enregistré', 'suc');
+  }catch(err){
+    console.error(err);
+    toast('Impossible d’enregistrer : vérifie la table SQL', 'err');
+  }
+}
+function exportPlanningXLSX(){
+  if(!isAmarPlanningManager()){
+    toast('Export planning réservé à Amar Lacidi', 'err');
+    return;
+  }
+  const rows = state.planningRows || [];
+  const emps = state.allEmps || [];
+  const start = document.getElementById('plan-week-start').value || planMondayISO();
+  const days = Array.from({length:7},(_,i)=>addDaysISO(start,i));
+  const by = {}; rows.forEach(r=>by[`${r.employee_id}_${r.work_date}`]=r);
+  const data = emps.map(e=>{
+    const o = {'Salarié':e.full_name};
+    days.forEach(d=>{const r=by[`${e.id}_${d}`]; o[frDay(d)] = r && r.status==='planned' ? `${PLAN_ORG_TYPES[r.organization_type]?.label||''} · ${r.start_time||''}-${r.end_time||''} · ${locLabel(r.location_type)} ${r.location_label?('('+r.location_label+')'):''} · pause ${r.break_minutes||0}min` : (r?.status==='absence'?'Absent/CP':'Repos')});
+    return o;
+  });
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(data), 'Planning');
+  XLSX.writeFile(wb, `planning_salaries_${start}.xlsx`);
+}
+async function loadEmployeePlanning(){
+  if(!state.current) return;
+  const start = planMondayISO(), end = addDaysISO(start,6);
+  const list = document.getElementById('emp-plan-list');
+  try{
+    const {data, error} = await sb.from('employee_planning')
+      .select('*').eq('employee_id', state.current.id).gte('work_date', start).lte('work_date', end).order('work_date');
+    if(error) throw error;
+    const byDate = {}; (data||[]).forEach(r=>byDate[r.work_date]=r);
+    const days = Array.from({length:7},(_,i)=>addDaysISO(start,i));
+    list.innerHTML = days.map(d=>{
+      const r = byDate[d] || {status:'rest'};
+      const cls = r.status==='planned' ? '' : (r.status==='absence'?'abs':'rest');
+      const time = r.status==='planned' ? `${r.start_time||'--:--'} → ${r.end_time||'--:--'}` : (r.status==='absence'?'Absent / CP':'Repos');
+      const sub = r.status==='planned' ? `Pause prévue : ${r.break_minutes||0} min · Durée prévue : ${fmtMin(plannedMinutes(r))}` : 'Aucun horaire prévu';
+      const loc = r.status==='planned' ? `<div class="plan-location">📍 ${locLabel(r.location_type)}${r.location_label?' · '+hesc(r.location_label):''}</div>` : '';
+      const org = r.organization_type ? `<div class="plan-day-sub">Organisation : ${PLAN_ORG_TYPES[r.organization_type]?.label||r.organization_type}</div>` : '';
+      return `<div class="plan-day-card ${cls}"><div class="plan-day-head"><div class="plan-day-title">${frDay(d)}</div><div class="plan-day-time">${time}</div></div>${loc}<div class="plan-day-sub">${sub}</div>${org}</div>`;
+    }).join('');
+    renderEmployeeWeekValidation(start);
+  }catch(err){
+    console.error(err);
+    list.innerHTML = '<div class="empty"><div class="ico">⚠️</div><p>Planning non disponible. Table SQL à créer.</p></div>';
+  }
+}
+
+async function renderEmployeeWeekValidation(weekStart){
+  const box=document.getElementById('emp-week-validation'); if(!box || !state.current) return;
+  try{
+    const {data}=await sb.from('employee_week_validations').select('*').eq('employee_id',state.current.id).eq('week_start',weekStart).maybeSingle();
+    if(data){ box.innerHTML=`<div class="plan-validation-box"><b>✅ Semaine validée</b><div style="font-size:12px;color:var(--text-l);margin-top:4px">Validée le ${fmtDate(data.validated_at)}</div></div>`; return; }
+  }catch(e){}
+  box.innerHTML=`<div class="plan-validation-box"><b>📌 Planning renseigné par Amar Lacidi</b><div style="font-size:12px;color:var(--text-l);margin-top:4px">Vue consultation uniquement. Le salarié ne peut pas créer ni modifier son planning.</div></div>`;
+}
+
+function planningPrintHTML(rows, emps, start, title){
+  const days = Array.from({length:7},(_,i)=>addDaysISO(start,i));
+  const by = {}; (rows||[]).forEach(r=>by[`${r.employee_id}_${r.work_date}`]=r);
+  return `<div class="print-sheet"><div class="print-head"><div><div class="print-title">${hesc(title)}</div><div class="print-sub">Semaine du ${fmtDate(start)} au ${fmtDate(addDaysISO(start,6))}</div></div><div style="text-align:right;font-weight:900;color:#D9A124">OM PRO × API<br><span style="font-size:11px;color:#6B7280">Planning salariés</span></div></div><table class="print-grid"><thead><tr><th>Salarié</th>${days.map(d=>`<th>${frDay(d)}</th>`).join('')}</tr></thead><tbody>${(emps||[]).map(e=>`<tr><td><b>${hesc(e.full_name)}</b><br><span style="font-size:10px;color:#6B7280">${e.role==='manager'?'Manager':isInterimEmployee(e)?'Intérimaire':'Salarié'}</span></td>${days.map(d=>{const r=by[`${e.id}_${d}`]||{status:'rest'}; if(r.status!=='planned') return `<td class="off">${r.status==='absence'?'Absent / CP':'Repos'}</td>`; return `<td class="work"><b>${r.start_time||'--:--'} → ${r.end_time||'--:--'}</b><span class="loc">📍 ${locLabel(r.location_type)}${r.location_label?' · '+hesc(r.location_label):''}</span><span class="org">${PLAN_ORG_TYPES[r.organization_type]?.label||''}</span><span style="display:block;margin-top:3px;font-size:10px;color:#6B7280">Pause ${r.break_minutes||0} min</span></td>`}).join('')}</tr>`).join('')}</tbody></table><div class="print-footer"><span>Document interne — affichage salariés</span><span>Généré par Amar Lacidi</span></div></div>`;
+}
+function openPrintWindow(html){
+  const w = window.open('', '_blank');
+  if(!w){toast('Popup bloquée : autorise les fenêtres pour imprimer','err'); return;}
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Planning salariés</title><style>${Array.from(document.styleSheets).map(ss=>{try{return Array.from(ss.cssRules).map(r=>r.cssText).join('\n')}catch(e){return ''}}).join('\n')}</style></head><body>${html}<script>setTimeout(()=>window.print(),350)<\/script></body></html>`);
+  w.document.close();
+}
+function printPlanningForStaff(){
+  if(!isAmarPlanningManager()){toast('Réservé à Amar Lacidi','err'); return;}
+  const start = document.getElementById('plan-week-start')?.value || planMondayISO();
+  openPrintWindow(planningPrintHTML(state.planningRows||[], state.allEmps||[], start, 'Planning hebdomadaire salariés'));
+}
+async function printMyPlanning(){
+  if(!state.current) return;
+  const start = planMondayISO(), end = addDaysISO(start,6);
+  try{
+    const {data, error}=await sb.from('employee_planning').select('*').eq('employee_id', state.current.id).gte('work_date', start).lte('work_date', end).order('work_date');
+    if(error) throw error;
+    openPrintWindow(planningPrintHTML(data||[], [state.current], start, 'Mon planning'));
+  }catch(err){console.error(err); toast('Planning non disponible pour impression','err')}
+}
+async function loadMyLeaveRequests(){
+  const zone=document.getElementById('leave-request-zone'), list=document.getElementById('emp-leave-list'); if(!zone||!list||!state.current) return;
+  if(isInterimEmployee(state.current)){ zone.innerHTML='<div class="empty"><div class="ico">ℹ️</div><p>Les intérimaires ne posent pas de congés dans l’application.</p></div>'; list.innerHTML=''; return; }
+  try{
+    const {data,error}=await sb.from('employee_leave_requests').select('*').eq('employee_id', state.current.id).order('created_at',{ascending:false});
+    if(error) throw error;
+    if(!data||data.length===0){list.innerHTML='<div class="empty"><div class="ico">📭</div><p>Aucune demande</p></div>'; return;}
+    list.innerHTML=data.map(r=>`<div class="leave-card ${r.status}"><div class="leave-title">${leaveKindLabel(r.kind)} · ${leaveStatusLabel(r.status)}</div><div class="leave-meta">Du ${fmtDate(r.start_date)} au ${fmtDate(r.end_date)}${r.note?' · '+hesc(r.note):''}${r.manager_note?'<br>Réponse manager : '+hesc(r.manager_note):''}</div></div>`).join('');
+  }catch(err){console.error(err); list.innerHTML='<div class="empty"><div class="ico">⚠️</div><p>Table demandes congés absente : exécute le SQL V9.2</p></div>';}
+}
+function leaveKindLabel(k){return {cp:'Congé payé', recovery:'Récupération', rest:'Repos demandé', absence:'Absence'}[k]||k}
+function leaveStatusLabel(s){return {pending:'En attente', approved:'Validée', rejected:'Refusée', cancelled:'Annulée'}[s]||s}
+async function submitLeaveRequest(){
+  if(!state.current || isInterimEmployee(state.current)){toast('Demande non disponible pour intérimaire','err'); return;}
+  const start=document.getElementById('lr-start').value, end=document.getElementById('lr-end').value, kind=document.getElementById('lr-kind').value, note=document.getElementById('lr-note').value;
+  if(!start||!end){toast('Dates obligatoires','err'); return;}
+  try{
+    const {error}=await sb.from('employee_leave_requests').insert({employee_id:state.current.id,start_date:start,end_date:end,kind,status:'pending',note});
+    if(error) throw error;
+    toast('Demande envoyée à Amar Lacidi','suc');
+    document.getElementById('lr-note').value='';
+    loadMyLeaveRequests();
+  }catch(err){console.error(err); toast('Impossible d’envoyer : vérifie le SQL V9.2','err');}
+}
+async function loadLeaveRequests(){
+  const box=document.getElementById('mgr-leave-requests'); if(!box) return;
+  try{
+    const {data,error}=await sb.from('employee_leave_requests').select('*, employees(full_name, role)').order('created_at',{ascending:false}).limit(100);
+    if(error) throw error;
+    if(!data||data.length===0){box.innerHTML='<div class="empty"><div class="ico">📭</div><p>Aucune demande</p></div>'; return;}
+    box.innerHTML=data.map(r=>`<div class="leave-card ${r.status}"><div class="leave-title">${hesc(r.employees?.full_name||'Salarié')} · ${leaveKindLabel(r.kind)} · ${leaveStatusLabel(r.status)}</div><div class="leave-meta">Du ${fmtDate(r.start_date)} au ${fmtDate(r.end_date)}${r.note?' · '+hesc(r.note):''}</div>${r.status==='pending'?`<div class="fg" style="margin-top:8px"><input id="lr-note-${r.id}" placeholder="Note manager optionnelle"></div><div class="leave-actions"><button class="btn btn-dan" onclick="reviewLeaveRequest('${r.id}','rejected')">Refuser</button><button class="btn btn-suc" onclick="reviewLeaveRequest('${r.id}','approved')">Valider</button></div>`:''}</div>`).join('');
+  }catch(err){console.error(err); box.innerHTML='<div class="empty"><div class="ico">⚠️</div><p>Table demandes congés absente : exécute le SQL V9.2</p></div>';}
+}
+async function reviewLeaveRequest(id,status){
+  if(!isAmarPlanningManager()){toast('Validation réservée à Amar Lacidi','err'); return;}
+  const note=document.getElementById('lr-note-'+id)?.value || '';
+  try{
+    const {data: req, error:e1}=await sb.from('employee_leave_requests').select('*').eq('id',id).single(); if(e1) throw e1;
+    const {error:e2}=await sb.from('employee_leave_requests').update({status, manager_note:note, reviewed_by:state.current?.id, reviewed_at:new Date().toISOString()}).eq('id',id); if(e2) throw e2;
+    if(status==='approved'){
+      try{ await sb.from('time_off').insert({employee_id:req.employee_id,start_date:req.start_date,end_date:req.end_date,kind:req.kind,status:'approved',note:req.note||note}); }catch(e){ console.warn('time_off insertion skipped', e); }
+    }
+    toast(status==='approved'?'Demande validée':'Demande refusée','suc');
+    loadLeaveRequests();
+  }catch(err){console.error(err); toast('Erreur validation demande','err');}
+}
+async function validateMyWeek(weekStart){
+  if(!state.current) return;
+  try{
+    const {error}=await sb.from('employee_week_validations').upsert({employee_id:state.current.id, week_start:weekStart, status:'validated', validated_at:new Date().toISOString()},{onConflict:'employee_id,week_start'});
+    if(error) throw error;
+    toast('Semaine validée', 'suc');
+    renderEmployeeWeekValidation(weekStart);
+  }catch(err){ console.error(err); toast('Table validation absente : exécute le SQL V9', 'err'); }
+}
 
 // ═══════════════ INIT ═══════════════
 
