@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>OM PRO × API · Pointage RH</title>
+<!-- V10.4 signature congés + impression -->
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -290,7 +291,7 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
 /* === V9.5 Signature planning hebdomadaire === */
 .signature-card{background:#fff;border-radius:16px;padding:14px;box-shadow:var(--shadow);border-left:4px solid var(--gold);margin-top:10px}
 .signature-pad-wrap{background:#F9FAFB;border:1.5px dashed #CBD5E1;border-radius:14px;padding:10px;margin:10px 0}
-#week-signature-pad{width:100%;height:170px;background:#fff;border-radius:10px;touch-action:none;display:block;box-shadow:inset 0 0 0 1px #E5E7EB}
+#week-signature-pad,#leave-signature-pad{width:100%;height:170px;background:#fff;border-radius:10px;touch-action:none;display:block;box-shadow:inset 0 0 0 1px #E5E7EB}
 .signature-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .signature-preview{max-width:220px;max-height:74px;border:1px solid #E5E7EB;border-radius:8px;background:#fff;margin-top:8px;padding:4px}
 .signed-stamp{display:inline-flex;align-items:center;gap:6px;background:#D1FAE5;color:#065F46;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:800;margin-top:8px}
@@ -403,7 +404,13 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
         <p style="font-size:12px;color:var(--text-l);margin-bottom:10px">Planning prévu par le manager. Le pointage réel reste enregistré séparément.</p>
         <div id="emp-plan-list"><div class="empty"><div class="ico">⏳</div><p>Chargement...</p></div></div>
         <div class="plan-print-actions"><button class="btn btn-pri" onclick="printMyPlanning()">🖨️ Imprimer</button><button class="btn btn-sec" onclick="loadEmployeePlanning()">↻ Actualiser</button></div>
-        <div id="emp-week-validation" style="margin-top:10px"></div>
+        <div id="emp-week-validation" style="margin-top:10px">
+          <div class="plan-validation-box pending">
+            <b>📌 Signature planning semaine</b>
+            <div style="font-size:12px;color:var(--text-l);margin-top:4px">En fin de semaine, signe avec le doigt pour valider la consultation du planning.</div>
+            <button class="btn btn-suc btn-blk" style="margin-top:10px" onclick="openWeekSignature(planMondayISO())">✍️ Signer la semaine</button>
+          </div>
+        </div>
       </div>
     </div>
     <div id="emp-month" class="tab-content">
@@ -429,12 +436,12 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
       <div class="card">
         <div class="section-t" style="margin-top:0">🌴 Demande de congé / récupération</div>
         <div id="leave-request-zone">
-          <p style="font-size:13px;color:var(--text-l);margin-bottom:12px">Les salariés peuvent poser une demande. Amar Lacidi la valide ou la refuse côté manager. Les intérimaires n'ont pas accès aux demandes de congés.</p>
+          <p style="font-size:13px;color:var(--text-l);margin-bottom:12px">Les salariés posent une demande signée avec le doigt. La signature, la date et l’heure sont enregistrées, puis Amar Lacidi valide ou refuse côté manager. Les intérimaires n'ont pas accès aux demandes de congés.</p>
           <div class="fg"><label>Du</label><input type="date" id="lr-start"></div>
           <div class="fg"><label>Au</label><input type="date" id="lr-end"></div>
           <div class="fg"><label>Type</label><select id="lr-kind"><option value="cp">Congé payé</option><option value="recovery">Récupération</option><option value="rest">Repos demandé</option><option value="absence">Absence autorisée</option></select></div>
           <div class="fg"><label>Commentaire</label><textarea id="lr-note" rows="2" placeholder="Motif ou précision..."></textarea></div>
-          <button class="btn btn-gold btn-blk" onclick="submitLeaveRequest()">Envoyer la demande</button>
+          <button class="btn btn-gold btn-blk" onclick="openLeaveSignatureModal()">✍️ Signer et envoyer la demande</button>
         </div>
       </div>
       <div class="card">
@@ -920,6 +927,26 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px">
     <button class="btn btn-sec" onclick="closeModal('mod-week-signature')">Annuler</button>
     <button class="btn btn-suc" onclick="submitWeekSignature()">Signer la semaine</button>
+  </div>
+</div></div>
+
+<!-- Modal Signature Demande Congé -->
+<div id="mod-leave-signature" class="mod-bg"><div class="mod">
+  <h3>✍️ Signature demande de congé</h3>
+  <p style="font-size:13px;color:var(--text-l);line-height:1.5;margin-bottom:10px">Je confirme ma demande de congé / récupération. Ma signature sera enregistrée avec la date et l'heure de la demande.</p>
+  <div class="signature-card">
+    <div style="font-size:12px;font-weight:800;color:var(--text-l);text-transform:uppercase">Demande concernée</div>
+    <div id="sig-leave-label" style="font-size:14px;font-weight:900;margin-top:3px">—</div>
+    <div class="signature-pad-wrap"><canvas id="leave-signature-pad"></canvas></div>
+    <button class="btn btn-sec btn-blk" onclick="clearLeaveSignature()">Effacer la signature</button>
+  </div>
+  <div class="fg" style="margin-top:12px">
+    <label>Confirme avec ton PIN</label>
+    <input type="password" id="leave-sig-pin" maxlength="4" inputmode="numeric" placeholder="••••">
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px">
+    <button class="btn btn-sec" onclick="closeModal('mod-leave-signature')">Annuler</button>
+    <button class="btn btn-suc" onclick="submitSignedLeaveRequest()">Signer et envoyer</button>
   </div>
 </div></div>
 
@@ -3242,6 +3269,7 @@ async function loadEmployeePlanning(){
   }catch(err){
     console.error(err);
     list.innerHTML = '<div class="empty"><div class="ico">⚠️</div><p>Planning non disponible. Table SQL à créer.</p></div>';
+    try { renderEmployeeWeekValidation(start); } catch(e) {}
   }
 }
 
@@ -3302,30 +3330,105 @@ async function loadMyLeaveRequests(){
     const {data,error}=await sb.from('employee_leave_requests').select('*').eq('employee_id', state.current.id).order('created_at',{ascending:false});
     if(error) throw error;
     if(!data||data.length===0){list.innerHTML='<div class="empty"><div class="ico">📭</div><p>Aucune demande</p></div>'; return;}
-    list.innerHTML=data.map(r=>`<div class="leave-card ${r.status}"><div class="leave-title">${leaveKindLabel(r.kind)} · ${leaveStatusLabel(r.status)}</div><div class="leave-meta">Du ${fmtDate(r.start_date)} au ${fmtDate(r.end_date)}${r.note?' · '+hesc(r.note):''}${r.manager_note?'<br>Réponse manager : '+hesc(r.manager_note):''}</div></div>`).join('');
+    list.innerHTML=data.map(r=>`<div class="leave-card ${r.status}"><div class="leave-title">${leaveKindLabel(r.kind)} · ${leaveStatusLabel(r.status)}</div><div class="leave-meta">Du ${fmtDate(r.start_date)} au ${fmtDate(r.end_date)}${r.note?' · '+hesc(r.note):''}${r.signed_at?'<br>✍️ Signée le '+fmtDate(r.signed_at)+' à '+fmtTime(r.signed_at):''}${r.manager_note?'<br>Réponse manager : '+hesc(r.manager_note):''}</div>${r.signature_data_url?`<img class="signature-preview" src="${r.signature_data_url}" alt="Signature congé">`:''}<button class="btn btn-sec btn-blk" style="margin-top:8px" onclick="printLeaveRequest('${r.id}')">🖨️ Imprimer la demande</button></div>`).join('');
   }catch(err){console.error(err); list.innerHTML='<div class="empty"><div class="ico">⚠️</div><p>Table demandes congés absente : exécute le SQL V9.2</p></div>';}
 }
 function leaveKindLabel(k){return {cp:'Congé payé', recovery:'Récupération', rest:'Repos demandé', absence:'Absence'}[k]||k}
 function leaveStatusLabel(s){return {pending:'En attente', approved:'Validée', rejected:'Refusée', cancelled:'Annulée'}[s]||s}
 async function submitLeaveRequest(){
+  // Compatibilité : ancien bouton. Maintenant les congés doivent être signés.
+  openLeaveSignatureModal();
+}
+let leaveSigPad = { drawing:false, empty:true, ctx:null, pending:null };
+function openLeaveSignatureModal(){
   if(!state.current || isInterimEmployee(state.current)){toast('Demande non disponible pour intérimaire','err'); return;}
   const start=document.getElementById('lr-start').value, end=document.getElementById('lr-end').value, kind=document.getElementById('lr-kind').value, note=document.getElementById('lr-note').value;
   if(!start||!end){toast('Dates obligatoires','err'); return;}
-  try{
-    const {error}=await sb.from('employee_leave_requests').insert({employee_id:state.current.id,start_date:start,end_date:end,kind,status:'pending',note});
-    if(error) throw error;
-    toast('Demande envoyée à Amar Lacidi','suc');
-    document.getElementById('lr-note').value='';
-    loadMyLeaveRequests();
-  }catch(err){console.error(err); toast('Impossible d’envoyer : vérifie le SQL V9.2','err');}
+  if(end < start){toast('Date de fin avant date de début','err'); return;}
+  leaveSigPad.pending = {start,end,kind,note};
+  document.getElementById('sig-leave-label').textContent = `${leaveKindLabel(kind)} · du ${fmtDate(start)} au ${fmtDate(end)}`;
+  document.getElementById('leave-sig-pin').value='';
+  showModal('mod-leave-signature');
+  setTimeout(initLeaveSignaturePad, 120);
 }
+function initLeaveSignaturePad(){
+  const canvas=document.getElementById('leave-signature-pad'); if(!canvas) return;
+  const ratio = Math.max(window.devicePixelRatio || 1, 1);
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = Math.floor(rect.width * ratio);
+  canvas.height = Math.floor(rect.height * ratio);
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(ratio,0,0,ratio,0,0);
+  ctx.lineWidth=2.2; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#111827';
+  leaveSigPad.ctx=ctx; leaveSigPad.empty=true;
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,rect.width,rect.height);
+  const pos = e => { const r=canvas.getBoundingClientRect(); const p=e.touches?e.touches[0]:e; return {x:p.clientX-r.left,y:p.clientY-r.top}; };
+  canvas.onpointerdown = e => { e.preventDefault(); leaveSigPad.drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); };
+  canvas.onpointermove = e => { if(!leaveSigPad.drawing) return; e.preventDefault(); const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); leaveSigPad.empty=false; };
+  canvas.onpointerup = canvas.onpointerleave = e => { leaveSigPad.drawing=false; };
+}
+function clearLeaveSignature(){
+  const canvas=document.getElementById('leave-signature-pad'); if(!canvas||!leaveSigPad.ctx) return;
+  const rect=canvas.getBoundingClientRect();
+  leaveSigPad.ctx.fillStyle='#fff'; leaveSigPad.ctx.fillRect(0,0,rect.width,rect.height);
+  leaveSigPad.empty=true;
+}
+async function submitSignedLeaveRequest(){
+  if(!state.current || isInterimEmployee(state.current)){toast('Demande non disponible pour intérimaire','err'); return;}
+  const pin=document.getElementById('leave-sig-pin').value.trim();
+  if(!/^[0-9]{4}$/.test(pin)){toast('PIN à 4 chiffres','err'); return;}
+  if(!leaveSigPad.pending){toast('Demande incomplète','err'); return;}
+  if(leaveSigPad.empty){toast('Signature obligatoire','err'); return;}
+  try{
+    const {data: loginCheck, error: loginError} = await sb.rpc('employee_login', {p_employee_id: state.current.id, p_pin: pin});
+    if(loginError) throw loginError;
+    if(!loginCheck || !loginCheck.ok){ toast('PIN incorrect', 'err'); return; }
+    const canvas=document.getElementById('leave-signature-pad');
+    const signatureData = canvas.toDataURL('image/png');
+    const now = new Date().toISOString();
+    const {start,end,kind,note}=leaveSigPad.pending;
+    const {error}=await sb.from('employee_leave_requests').insert({
+      employee_id:state.current.id,
+      start_date:start,
+      end_date:end,
+      kind,
+      status:'pending',
+      note,
+      signed_at:now,
+      signature_data_url:signatureData,
+      signature_name:state.current.full_name
+    });
+    if(error) throw error;
+    closeModal('mod-leave-signature');
+    document.getElementById('leave-sig-pin').value='';
+    document.getElementById('lr-note').value='';
+    leaveSigPad.pending=null;
+    toast('Demande signée et envoyée à Amar Lacidi','suc');
+    loadMyLeaveRequests();
+  }catch(err){console.error(err); toast('Impossible d’envoyer : exécute le SQL V10.4 congés signés','err');}
+}
+async function printLeaveRequest(id){
+  try{
+    const {data:r,error}=await sb.from('employee_leave_requests').select('*, employees(full_name, role)').eq('id',id).single();
+    if(error) throw error;
+    const empName = r.employees?.full_name || state.current?.full_name || 'Salarié';
+    openPrintWindow(leaveRequestPrintHTML(r, empName));
+  }catch(err){console.error(err); toast('Demande congé non imprimable','err');}
+}
+function leaveRequestPrintHTML(r, empName){
+  const generated = new Date().toISOString();
+  const status = leaveStatusLabel(r.status);
+  const sigHTML = r.signature_data_url ? `<img src="${r.signature_data_url}" alt="Signature salarié">` : '<div style="color:#6B7280;font-size:12px">Signature non disponible</div>';
+  return `<div class="print-sheet"><div class="print-head"><div><div class="print-title">Demande de congé / récupération signée</div><div class="print-sub">OM PRO × API · Document RH</div></div><div style="text-align:right;font-weight:900;color:#D9A124">API Pointage<br><span style="font-size:11px;color:#6B7280">Congés salariés</span></div></div><table class="print-grid"><tbody><tr><th>Salarié</th><td>${hesc(empName)}</td></tr><tr><th>Type</th><td>${leaveKindLabel(r.kind)}</td></tr><tr><th>Période</th><td>Du ${fmtDate(r.start_date)} au ${fmtDate(r.end_date)}</td></tr><tr><th>Statut</th><td>${status}</td></tr><tr><th>Commentaire salarié</th><td>${hesc(r.note||'—')}</td></tr><tr><th>Réponse manager</th><td>${hesc(r.manager_note||'—')}</td></tr></tbody></table><div class="print-signature"><div class="sig-box"><div class="sig-title">Signature salarié</div>${sigHTML}</div><div class="sig-meta">Signataire : ${hesc(r.signature_name||empName)}<br>Demande signée le : ${fmtDate(r.signed_at||r.created_at)}<br>Heure : ${fmtTime(r.signed_at||r.created_at)}<br>Document imprimé le : ${fmtDate(generated)} à ${fmtTime(generated)}</div></div><div class="print-footer"><span>Document interne — demande de congé signée</span><span>Validation manager : Amar Lacidi</span></div></div>`;
+}
+
 async function loadLeaveRequests(){
   const box=document.getElementById('mgr-leave-requests'); if(!box) return;
   try{
     const {data,error}=await sb.from('employee_leave_requests').select('*, employees(full_name, role)').order('created_at',{ascending:false}).limit(100);
     if(error) throw error;
     if(!data||data.length===0){box.innerHTML='<div class="empty"><div class="ico">📭</div><p>Aucune demande</p></div>'; return;}
-    box.innerHTML=data.map(r=>`<div class="leave-card ${r.status}"><div class="leave-title">${hesc(r.employees?.full_name||'Salarié')} · ${leaveKindLabel(r.kind)} · ${leaveStatusLabel(r.status)}</div><div class="leave-meta">Du ${fmtDate(r.start_date)} au ${fmtDate(r.end_date)}${r.note?' · '+hesc(r.note):''}</div>${r.status==='pending'?`<div class="fg" style="margin-top:8px"><input id="lr-note-${r.id}" placeholder="Note manager optionnelle"></div><div class="leave-actions"><button class="btn btn-dan" onclick="reviewLeaveRequest('${r.id}','rejected')">Refuser</button><button class="btn btn-suc" onclick="reviewLeaveRequest('${r.id}','approved')">Valider</button></div>`:''}</div>`).join('');
+    box.innerHTML=data.map(r=>`<div class="leave-card ${r.status}"><div class="leave-title">${hesc(r.employees?.full_name||'Salarié')} · ${leaveKindLabel(r.kind)} · ${leaveStatusLabel(r.status)}</div><div class="leave-meta">Du ${fmtDate(r.start_date)} au ${fmtDate(r.end_date)}${r.note?' · '+hesc(r.note):''}${r.signed_at?'<br>✍️ Signée le '+fmtDate(r.signed_at)+' à '+fmtTime(r.signed_at):''}</div>${r.signature_data_url?`<img class="signature-preview" src="${r.signature_data_url}" alt="Signature congé">`:''}<button class="btn btn-sec btn-blk" style="margin-top:8px" onclick="printLeaveRequest('${r.id}')">🖨️ Imprimer la demande signée</button>${r.status==='pending'?`<div class="fg" style="margin-top:8px"><input id="lr-note-${r.id}" placeholder="Note manager optionnelle"></div><div class="leave-actions"><button class="btn btn-dan" onclick="reviewLeaveRequest('${r.id}','rejected')">Refuser</button><button class="btn btn-suc" onclick="reviewLeaveRequest('${r.id}','approved')">Valider</button></div>`:''}</div>`).join('');
   }catch(err){console.error(err); box.innerHTML='<div class="empty"><div class="ico">⚠️</div><p>Table demandes congés absente : exécute le SQL V9.2</p></div>';}
 }
 async function reviewLeaveRequest(id,status){
@@ -3946,7 +4049,12 @@ async function loadEmployeePlanning(){
       return `<div class="plan-day-card ${cls}">${planJobBadge(state.current,r)}<div class="plan-day-head"><div class="plan-day-title">${frDay(d)}</div><div class="plan-day-time">${time}</div></div>${loc}<div class="plan-day-sub">${sub}</div>${realLine}${org}</div>`;
     }).join('');
     renderEmployeeWeekValidation(start);
-  }catch(err){ console.error(err); list.innerHTML = '<div class="empty"><div class="ico">⚠️</div><p>Planning non disponible. Table SQL à créer.</p></div>'; }
+  }catch(err){
+    console.error(err);
+    list.innerHTML = '<div class="empty"><div class="ico">⚠️</div><p>Planning non disponible. Table SQL à créer.</p></div>';
+    // Même si le chargement du planning échoue, on laisse le pavé signature accessible.
+    try { renderEmployeeWeekValidation(start); } catch(e) {}
+  }
 }
 
 const _oldRenderEmployeeWeekValidationV101 = renderEmployeeWeekValidation;
@@ -3963,6 +4071,156 @@ function planningPrintHTML(rows, emps, start, title, signature){
   const by = {}; (rows||[]).forEach(r=>by[`${r.employee_id}_${r.work_date}`]=r);
   const sigHTML = signature ? `<div class="print-signature"><div class="sig-box"><div class="sig-title">Signature salarié</div>${signature.signature_data_url?`<img src="${signature.signature_data_url}" alt="Signature salarié">`:'<div style="color:#6B7280;font-size:12px">Signature enregistrée</div>'}</div><div class="sig-meta">Salarié : ${hesc(signature.employee_name||'')}<br>Semaine validée le : ${fmtDate(signature.signed_at||signature.validated_at)}<br>Heure : ${fmtTime(signature.signed_at||signature.validated_at)}<br>Document généré le : ${fmtDate(new Date().toISOString())} à ${fmtTime(new Date().toISOString())}</div></div>` : '';
   return `<div class="print-sheet"><div class="print-head"><div><div class="print-title">${hesc(title)}</div><div class="print-sub">Semaine du ${fmtDate(start)} au ${fmtDate(addDaysISO(start,6))}</div></div><div style="text-align:right;font-weight:900;color:#D9A124">OM PRO × API<br><span style="font-size:11px;color:#6B7280">Planning salariés</span></div></div>${renderPlanLegend()}<table class="print-grid"><thead><tr><th>Salarié</th>${days.map(d=>`<th>${frDay(d)}</th>`).join('')}</tr></thead><tbody>${(emps||[]).map(e=>`<tr><td><b>${hesc(e.full_name)}</b><br><span style="font-size:10px;color:#6B7280">${e.role==='manager'?'Manager':isInterimEmployee(e)?'Intérimaire':'Salarié'}</span><br><span style="font-size:10px;font-weight:900;color:#334155">${planJobInfo(planEmployeeFunctionV101(e)).icon} ${planJobInfo(planEmployeeFunctionV101(e)).label}</span></td>${days.map(d=>{const r=by[`${e.id}_${d}`]||{status:'rest'}; if(r.status!=='planned') return `<td class="off">${r.organization_type==='ferme'?'Fermé':(r.status==='absence'?'Absent / CP':'Repos')}</td>`; const jk=planJobKeyFor(e,r), ji=planJobInfo(jk); const real=(state.realByEmpDate||{})[`${e.id}_${d}`]; const diff=real?real.minutes-plannedMinutes(r):null; return `<td class="work job-${jk}"><b>${r.start_time||'--:--'} → ${r.end_time||'--:--'}</b><span class="job-label">${ji.icon} ${ji.label}</span><span class="loc">📍 ${locLabel(r.location_type)}${r.location_label?' · '+hesc(r.location_label):''}</span><span class="org">${PLAN_ORG_TYPES[r.organization_type]?.label||''}</span><span style="display:block;margin-top:3px;font-size:10px;color:#6B7280">Pause ${r.break_minutes||0} min</span>${real?`<span style="display:block;font-size:10px;font-weight:900;color:${Math.abs(diff)<15?'#065F46':diff>0?'#92400E':'#991B1B'}">Pointé ${fmtMin(real.minutes)} · écart ${diff===0?'0':(diff>0?'+':'-')+fmtMin(Math.abs(diff))}</span>`:''}</td>`}).join('')}</tr>`).join('')}</tbody></table>${sigHTML}<div class="print-footer"><span>Document interne — planning salarié signé</span><span>Généré par Amar Lacidi</span></div></div>`;
+}
+
+
+// ═══════════════════════════════════════════════
+// V10.5 — Géolocalisation des affectations Stade / Déplacement
+// ═══════════════════════════════════════════════
+const PLAN_GEO_REQUIRED_LOCATIONS_V105 = ['stade_velodrome','deplacement','deplacement_exterieur'];
+function isGeoRequiredLocationV105(loc){ return PLAN_GEO_REQUIRED_LOCATIONS_V105.includes(String(loc||'')); }
+function browserGeolocationV105(){
+  return new Promise((resolve, reject)=>{
+    if(!navigator.geolocation){ reject(new Error('Géolocalisation non disponible sur cet appareil')); return; }
+    navigator.geolocation.getCurrentPosition(
+      pos => resolve({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+        accuracy: pos.coords.accuracy,
+        captured_at: new Date().toISOString()
+      }),
+      err => reject(err),
+      { enableHighAccuracy:true, timeout:12000, maximumAge:30000 }
+    );
+  });
+}
+async function captureGeoForPlanningRowV105(row){
+  if(!row || !isGeoRequiredLocationV105(row.location_type)) return;
+  if(row.location_lat && row.location_lng) return;
+  try{
+    toast('📍 Géolocalisation demandée pour ce site', '');
+    const geo = await browserGeolocationV105();
+    row.location_lat = geo.lat;
+    row.location_lng = geo.lng;
+    row.location_accuracy = geo.accuracy;
+    row.location_captured_at = geo.captured_at;
+    const stamp = `GPS OK ${new Date(geo.captured_at).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`;
+    if(!String(row.location_label||'').includes('GPS OK')){
+      row.location_label = row.location_label ? `${row.location_label} · ${stamp}` : stamp;
+      row.note = row.location_label;
+    }
+    toast('✓ Géolocalisation enregistrée', 'suc');
+    renderPlanningGrid();
+  }catch(err){
+    console.warn('Géolocalisation planning refusée/indisponible', err);
+    row.location_geo_error = err.message || String(err);
+    toast('Géolocalisation non enregistrée : autorisation refusée ou indisponible', 'err');
+  }
+}
+
+function updatePlanCell(input){
+  const cell = input.closest('.plan-cell');
+  const row = findPlanRow(cell);
+  const emp = (state.allEmps||[]).find(e=>e.id===row.employee_id) || {};
+  row.start_time = cell.querySelector('.ps').value || null;
+  row.end_time = cell.querySelector('.pe').value || null;
+  row.break_minutes = Number(cell.querySelector('.pb').value || 0);
+  row.status = cell.querySelector('.pst')?.value || (row.start_time && row.end_time ? 'planned' : 'rest');
+  row.function_type = cell.querySelector('.pjob')?.value || planEmployeeFunctionV101(emp,row);
+  row.location_type = cell.querySelector('.ploc')?.value || row.location_type || null;
+  row.location_label = cell.querySelector('.pnote')?.value || row.location_label || null;
+  row.note = row.location_label;
+  if(!isGeoRequiredLocationV105(row.location_type)){
+    row.location_lat = null; row.location_lng = null; row.location_accuracy = null; row.location_captured_at = null;
+  }
+  refreshPlanKpis();
+  if(isGeoRequiredLocationV105(row.location_type)){
+    captureGeoForPlanningRowV105(row);
+  }else{
+    renderPlanningGrid();
+  }
+}
+
+async function savePlanningWeek(){
+  if(!isAmarPlanningManager()){ toast('Seul Amar Lacidi peut enregistrer le planning', 'err'); return; }
+  const makeRows = (withGeo=true) => (state.planningRows||[]).map(r=>{
+    const base = {
+      employee_id:r.employee_id, work_date:r.work_date, start_time:r.start_time || null, end_time:r.end_time || null,
+      break_minutes:Number(r.break_minutes)||0, status:r.status || 'planned', note:r.note || null,
+      organization_type:r.organization_type || null, template_key:r.template_key || null, location_type:r.location_type || null,
+      location_label:r.location_label || null, function_type:r.function_type || null, created_by:state.current?.id || null
+    };
+    if(withGeo){
+      base.location_lat = r.location_lat || null;
+      base.location_lng = r.location_lng || null;
+      base.location_accuracy = r.location_accuracy || null;
+      base.location_captured_at = r.location_captured_at || null;
+    }
+    return base;
+  });
+  try{
+    let {error} = await sb.from('employee_planning').upsert(makeRows(true), {onConflict:'employee_id,work_date'});
+    if(error && String(error.message||'').toLowerCase().includes('location_')){
+      console.warn('Colonnes géolocalisation absentes, sauvegarde sans GPS', error);
+      ({error} = await sb.from('employee_planning').upsert(makeRows(false), {onConflict:'employee_id,work_date'}));
+      if(error) throw error;
+      toast('Planning enregistré sans GPS : exécute le SQL V10.5', 'err');
+      return;
+    }
+    if(error) throw error;
+    toast('Planning enregistré avec affectations et géolocalisation', 'suc');
+  }catch(err){ console.error(err); toast('Impossible d’enregistrer : vérifie le SQL V10.5', 'err'); }
+}
+
+const _oldConfirmLocationV105 = confirmLocation;
+async function confirmLocation(){
+  if(!state.tempLocation){ toast('Choisis un lieu', 'err'); return; }
+  let other = null;
+  if(state.tempLocation === 'autre'){
+    other = document.getElementById('loc-other-input').value.trim();
+    if(!other){ toast('Précise le lieu', 'err'); return; }
+  }
+  state.currentLocation = { type: state.tempLocation, other: other };
+  if(isGeoRequiredLocationV105(state.tempLocation)){
+    try{
+      toast('📍 Géolocalisation du lieu en cours...', '');
+      state.currentLocation.geo = await browserGeolocationV105();
+      toast('✓ Géolocalisation enregistrée pour le lieu', 'suc');
+    }catch(err){
+      console.warn('Géolocalisation lieu refusée/indisponible', err);
+      state.currentLocation.geo_error = err.message || String(err);
+      toast('Lieu choisi, mais GPS non enregistré', 'err');
+    }
+  }
+  closeModal('mod-location');
+  if(state.locationContext === 'punch' && state.pendingPunch){
+    document.getElementById('conf-title').textContent = `Confirmer : ${PLBL[state.pendingPunch]||state.pendingPunch}`;
+    document.getElementById('conf-pin-input').value = '';
+    showModal('mod-confirm-pin');
+    setTimeout(() => document.getElementById('conf-pin-input').focus(), 100);
+  } else {
+    if(state.dayState && state.dayState.has_start && !state.dayState.has_end){
+      try {
+        const lastPunch = state.dayState.punches[state.dayState.punches.length - 1];
+        if(lastPunch){
+          const upd = { location_type: state.currentLocation.type, location_other: state.currentLocation.other };
+          if(state.currentLocation.geo){
+            upd.location_lat = state.currentLocation.geo.lat;
+            upd.location_lng = state.currentLocation.geo.lng;
+            upd.location_accuracy = state.currentLocation.geo.accuracy;
+            upd.location_captured_at = state.currentLocation.geo.captured_at;
+          }
+          const {error} = await sb.from('punches').update(upd).eq('id', lastPunch.id);
+          if(error && String(error.message||'').toLowerCase().includes('location_')){
+            await sb.from('punches').update({ location_type: state.currentLocation.type, location_other: state.currentLocation.other }).eq('id', lastPunch.id);
+          }
+        }
+      } catch(err){ console.error('location update error:', err); }
+    }
+    toast('✓ Lieu changé', 'suc');
+    updateLocationPill();
+    if(state.current) loadDayState();
+  }
 }
 
 </script>
