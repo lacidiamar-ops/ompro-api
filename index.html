@@ -1126,6 +1126,7 @@ const SUPABASE_URL = 'https://vjulagaprzbnquynwjmt.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqdWxhZ2FwcnpibnF1eW53am10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4OTYzMDEsImV4cCI6MjA5MjQ3MjMwMX0.wX5C8kV4COGDwca_rxGMY41wHfpmsD7hMEWcxirIpak';
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+window.sb = sb; // expose pour le patch et les IIFEs
 
 const state = {
   employees: [],
@@ -1140,6 +1141,7 @@ const state = {
   installEvent: null,
   allEmps: []
 };
+window.state = state; // expose pour le patch et les IIFEs
 
 
 // Accès planning : seul Amar Lacidi peut créer / modifier / exporter le planning.
@@ -3005,17 +3007,17 @@ function planAssignmentForEmployee(emp, orgKey, employees){
     // Salle : 1 personne matin + 1 personne relais soir.
     // Cuisine : Igal en chef 8h30 + 1 chaud matin + 1 chaud relais soir + 1 plonge.
     // Pas de poste froid généré automatiquement. Fin jusqu'à 22h sans dépasser 10h nettes par personne.
-    if(isSalle(emp) || isInterimSalle(emp)) return salleIndex === 0 ? tplRow('mav_matin_10','Salle · PDJ + mise en place MAV') : (salleIndex === 1 ? tplRow('mav_soir_10','Salle · dîner MAV jusqu'a 22h') : tplRow('repos','Salle non affectée MAV'));
+    if(isSalle(emp) || isInterimSalle(emp)) return salleIndex === 0 ? tplRow('mav_matin_10','Salle · PDJ + mise en place MAV') : (salleIndex === 1 ? tplRow('mav_soir_10','Salle - diner MAV jusqu a 22h') : tplRow('repos','Salle non affectée MAV'));
     if(isIgal(emp)) return tplRow('mav_chef_10','Chef · coordination MAV');
     if(isDamien(emp) || isSivane(emp) || isInterimChaud(emp)){
       // 3 chaud maximum : Igal + 2 autres. Un des deux autres couvre le relais jusqu'à 22h.
       if(titulaireChaudIndex === 0) return tplRow('mav_matin_10','Cuisine chaud · production MAV');
-      if(titulaireChaudIndex === 1) return tplRow('mav_soir_10','Cuisine chaud · dîner MAV jusqu'a 22h');
-      if(isInterimChaud(emp) && chaudIndex < 3) return tplRow('mav_soir_10','Intérim chaud · renfort MAV jusqu'a 22h');
+      if(titulaireChaudIndex === 1) return tplRow('mav_soir_10','Cuisine chaud - diner MAV jusqu a 22h');
+      if(isInterimChaud(emp) && chaudIndex < 3) return tplRow('mav_soir_10','Interim chaud - renfort MAV jusqu a 22h');
       return tplRow('repos','Chaud non affecté MAV');
     }
     if(isIsmael(emp) || isInterimFroid(emp)) return tplRow('repos','Pas de froid sur MAV');
-    if(isInterimPlonge(emp)) return plonge.findIndex(e=>e.id===emp.id) === 0 ? tplRow('mav_plonge_10','Plonge · MAV jusqu'a 22h') : tplRow('repos','Plonge non affecté MAV');
+    if(isInterimPlonge(emp)) return plonge.findIndex(e=>e.id===emp.id) === 0 ? tplRow('mav_plonge_10','Plonge - MAV jusqu a 22h') : tplRow('repos','Plonge non affecté MAV');
     return tplRow('repos','Non affecté MAV');
   }
 
@@ -3703,7 +3705,13 @@ async function validateMyWeek(weekStart){
 
 window.addEventListener('DOMContentLoaded', () => {
   injectLogos();
-  loadEmployees();
+  (async () => {
+    try {
+      await loadEmployees();
+    } catch(e) {
+      console.error('DOMContentLoaded loadEmployees FATAL:', e?.message || JSON.stringify(e) || e);
+    }
+  })();
 });
 
 document.addEventListener('gesturestart', e=>e.preventDefault());
@@ -3798,7 +3806,7 @@ function buildSlotsForOrgV10(orgKey, date, groups, usedMin){
   if(orgKey==='mise_au_vert'){
     // Mise au vert : 10h max. Cuisine ferme 21h, salle/plonge 22h.
     add(salle[0], 'salle_mav_matin', 'Salle · PDJ + mise en place MAV', 600);
-    add(salle[1], 'salle_mav_fermeture', 'Salle · relais dîner MAV jusqu'a 22h', 600);
+    add(salle[1], 'salle_mav_fermeture', 'Salle - relais diner MAV 22h', 600);
     add(igal, 'mav_chef_igal', 'Igal · coordination MAV / coupure', 600);
     // deux chaud titulaires reprennent pour finir à 21h ; nouveau cuisinier si repos fixe.
     hotAvailable.slice(0,2).forEach(e=>add(e,'mav_chaud_coupure','Chaud · PDJ + reprise dîner, cuisine 21h',600));
@@ -5054,7 +5062,7 @@ async function confirmLocation(){
     if(org==='ferme') return slots;
     if(org==='mise_au_vert'){
       add(p.salle[0],'salle_mav_matin','Salle · PDJ + mise en place MAV');
-      add(p.salle[1],'salle_mav_fermeture','Salle · relais dîner MAV jusqu'a 22h');
+      add(p.salle[1],'salle_mav_fermeture','Salle - relais diner MAV 22h');
       add(p.igal,'mav_chef_igal','Igal · coordination MAV / coupure');
       add(p.chaud[0],'mav_chaud_coupure','Chaud · PDJ + reprise dîner, cuisine 21h');
       add(p.chaud[1],'mav_chaud_coupure','Chaud · PDJ + reprise dîner, cuisine 21h');
@@ -6795,29 +6803,37 @@ async function confirmLocation(){
   function frDay2(iso){ const d=new Date(String(iso)+'T12:00:00'); return d.toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'2-digit'}).replace('.', ''); }
   function employeeIsActive(e){ return (e?.is_active !== false) && (e?.active !== false); }
 
-  // 1) Remplace le chargement salariés par une lecture conforme à la vraie table Supabase.
+  // 1) Chargement salariés - version robuste avec fallback
   async function loadEmployeesV15(){
     const grid=$('emp-grid');
     if(grid) grid.innerHTML='<div class="empty"><div class="ico">⏳</div><p>Chargement...</p></div>';
+    // sb = closure du script principal. window.sb = copie exposée. Les deux pointent vers le même client.
+    const client = (typeof sb !== 'undefined' && sb) || window.sb;
+    if(!client){ console.error(TAG,'Supabase client introuvable'); return; }
     try{
-      const {data,error}=await sb.from('employees')
+      const {data,error}=await client.from('employees')
         .select('id,full_name,role,role_title,pin_code,is_active,active,default_function,weekly_base_hours,avatar_code')
         .order('full_name');
-      if(error) throw error;
+      if(error){
+        console.error(TAG,'Supabase error:',error.message,'code:',error.code,'details:',error.details);
+        throw error;
+      }
       const rows=(data||[]).filter(employeeIsActive).map(e=>({
         ...e,
-        full_name:e.full_name || 'Salarié',
-        default_function:e.default_function || 'polyvalent',
-        active: e.active !== false,
-        is_active: e.is_active !== false
+        full_name:e.full_name||'Salarié',
+        default_function:e.default_function||'polyvalent',
+        active:e.active!==false,
+        is_active:e.is_active!==false
       }));
       state.employees=rows;
       state.allEmps=rows;
+      window.state=state;
       if(typeof renderEmpList==='function') renderEmpList();
-      console.log(TAG,'salariés chargés',rows.length);
+      console.log(TAG,'salariés chargés:',rows.length);
     }catch(e){
-      console.error(TAG,'erreur chargement salariés',e);
-      if(grid) grid.innerHTML='<div class="empty"><div class="ico">⚠️</div><p>Erreur chargement salariés. Vérifie la table employees.</p></div>';
+      const msg=e?.message||e?.code||(typeof e==='object'?JSON.stringify(e):String(e));
+      console.error(TAG,'erreur finale:',msg);
+      if(grid) grid.innerHTML='<div class="empty"><div class="ico">⚠️</div><p>Erreur chargement: '+String(msg).slice(0,120).replace(/[<>]/g,'')+'</p></div>';
     }
   }
 
@@ -7412,8 +7428,11 @@ async function confirmLocation(){
       return;
     }
 
-    const sb = window.sb;
-    if (!sb) return;
+    const sb = window.sb || (typeof supabase !== 'undefined' && supabase);
+    if (!sb) {
+      if (typeof window.toast === 'function') window.toast('Client Supabase non disponible', 'err');
+      return;
+    }
 
     // Collecte les lignes depuis la grille visible (V12.9 collectRowsFromVisibleManagerGrid)
     let rows = [];
@@ -7903,7 +7922,12 @@ async function confirmLocation(){
     if (valBox) valBox.innerHTML = '';
     list.innerHTML = '<div class="empty"><div class="ico">⏳</div><p>Chargement planning...</p></div>';
 
-    const sb = window.sb;
+    // Récupérer sb: window.sb OU la variable globale du script principal
+    const sb = window.sb || (typeof supabase !== 'undefined' && supabase);
+    if (!sb) {
+      list.innerHTML = '<div class="empty"><div class="ico">⚠️</div><p>Client Supabase non disponible.</p></div>';
+      return;
+    }
     const currentId = String(window.state.current.id);
 
     // Plage : semaine courante + 5 semaines futures = 6 semaines au total
@@ -7963,7 +7987,7 @@ async function confirmLocation(){
       const fmtMin = window.fmtMinutes || (m=>{m=Math.max(0,Math.round(Number(m)||0));return Math.floor(m/60)+'h'+String(m%60).padStart(2,'0');});
       const duration = window.calcDurationMin || function(r){
         if(!r||!['planned','work','travail'].includes(String(r.status||'').toLowerCase())) return 0;
-        const hm = v=>{if(!v)return null;const p=String(v).match(/^(\d{1,2}):(\d{2})/);return p?+p[1]*60++p[2]:null;};
+        const hm = v=>{if(!v)return null;const p=String(v).match(/^(\d{1,2}):(\d{2})/);return p?+p[1]*60+(+p[2]):null;};
         const s=hm(r.start_time),e0=hm(r.end_time);if(s==null||e0==null)return 0;
         let e=e0;if(e<s)e+=1440;return Math.max(0,e-s-(Number(r.break_minutes)||0));
       };
@@ -8003,7 +8027,7 @@ async function confirmLocation(){
         html += '</div>';
 
         if (!hasAnyData) {
-          html += '<div class="empty" style="padding:16px 0"><div class="ico" style="font-size:28px">📅</div><p>Amar n'a pas encore publié ce planning.<br>Reviens bientôt.</p></div>';
+          html += `<div class="empty" style="padding:16px 0"><div class="ico" style="font-size:28px">📅</div><p>Amar n'a pas encore publié ce planning.<br>Reviens bientôt.</p></div>`;
         } else {
           // Afficher les 7 jours
           days.forEach(d => {
@@ -8140,32 +8164,8 @@ async function confirmLocation(){
     setTimeout(rescueSalarieTab, 3000);
   });
 
-  // ─────────────────────────────────────────────────────────────
-  // Vérification chargement initial avec loadEmployees correct
-  // ─────────────────────────────────────────────────────────────
-  const _prevLoadEmployees = window.loadEmployees;
-  window.loadEmployees = async function() {
-    const grid = document.getElementById('emp-grid');
-    if (grid) grid.innerHTML = '<div class="empty"><div class="ico">⏳</div><p>Chargement...</p></div>';
-    try {
-      const { data, error } = await window.sb.from('employees')
-        .select('id, full_name, role, role_title, pin_code, is_active, active, default_function, weekly_base_hours, avatar_code')
-        .order('full_name');
-      if (error) throw error;
-      const rows = (data || []).filter(window.employeeIsActive).map(e => ({
-        ...e,
-        full_name: e.full_name || 'Salarie',
-        default_function: e.default_function || 'polyvalent'
-      }));
-      window.state.employees = rows;
-      window.state.allEmps = rows;
-      if (typeof window.renderEmpList === 'function') window.renderEmpList();
-      console.log(PATCH_TAG, 'loadEmployees OK', rows.length, 'salariés');
-    } catch(e) {
-      console.error(PATCH_TAG, 'loadEmployees error', e);
-      if (grid) grid.innerHTML = '<div class="empty"><div class="ico">⚠️</div><p>Erreur chargement salaries.</p></div>';
-    }
-  };
+  // loadEmployees: laissé à V15 (L6902) — ne pas redéfinir ici
+  // V15 fonctionne via DOMContentLoaded L3706 avec sb de sa closure
 
   console.log(PATCH_TAG, '✅ Toutes les corrections appliquées');
   console.log(PATCH_TAG, 'Corrections actives :', [
