@@ -6990,8 +6990,17 @@ async function confirmLocation(){
     if(!state.current) return;
     const empId = state.current.id;
     if(!empId){ console.warn('loadEmployeePlanning: pas d\'id'); return; }
-    // S'enregistrer comme version finale pour que les déclarations de base délèguent ici
-    window._loadEmployeePlanningFinal = window.loadEmployeePlanning;
+
+    // Helpers locaux sûrs (ne dépendent d'aucun scope externe)
+    const HHMM = t => { if(!t) return '--:--'; const s=String(t); return s.length>=5 ? s.slice(0,5) : s; };
+    const ESC = v => String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+    const STATUS_LBL = {planned:'Travail',work:'Travail',rest:'Repos',absence:'Congé / absence',recovery:'Récupération',unpaid:'Sans solde'};
+    const LOC_LBL = (typeof LOCS!=='undefined'&&LOCS) ? LOCS : {};
+    function durMin(r){ if(!r||!(r.status==='planned'||r.status==='work')) return 0; const a=HHMM(r.start_time),b=HHMM(r.end_time); if(a==='--:--'||b==='--:--') return 0; const [h1,m1]=a.split(':').map(Number),[h2,m2]=b.split(':').map(Number); let d=(h2*60+m2)-(h1*60+m1); if(d<0)d+=1440; return Math.max(0,d-(Number(r.break_minutes)||0)); }
+    function fMin(m){ m=Math.round(m||0); const h=Math.floor(m/60), mm=m%60; return mm?`${h}h${String(mm).padStart(2,'0')}`:`${h}h`; }
+    function frD(d){ const dt=new Date(d+'T12:00:00'); return dt.toLocaleDateString('fr-FR',{weekday:'long',day:'2-digit',month:'2-digit'}); }
+    function mondayOf(dateStr){ const dt=new Date((dateStr||new Date().toISOString().slice(0,10))+'T12:00:00'); const day=dt.getDay()||7; dt.setDate(dt.getDate()-day+1); return dt.toISOString().slice(0,10); }
+    function weekDaysOf(ws){ return Array.from({length:7},(_,i)=>{ const dt=new Date(ws+'T12:00:00'); dt.setDate(dt.getDate()+i); return dt.toISOString().slice(0,10); }); }
 
     const today = new Date(); today.setHours(12,0,0,0);
     const dow = today.getDay()||7;
@@ -7002,7 +7011,7 @@ async function confirmLocation(){
     const list = document.getElementById('emp-plan-list'); if(!list) return;
     list.innerHTML='<div class="empty"><div class="ico">⏳</div><p>Chargement planning...</p></div>';
 
-    // ── PHASE 1 : planning personnel uniquement (priorité absolue) ──
+    // ── PHASE 1 : planning personnel uniquement ──
     let mine = [];
     try{
       const mineRes = await sb.from('employee_planning').select('*')
@@ -7010,17 +7019,17 @@ async function confirmLocation(){
         .gte('work_date', start).lte('work_date', end)
         .order('work_date');
       if(mineRes.error) throw mineRes.error;
-      mine = (mineRes.data||[]).map(r=>({...r, start_time:hhmm(r.start_time), end_time:hhmm(r.end_time)}));
+      mine = (mineRes.data||[]);
       console.log('loadEmployeePlanning:', empId, '→', mine.length, 'lignes');
     }catch(e){
       console.error('loadEmployeePlanning phase 1:', e);
-      list.innerHTML=`<div class="empty"><div class="ico">⚠️</div><p>Planning non disponible : ${e.message||e}</p><button class="btn btn-pri" style="margin-top:10px" onclick="loadEmployeePlanning()">↻ Réessayer</button></div>`;
+      list.innerHTML=`<div class="empty"><div class="ico">⚠️</div><p>Planning non disponible : ${ESC(e.message||String(e))}</p><button class="btn btn-pri" style="margin-top:10px" onclick="loadEmployeePlanning()">↻ Réessayer</button></div>`;
       return;
     }
 
-    // Afficher immédiatement les semaines personnelles
+    // Grouper par semaine
     const byWeek={};
-    mine.forEach(r=>{ const ws=mondayISO(new Date(r.work_date+'T12:00:00')); (byWeek[ws]||=[]).push(r); });
+    mine.forEach(r=>{ const ws=mondayOf(r.work_date); (byWeek[ws]||=[]).push(r); });
     const weeks = Object.keys(byWeek).sort();
 
     let html='';
@@ -7028,25 +7037,25 @@ async function confirmLocation(){
       html='<div class="empty"><div class="ico">📭</div><p>Aucun planning enregistré pour le moment.</p></div>';
     } else {
       for(const ws of weeks.slice().reverse()){
-        const days=weekDays(ws); const by={}; (byWeek[ws]||[]).forEach(r=>by[r.work_date]=r);
-        const total=days.reduce((s,d)=>s+duration(by[d]),0);
-        html += `<div class="card"><div class="section-t" style="margin-top:0">Semaine du ${frDay(ws)} — ${fmtMin(total)} prévus</div>`;
+        const days=weekDaysOf(ws); const by={}; (byWeek[ws]||[]).forEach(r=>by[r.work_date]=r);
+        const total=days.reduce((s,d)=>s+durMin(by[d]),0);
+        html += `<div class="card"><div class="section-t" style="margin-top:0">Semaine du ${frD(ws)} — ${fMin(total)} prévus</div>`;
         html += days.map(d=>{
           const r=by[d]||{status:'rest',work_date:d};
           const isWork=r.status==='planned'||r.status==='work';
           const job=r.function_type||'polyvalent';
-          return `<div class="plan-day-card job-${job}"><div class="plan-day-head"><div class="plan-day-title">${frDay(d)}</div><div class="plan-day-time">${isWork?`${hhmm(r.start_time)} → ${hhmm(r.end_time)}`:(STATUS[r.status]||'Repos')}</div></div><div class="plan-day-sub">${isWork?`${LOCS[r.location_type]||''} · ${esc(r.location_label||r.note||'')} · pause ${r.break_minutes||0} min · prévu ${fmtMin(duration(r))}`:'Aucun horaire prévu'}</div></div>`;
+          return `<div class="plan-day-card job-${job}"><div class="plan-day-head"><div class="plan-day-title">${frD(d)}</div><div class="plan-day-time">${isWork?`${HHMM(r.start_time)} → ${HHMM(r.end_time)}`:(STATUS_LBL[r.status]||'Repos')}</div></div><div class="plan-day-sub">${isWork?`${LOC_LBL[r.location_type]||''} · ${ESC(r.location_label||r.note||'')} · pause ${r.break_minutes||0} min · prévu ${fMin(durMin(r))}`:'Aucun horaire prévu'}</div></div>`;
         }).join('') + '</div>';
       }
     }
-    // Placeholder pour le collectif (chargé en arrière-plan)
     html += `<div id="collective-plan-zone"><div class="empty"><div class="ico">⏳</div><p>Chargement du planning collectif...</p></div></div>`;
     list.innerHTML = html;
-    try{ if(typeof renderEmployeeWeekValidation==='function') renderEmployeeWeekValidation(mondayISO()); }catch(e){}
+    // Pavé signature (vraie fonction, ne reboucle pas)
+    try{ if(typeof renderEmployeeWeekValidation==='function') renderEmployeeWeekValidation(mondayOf(today.toISOString().slice(0,10))); }catch(e){ console.warn('week validation:',e); }
 
     // ── PHASE 2 : planning collectif en arrière-plan ──
-    const curWs = mondayISO();
-    const curEnd = addDays(curWs, 6);
+    const curWs = mondayOf(today.toISOString().slice(0,10));
+    const curEnd = weekDaysOf(curWs)[6];
     try{
       const [collectiveRes, empRes] = await Promise.all([
         sb.from('employee_planning').select('employee_id,work_date,start_time,end_time,status,function_type,location_type,break_minutes,note')
@@ -7054,15 +7063,24 @@ async function confirmLocation(){
         sb.from('employees').select('id,full_name').eq('active',true)
       ]);
       const empMap={}; (empRes.data||[]).forEach(e=>empMap[String(e.id)]=e);
-      const allCollective=(collectiveRes.data||[]).map(r=>({...r,start_time:hhmm(r.start_time),end_time:hhmm(r.end_time)}));
+      const byDay={}; (collectiveRes.data||[]).forEach(r=>{ (byDay[r.work_date]||=[]).push(r); });
+      let cHtml=`<div class="card"><div class="section-t" style="margin-top:0">Planning collectif équipe</div>`;
+      for(const d of weekDaysOf(curWs)){
+        const dayRows=(byDay[d]||[]).filter(r=>r.status==='planned'||r.status==='work');
+        const names=dayRows.map(r=>`<div class="team-plan-person"><span>${ESC(empMap[String(r.employee_id)]?.full_name||'Salarié')} — ${HHMM(r.start_time)}-${HHMM(r.end_time)}${r.function_type?' · '+r.function_type:''}</span></div>`).join('');
+        cHtml += `<div class="team-plan-day"><b>${frD(d)}</b>${names||'<div class="plan-day-sub">Personne planifiée</div>'}</div>`;
+      }
+      cHtml+=`</div>`;
       const zone = document.getElementById('collective-plan-zone');
-      if(zone) zone.outerHTML = renderCollectivePlanningV129(allCollective, curWs, curEnd, empMap);
+      if(zone) zone.outerHTML = cHtml;
     }catch(e){
       console.warn('loadEmployeePlanning collectif:', e);
       const zone = document.getElementById('collective-plan-zone');
-      if(zone) zone.innerHTML='<div class="empty"><div class="ico">📡</div><p>Planning collectif indisponible (hors ligne).</p></div>';
+      if(zone) zone.innerHTML='<div class="empty"><div class="ico">📡</div><p>Planning collectif indisponible.</p></div>';
     }
   };
+  // Enregistrer immédiatement comme version finale (pas au runtime) pour que les onclick délèguent dès le 1er appel
+  window._loadEmployeePlanningFinal = window.loadEmployeePlanning;
 
   window.exportPlanningXLSX = function(){
     const rows=collectRowsFromVisibleManagerGrid();
@@ -7510,8 +7528,8 @@ async function confirmLocation(){
     if(name==='planning') return window.loadEmployeePlanning();
     if(typeof oldEmpTab==='function') return oldEmpTab(name, btn);
   };
-  // Après signature, l’ancienne fonction appelle renderEmployeeWeekValidation ; on recharge la vue complète.
-  window.renderEmployeeWeekValidation = renderEmployeeWeekValidation = async function(){ try{ await window.loadEmployeePlanning(); }catch(e){ console.warn(TAG,e); } };
+  // NE PAS rediriger renderEmployeeWeekValidation vers loadEmployeePlanning (boucle infinie).
+  // La vraie fonction renderEmployeeWeekValidation est conservée telle quelle.
   if(typeof window.avatarFor !== 'function') window.avatarFor=function(){return '<div class="avatar-3d-mini">👤</div>'};
   console.log(TAG,'correctif actif : toutes les semaines Supabase affichées côté salarié');
 })();
