@@ -1,5 +1,4 @@
 -- Rate-limit repeated employee PIN failures without changing existing PIN values.
--- Apply through the normal Supabase migration pipeline after review.
 
 create table if not exists ompro.employee_login_limits (
   employee_id uuid primary key references ompro.employees(id) on delete cascade,
@@ -10,6 +9,9 @@ create table if not exists ompro.employee_login_limits (
 );
 
 alter table ompro.employee_login_limits enable row level security;
+
+revoke all on table ompro.employee_login_limits from public, anon, authenticated;
+grant select, insert, update, delete on table ompro.employee_login_limits to service_role;
 
 create index if not exists employee_login_limits_locked_until_idx
   on ompro.employee_login_limits (locked_until)
@@ -50,7 +52,7 @@ begin
       'ok', false,
       'error', 'temporarily_locked',
       'message', 'Trop de tentatives. Réessayez dans quelques minutes.',
-      'retry_after_seconds', greatest(1, ceil(extract(epoch from (v_limit.locked_until - v_now)))::integer
+      'retry_after_seconds', greatest(1, ceil(extract(epoch from (v_limit.locked_until - v_now)))::integer)
     );
   end if;
 
@@ -118,3 +120,6 @@ begin
   );
 end;
 $function$;
+
+revoke all on function ompro.employee_login(uuid,text) from public;
+grant execute on function ompro.employee_login(uuid,text) to anon, authenticated, service_role;
