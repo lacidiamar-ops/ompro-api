@@ -2,7 +2,7 @@
 
 ## Principe retenu
 
-Le fonctionnement actuel par sélection du salarié + code PIN est conservé. Aucune modification de la validation du PIN n'est incluse dans cette étape.
+Le fonctionnement actuel par sélection du salarié + code PIN est conservé. Le format et le parcours PIN ne sont pas modifiés.
 
 La sécurisation est déployée progressivement afin d'éviter une interruption de la pointeuse :
 
@@ -27,10 +27,24 @@ La sécurisation est déployée progressivement afin d'éviter une interruption 
 
 Les valeurs sensibles liées au PIN, au code manager et aux signatures ne sont pas copiées dans le journal.
 
+## Pointage sécurisé
+
+La fonction `ompro.secure_employee_punch` est disponible côté Supabase. Elle :
+
+- réutilise la validation PIN existante via `employee_login` ;
+- accepte uniquement les types de pointage autorisés ;
+- calcule la date de service en timezone `Europe/Paris` ;
+- empêche les doubles débuts, doubles pauses et reprises incohérentes ;
+- verrouille la transaction par salarié et par journée pour éviter les doubles clics simultanés ;
+- enregistre le pointage avec la source `secure_rpc` ;
+- renvoie une réponse JSON compatible avec le frontend.
+
+L'ancienne politique d'insertion anonyme reste provisoirement en place tant que le frontend de production n'appelle pas exclusivement cette fonction.
+
 ## Règle de déploiement
 
 Ne jamais supprimer une politique RLS anonyme tant que l'écran correspondant n'a pas été migré vers une fonction RPC testée. Le contrôle doit être réalisé sur : connexion salarié, pointage, pauses, fin de service, planning, congés, signatures, régularisations, déplacements, météo d'équipe et notifications.
 
 ## Étape suivante
 
-Migrer en priorité les modifications de `employees`, `overtime_settings`, `regularization_requests` et `punches` vers des RPC contrôlées. Après validation, retirer uniquement les politiques anonymes d'écriture correspondantes. La lecture nécessaire à l'écran de connexion pourra rester disponible via une vue limitée ne contenant ni PIN ni donnée RH confidentielle.
+Basculer `executeConfirmedPunch()` vers `secure_employee_punch`, tester début, trois pauses, reprise, fin et deuxième mission, puis retirer uniquement la politique anonyme `INSERT` de `punches`. La lecture restera ouverte temporairement jusqu'à la création d'une vue ou d'un RPC de lecture limité.
