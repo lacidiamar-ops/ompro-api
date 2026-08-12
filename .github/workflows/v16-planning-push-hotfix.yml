@@ -1,0 +1,162 @@
+name: V16 planning push hotfix
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ !contains(github.event.head_commit.message, '[skip v16 patch]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch app safely
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('index.html')
+          text = p.read_text(encoding='utf-8')
+
+          # 1) Planning save: always send mission_order so multi-mission/upsert key is deterministic.
+          old = """        employee_id:r.employee_id,
+          work_date:r.work_date,"""
+          new = """        employee_id:r.employee_id,
+          mission_order:Number(r.mission_order||1),
+          work_date:r.work_date,"""
+          if old in text and 'mission_order:Number(r.mission_order||1)' not in text:
+              text = text.replace(old, new, 1)
+
+          # 2) Excel export V16: Monday -> Sunday, explicit weekday/date, employee weekly totals + overall weekly total.
+          start_marker = "window.exportPlanningXLSX = function(){"
+          next_marker = "\n  // Compatibilité ancienne barre"
+          start = text.find(start_marker)
+          if start != -1:
+              end = text.find(next_marker, start)
+              if end != -1:
+                  export_fn = r'''window.exportPlanningXLSX = function(){
+    try{
+      const rows=collectRowsFromVisibleManagerGrid();
+      if(!rows.length){ toast('Aucune donnée planning à exporter','err'); return; }
+      if(typeof XLSX==='undefined'){ toast('Module Excel indisponible','err'); return; }
+      const employeesById={}; (state.employees||[]).forEach(e=>employeesById[e.id]=e);
+      const dayNames=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+      const frDate=(iso)=>new Date(iso+'T12:00:00').toLocaleDateString('fr-FR');
+      const monday=(iso)=>{ const d=new Date(iso+'T12:00:00'); const n=d.getDay()||7; d.setDate(d.getDate()-n+1); return d.toISOString().slice(0,10); };
+      const add=(iso,n)=>{ const d=new Date(iso+'T12:00:00'); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); };
+      const mins=(r)=>{
+        if(!isWorkStatus(r.status)||!r.start_time||!r.end_time) return 0;
+        const cv=t=>{const [h,m]=String(t).slice(0,5).split(':').map(Number);return h*60+m};
+        let a=cv(r.start_time),b=cv(r.end_time); if(b<a)b+=1440;
+        return Math.max(0,b-a-Number(r.break_minutes||0));
+      };
+      const fmt=(m)=>`${Math.floor(Math.max(0,m)/60)}h${String(Math.max(0,m)%60).padStart(2,'0')}`;
+      const firstDate=rows.map(r=>r.work_date).sort()[0];
+      const ws=monday(firstDate), we=add(ws,6);
+      const weekLabel=`Lundi ${frDate(ws)} → Dimanche ${frDate(we)}`;
+      const detail=rows.slice().sort((a,b)=>String(a.employee_name||'').localeCompare(String(b.employee_name||''))||String(a.work_date).localeCompare(String(b.work_date))||Number(a.mission_order||1)-Number(b.mission_order||1)).map(r=>{
+        const d=new Date(r.work_date+'T12:00:00');
+        return {
+          'Semaine':weekLabel,
+          'Salarié':employeesById[r.employee_id]?.full_name||r.employee_name||'',
+          'Jour':dayNames[d.getDay()],
+          'Date':frDate(r.work_date),
+          'Mission':Number(r.mission_order||1),
+          'Statut':statusLabel(r.status),
+          'Début':isWorkStatus(r.status)?(r.start_time||''):'',
+          'Fin':isWorkStatus(r.status)?(r.end_time||''):'',
+          'Pause (min)':isWorkStatus(r.status)?Number(r.break_minutes||0):'',
+          'Durée prévue':isWorkStatus(r.status)?fmt(mins(r)):'',
+          'Fonction':planJobInfo(r.function_type).label,
+          'Lieu':locLabel(r.location_type)+(r.location_label?' · '+r.location_label:''),
+          'Organisation':orgLabel(r.organization_type),
+          'Note':r.note||''
+        };
+      });
+      const totals={};
+      for(const r of rows){ const name=employeesById[r.employee_id]?.full_name||r.employee_name||''; totals[name]=(totals[name]||0)+mins(r); }
+      const totalRows=Object.entries(totals).sort((a,b)=>a[0].localeCompare(b[0])).map(([name,m])=>({'Semaine':weekLabel,'Salarié':name,'Total semaine':fmt(m)}));
+      const overall=Object.values(totals).reduce((s,m)=>s+Number(m||0),0);
+      totalRows.push({'Semaine':weekLabel,'Salarié':'TOTAL ÉQUIPE','Total semaine':fmt(overall)});
+      const wb=XLSX.utils.book_new();
+      const wsDetail=XLSX.utils.json_to_sheet(detail);
+      const wsTotals=XLSX.utils.json_to_sheet(totalRows);
+      XLSX.utils.book_append_sheet(wb,wsDetail,'Planning lundi-dimanche');
+      XLSX.utils.book_append_sheet(wb,wsTotals,'Totaux semaine');
+      XLSX.writeFile(wb,`planning_${ws}_${we}.xlsx`);
+    }catch(err){ console.error('exportPlanningXLSX',err); toast('Export Excel impossible : '+(err.message||err),'err'); }
+  };'''
+                  text = text[:start] + export_fn + text[end:]
+
+          # 3) Auto push enrollment. Does not alter PIN/auth logic.
+          marker='/* V16_AUTO_PUSH_PLANNING */'
+          if marker not in text:
+              script = r'''
+<script>
+/* V16_AUTO_PUSH_PLANNING */
+(function(){
+  let lastEmployeeId=null, running=false;
+  function b64urlToUint8Array(s){
+    const pad='='.repeat((4-s.length%4)%4); const b64=(s+pad).replace(/-/g,'+').replace(/_/g,'/');
+    const raw=atob(b64); return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)));
+  }
+  async function ensurePlanningPush(){
+    if(running || !window.Notification || !('serviceWorker' in navigator) || !('PushManager' in window) || !window.state?.current?.id || !window.sb) return;
+    const empId=state.current.id;
+    if(lastEmployeeId===empId && Notification.permission==='denied') return;
+    running=true;
+    try{
+      let permission=Notification.permission;
+      if(permission==='default') permission=await Notification.requestPermission();
+      if(permission!=='granted'){ lastEmployeeId=empId; return; }
+      const reg=await navigator.serviceWorker.ready;
+      let sub=await reg.pushManager.getSubscription();
+      if(!sub){
+        const {data:keyRow,error:keyErr}=await sb.from('vapid_keys').select('public_key').limit(1).maybeSingle();
+        if(keyErr||!keyRow?.public_key) throw keyErr||new Error('Clé notification indisponible');
+        sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64urlToUint8Array(keyRow.public_key)});
+      }
+      const j=sub.toJSON();
+      const {error}=await sb.from('push_subscriptions').upsert({employee_id:empId,endpoint:j.endpoint,p256dh:j.keys?.p256dh,auth:j.keys?.auth},{onConflict:'employee_id,endpoint'});
+      if(error) throw error;
+      lastEmployeeId=empId;
+      const st=document.getElementById('push-status'); if(st) st.textContent='✅ Notifications planning actives';
+    }catch(e){ console.warn('V16 auto push',e); }
+    finally{ running=false; }
+  }
+  const observer=new MutationObserver(()=>{
+    if(document.querySelector('#s-emp.active,#s-mgr.active')) setTimeout(ensurePlanningPush,250);
+  });
+  window.addEventListener('DOMContentLoaded',()=>{
+    observer.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
+    document.addEventListener('pointerup',()=>{ if(document.querySelector('#s-emp.active,#s-mgr.active')) setTimeout(ensurePlanningPush,100); },{passive:true});
+    setTimeout(ensurePlanningPush,900);
+  });
+})();
+</script>
+'''
+              text=text.replace('</body>',script+'\n</body>',1)
+
+          # 4) Version label so we can verify the client received the update.
+          text=text.replace('Version V12.5 · OM PRO × API','Version V16.0 · OM PRO × API')
+          p.write_text(text,encoding='utf-8')
+
+          sw=Path('service-worker.js')
+          if sw.exists():
+              s=sw.read_text(encoding='utf-8')
+              import re
+              s=re.sub(r"const CACHE = '[^']+';", "const CACHE = 'om-pro-api-v160-planning-push';", s, count=1)
+              sw.write_text(s,encoding='utf-8')
+      - name: Commit V16 app patch
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html service-worker.js
+          git commit -m "V16 planning save, automatic push reminders and weekly export [skip v16 patch]"
+          git push origin HEAD:main
