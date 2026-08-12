@@ -11,25 +11,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Finalize V16 client
+      - name: Repair and install V16 client push
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import base64
           p=Path('index.html')
           text=p.read_text(encoding='utf-8')
-          text=text.replace("!window.state?.current?.id || !window.sb", "!state?.current?.id || !sb")
+          marker='/* V16_AUTO_PUSH_PLANNING */'
+          idx=text.find(marker)
+          if idx!=-1:
+              bad_start=text.rfind('\n<script>\n',0,idx)
+              bad_end=text.find('\n</script>\n\n</body></html>`);',idx)
+              if bad_start!=-1 and bad_end!=-1:
+                  close_end=bad_end+len('\n</script>')
+                  text=text[:bad_start]+text[close_end:]
+          push=base64.b64decode('CjxzY3JpcHQ+Ci8qIFYxNl9BVVRPX1BVU0hfUExBTk5JTkcgKi8KKGZ1bmN0aW9uKCl7CiAgbGV0IGxhc3RFbXBsb3llZUlkPW51bGwsIHJ1bm5pbmc9ZmFsc2U7CiAgYXN5bmMgZnVuY3Rpb24gZW5zdXJlUGxhbm5pbmdQdXNoKCl7CiAgICBpZihydW5uaW5nIHx8IHR5cGVvZiBzdGF0ZT09PSd1bmRlZmluZWQnIHx8ICFzdGF0ZS5jdXJyZW50Py5pZCB8fCB0eXBlb2Ygc2I9PT0ndW5kZWZpbmVkJyB8fCAhKCdOb3RpZmljYXRpb24nIGluIHdpbmRvdykgfHwgISgnc2VydmljZVdvcmtlcicgaW4gbmF2aWdhdG9yKSB8fCAhKCdQdXNoTWFuYWdlcicgaW4gd2luZG93KSkgcmV0dXJuOwogICAgY29uc3QgZW1wSWQ9c3RhdGUuY3VycmVudC5pZDsKICAgIGlmKGxhc3RFbXBsb3llZUlkPT09ZW1wSWQgJiYgTm90aWZpY2F0aW9uLnBlcm1pc3Npb24hPT0nZGVmYXVsdCcpIHJldHVybjsKICAgIHJ1bm5pbmc9dHJ1ZTsKICAgIHRyeXsKICAgICAgbGV0IHBlcm1pc3Npb249Tm90aWZpY2F0aW9uLnBlcm1pc3Npb247CiAgICAgIGlmKHBlcm1pc3Npb249PT0nZGVmYXVsdCcpIHBlcm1pc3Npb249YXdhaXQgTm90aWZpY2F0aW9uLnJlcXVlc3RQZXJtaXNzaW9uKCk7CiAgICAgIGlmKHBlcm1pc3Npb24hPT0nZ3JhbnRlZCcpeyBsYXN0RW1wbG95ZWVJZD1lbXBJZDsgcmV0dXJuOyB9CiAgICAgIGNvbnN0IHJlZz1hd2FpdCBuYXZpZ2F0b3Iuc2VydmljZVdvcmtlci5yZWFkeTsKICAgICAgbGV0IHN1Yj1hd2FpdCByZWcucHVzaE1hbmFnZXIuZ2V0U3Vic2NyaXB0aW9uKCk7CiAgICAgIGlmKCFzdWIpewogICAgICAgIHN1Yj1hd2FpdCByZWcucHVzaE1hbmFnZXIuc3Vic2NyaWJlKHt1c2VyVmlzaWJsZU9ubHk6dHJ1ZSxhcHBsaWNhdGlvblNlcnZlcktleTp1cmxCYXNlNjRUb1VpbnQ4QXJyYXkoVkFQSURfUFVCTElDX0tFWSl9KTsKICAgICAgfQogICAgICBjb25zdCBqPXN1Yi50b0pTT04oKTsKICAgICAgY29uc3Qge2Vycm9yfT1hd2FpdCBzYi5mcm9tKCdwdXNoX3N1YnNjcmlwdGlvbnMnKS51cHNlcnQoewogICAgICAgIGVtcGxveWVlX2lkOmVtcElkLCBlbmRwb2ludDpqLmVuZHBvaW50LCBwMjU2ZGg6ai5rZXlzPy5wMjU2ZGgsIGF1dGg6ai5rZXlzPy5hdXRoCiAgICAgIH0se29uQ29uZmxpY3Q6J2VtcGxveWVlX2lkLGVuZHBvaW50J30pOwogICAgICBpZihlcnJvcikgdGhyb3cgZXJyb3I7CiAgICAgIGxhc3RFbXBsb3llZUlkPWVtcElkOwogICAgICBjb25zdCBzdGF0dXM9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoc3RhdGUuY3VycmVudC5yb2xlPT09J21hbmFnZXInPydwdXNoLXN0YXR1cy1tZ3InOidwdXNoLXN0YXR1cycpOwogICAgICBpZihzdGF0dXMpIHN0YXR1cy50ZXh0Q29udGVudD0n4pyFIE5vdGlmaWNhdGlvbnMgcGxhbm5pbmcgYWN0aXZlcyc7CiAgICB9Y2F0Y2goZSl7IGNvbnNvbGUud2FybignVjE2IGF1dG8gcHVzaCcsZSk7IH0KICAgIGZpbmFsbHl7IHJ1bm5pbmc9ZmFsc2U7IH0KICB9CiAgZnVuY3Rpb24gc2NoZWR1bGVBdXRvKCl7CiAgICBpZihkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCcjcy1lbXAuYWN0aXZlLCNzLW1nci5hY3RpdmUnKSkgc2V0VGltZW91dChlbnN1cmVQbGFubmluZ1B1c2gsMTUwKTsKICB9CiAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ0RPTUNvbnRlbnRMb2FkZWQnLCgpPT57CiAgICBuZXcgTXV0YXRpb25PYnNlcnZlcihzY2hlZHVsZUF1dG8pLm9ic2VydmUoZG9jdW1lbnQuYm9keSx7c3VidHJlZTp0cnVlLGF0dHJpYnV0ZXM6dHJ1ZSxhdHRyaWJ1dGVGaWx0ZXI6WydjbGFzcyddfSk7CiAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdwb2ludGVydXAnLHNjaGVkdWxlQXV0byx7cGFzc2l2ZTp0cnVlfSk7CiAgICBzZXRUaW1lb3V0KHNjaGVkdWxlQXV0byw4MDApOwogIH0pOwp9KSgpOwo8L3NjcmlwdD4K').decode()
+          if marker not in text:
+              pos=text.rfind('</body>')
+              if pos==-1: raise RuntimeError('closing body not found')
+              text=text[:pos]+push+'\n'+text[pos:]
           p.write_text(text,encoding='utf-8')
-          sw=Path('service-worker.js')
-          if sw.exists():
-              s=sw.read_text(encoding='utf-8')
-              s=s.replace("const CACHE_NAME = 'ompro-v200-fresh';", "const CACHE_NAME = 'ompro-v160-planning-push';")
-              sw.write_text(s,encoding='utf-8')
           PY
-      - name: Commit patched app
+      - name: Commit repaired app
         run: |
           if git diff --quiet; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html service-worker.js
-          git commit -m "Finalize V16 automatic planning notifications [skip v16 patch]"
+          git add index.html
+          git commit -m "Repair V16 push placement and keep app script valid [skip v16 patch]"
           git push origin HEAD:main
