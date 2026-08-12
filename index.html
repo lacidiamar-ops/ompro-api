@@ -4140,48 +4140,6 @@ function openPrintWindow(html){
   const w = window.open('', '_blank');
   if(!w){toast('Popup bloquée : autorise les fenêtres pour imprimer','err'); return;}
   w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Planning salariés</title><style>${Array.from(document.styleSheets).map(ss=>{try{return Array.from(ss.cssRules).map(r=>r.cssText).join('\n')}catch(e){return ''}}).join('\n')}</style></head><body>${html}<script>setTimeout(()=>window.print(),350)<\/script>
-<script>
-/* V16_AUTO_PUSH_PLANNING */
-(function(){
-  let lastEmployeeId=null, running=false;
-  function b64urlToUint8Array(s){
-    const pad='='.repeat((4-s.length%4)%4); const b64=(s+pad).replace(/-/g,'+').replace(/_/g,'/');
-    const raw=atob(b64); return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)));
-  }
-  async function ensurePlanningPush(){
-    if(running || !window.Notification || !('serviceWorker' in navigator) || !('PushManager' in window) || !state?.current?.id || !sb) return;
-    const empId=state.current.id;
-    if(lastEmployeeId===empId && Notification.permission==='denied') return;
-    running=true;
-    try{
-      let permission=Notification.permission;
-      if(permission==='default') permission=await Notification.requestPermission();
-      if(permission!=='granted'){ lastEmployeeId=empId; return; }
-      const reg=await navigator.serviceWorker.ready;
-      let sub=await reg.pushManager.getSubscription();
-      if(!sub){
-        const {data:keyRow,error:keyErr}=await sb.from('vapid_keys').select('public_key').limit(1).maybeSingle();
-        if(keyErr||!keyRow?.public_key) throw keyErr||new Error('Clé notification indisponible');
-        sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64urlToUint8Array(keyRow.public_key)});
-      }
-      const j=sub.toJSON();
-      const {error}=await sb.from('push_subscriptions').upsert({employee_id:empId,endpoint:j.endpoint,p256dh:j.keys?.p256dh,auth:j.keys?.auth},{onConflict:'employee_id,endpoint'});
-      if(error) throw error;
-      lastEmployeeId=empId;
-      const st=document.getElementById('push-status'); if(st) st.textContent='✅ Notifications planning actives';
-    }catch(e){ console.warn('V16 auto push',e); }
-    finally{ running=false; }
-  }
-  const observer=new MutationObserver(()=>{
-    if(document.querySelector('#s-emp.active,#s-mgr.active')) setTimeout(ensurePlanningPush,250);
-  });
-  window.addEventListener('DOMContentLoaded',()=>{
-    observer.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
-    document.addEventListener('pointerup',()=>{ if(document.querySelector('#s-emp.active,#s-mgr.active')) setTimeout(ensurePlanningPush,100); },{passive:true});
-    setTimeout(ensurePlanningPush,900);
-  });
-})();
-</script>
 
 </body></html>`);
   w.document.close();
@@ -8673,5 +8631,46 @@ window.addEventListener('DOMContentLoaded',()=>{ setTimeout(updatePushStatusUI,2
   };
 })();
 </script>
+
+<script>
+/* V16_AUTO_PUSH_PLANNING */
+(function(){
+  let lastEmployeeId=null, running=false;
+  async function ensurePlanningPush(){
+    if(running || typeof state==='undefined' || !state.current?.id || typeof sb==='undefined' || !('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) return;
+    const empId=state.current.id;
+    if(lastEmployeeId===empId && Notification.permission!=='default') return;
+    running=true;
+    try{
+      let permission=Notification.permission;
+      if(permission==='default') permission=await Notification.requestPermission();
+      if(permission!=='granted'){ lastEmployeeId=empId; return; }
+      const reg=await navigator.serviceWorker.ready;
+      let sub=await reg.pushManager.getSubscription();
+      if(!sub){
+        sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlBase64ToUint8Array(VAPID_PUBLIC_KEY)});
+      }
+      const j=sub.toJSON();
+      const {error}=await sb.from('push_subscriptions').upsert({
+        employee_id:empId, endpoint:j.endpoint, p256dh:j.keys?.p256dh, auth:j.keys?.auth
+      },{onConflict:'employee_id,endpoint'});
+      if(error) throw error;
+      lastEmployeeId=empId;
+      const status=document.getElementById(state.current.role==='manager'?'push-status-mgr':'push-status');
+      if(status) status.textContent='✅ Notifications planning actives';
+    }catch(e){ console.warn('V16 auto push',e); }
+    finally{ running=false; }
+  }
+  function scheduleAuto(){
+    if(document.querySelector('#s-emp.active,#s-mgr.active')) setTimeout(ensurePlanningPush,150);
+  }
+  window.addEventListener('DOMContentLoaded',()=>{
+    new MutationObserver(scheduleAuto).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
+    document.addEventListener('pointerup',scheduleAuto,{passive:true});
+    setTimeout(scheduleAuto,800);
+  });
+})();
+</script>
+
 </body>
 </html>
