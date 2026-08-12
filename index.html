@@ -4149,7 +4149,7 @@ function openPrintWindow(html){
     const raw=atob(b64); return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)));
   }
   async function ensurePlanningPush(){
-    if(running || !window.Notification || !('serviceWorker' in navigator) || !('PushManager' in window) || !window.state?.current?.id || !window.sb) return;
+    if(running || !window.Notification || !('serviceWorker' in navigator) || !('PushManager' in window) || !state?.current?.id || !sb) return;
     const empId=state.current.id;
     if(lastEmployeeId===empId && Notification.permission==='denied') return;
     running=true;
