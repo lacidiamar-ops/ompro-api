@@ -1,6 +1,6 @@
 // OM PRO × API — Service Worker v2.0
 // Change CACHE_NAME à chaque déploiement pour forcer le rechargement
-const CACHE_NAME = 'ompro-v166-payroll-export';
+const CACHE_NAME = 'ompro-v161-planning-fix';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
