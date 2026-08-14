@@ -3,7 +3,7 @@
   'use strict';
   const $=id=>document.getElementById(id);
   const hh=v=>{const m=String(v||'').match(/^(\d{1,2}):(\d{2})/);return m?m[1].padStart(2,'0')+':'+m[2]:''};
-  const esc=v=>String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+  const esc=v=>String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[s]));
   const addDays=(d,n)=>{const x=new Date(d+'T12:00:00');x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)};
   const monday=()=>{const x=new Date();const k=x.getDay()||7;x.setDate(x.getDate()-k+1);x.setHours(12,0,0,0);return x.toISOString().slice(0,10)};
   const isWork=s=>['planned','work','travail','nettoyage'].includes(String(s||'').toLowerCase());
@@ -118,4 +118,33 @@
   window.enterMgr=async function(){const r=oldEnterMgr?await oldEnterMgr.apply(this,arguments):undefined;setTimeout(loadManager3Weeks,450);return r};
   window.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{if(state.current?.role==='manager')loadManager3Weeks();else if(state.current){loadEmployeeHome();loadTeam()}},800));
   console.log('V16.3 planning fix loaded');
+})();
+
+// V16.4 — congés manager : corrige l'ambiguïté des 2 FK vers employees
+(function(){
+  'use strict';
+  const safe=v=>String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+  const kindLabel=k=>({cp:'Congé payé',recovery:'Récupération',rest:'Repos demandé',absence:'Absence autorisée'}[k]||k||'Congé');
+  const statusLabel2=s=>({pending:'En attente',approved:'Validée',rejected:'Refusée'}[s]||s||'En attente');
+  const fmt=d=>{try{return new Date(String(d).slice(0,10)+'T12:00:00').toLocaleDateString('fr-FR')}catch(e){return d||''}};
+  async function loadLeaveRequestsV164(){
+    const box=document.getElementById('mgr-leave-requests'); if(!box) return;
+    box.innerHTML='<div class="empty"><div class="ico">⏳</div><p>Chargement...</p></div>';
+    try{
+      const {data,error}=await sb.from('employee_leave_requests')
+        .select('*, employee:employees!employee_leave_requests_employee_id_fkey(full_name,role,contrat)')
+        .order('created_at',{ascending:false}).limit(100);
+      if(error) throw error;
+      const rows=(data||[]).filter(r=>{
+        const txt=String((r.employee?.role||'')+' '+(r.employee?.contrat||'')+' '+(r.employee?.full_name||'')).toLowerCase();
+        return !txt.includes('interim') && !txt.includes('intérim');
+      });
+      if(!rows.length){box.innerHTML='<div class="empty"><div class="ico">📭</div><p>Aucune demande</p></div>';return;}
+      box.innerHTML=rows.map(r=>`<div class="leave-card ${safe(r.status)}"><div class="leave-title">${safe(r.employee?.full_name||'Salarié')} · ${safe(kindLabel(r.kind))} · ${safe(statusLabel2(r.status))}</div><div class="leave-meta">Du ${fmt(r.start_date)} au ${fmt(r.end_date)}${r.note?' · '+safe(r.note):''}${r.signed_at?'<br>✍️ Demande signée':''}</div>${r.signature_data_url?`<img class="signature-preview" src="${r.signature_data_url}" alt="Signature congé">`:''}<button class="btn btn-sec btn-blk" style="margin-top:8px" onclick="printLeaveRequest('${r.id}')">🖨️ Imprimer la demande signée</button>${r.status==='pending'?`<div class="fg" style="margin-top:8px"><input id="lr-note-${r.id}" placeholder="Note manager optionnelle"></div><div class="leave-actions"><button class="btn btn-dan" onclick="reviewLeaveRequest('${r.id}','rejected')">Refuser</button><button class="btn btn-suc" onclick="reviewLeaveRequest('${r.id}','approved')">Valider</button></div>`:''}</div>`).join('');
+    }catch(e){console.error('V16.4 leave',e);box.innerHTML='<div class="empty"><div class="ico">⚠️</div><p>Erreur chargement demandes congés : '+safe(e.message||e)+'</p></div>';}
+  }
+  window.loadLeaveRequests=loadLeaveRequestsV164;
+  const prevMgrTabLeave=window.mgrTab;
+  window.mgrTab=function(name,btn){const r=prevMgrTabLeave?prevMgrTabLeave.apply(this,arguments):undefined;if(name==='leave')setTimeout(loadLeaveRequestsV164,120);return r};
+  console.log('V16.4 leave requests fix loaded');
 })();
