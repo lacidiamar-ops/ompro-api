@@ -1,6 +1,6 @@
 // OM PRO × API — Service Worker v16.7
 // Change CACHE_NAME à chaque déploiement pour forcer le rechargement
-const CACHE_NAME = 'ompro-v167-overnight-fix';
+const CACHE_NAME = 'ompro-v161-planning-fix';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
